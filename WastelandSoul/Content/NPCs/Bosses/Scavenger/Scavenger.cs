@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -113,11 +114,10 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 		//   ai[0] = 阶段序号（0/1/2），由阶段状态写入
 		//   ai[1] = 状态机当前状态 ID（InnoVault NpcStateMachine 占用，自动同步）
 		//   ai[2] = 污染团投放计数（**联机**：ai[] 原版会自动同步，用它给掷骰当种子，见 UpdatePollutionBarrage）
-		//   ai[3] = 过载自毁标记（掉落判定用）
-		//   localAI[0] = 卡顿计时器
-		//   localAI[1] = 维修无人机召唤冷却
-		//   localAI[2] = 污染团投放冷却
-		//   localAI[3] = 冲锋次数
+		//   ai[3] = 攻击轮换计数；过载自毁时写入负标记（掉落判定）
+		//   localAI[1] = 维修无人机召唤冷却（**服务端**递减，<see cref="SendExtraAI"/> 同步）
+		//   localAI[2] = 污染团投放冷却（同上）
+		//   localAI[3] = 过载预警次数（仅客户端表现）
 
 		public override void SetStaticDefaults()
 		{
@@ -168,11 +168,11 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 
 			NPC.target = target.whoAmI;
 
-			// 这两个是"与状态无关"的持续机制，跟着 Boss 一直跑
-			UpdateRepairDrones();
-			UpdatePollutionBarrage();
-
-			NPC.localAI[0] += 1f;
+			// 持续机制只在权威侧跑计时（客户端靠 SendExtraAI 收冷却，避免污染间隔用错 ai[2]）
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				UpdateRepairDrones();
+				UpdatePollutionBarrage();
+			}
 
 			// 状态推进 + 阶段判定（阶段由 PhaseController 在 HP 跌破阈值时一次性切过去）
 			ctx.Machine.Update();
@@ -247,8 +247,8 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 				return;
 			}
 
-			if (stutterGated && npc.localAI[0] % StutterInterval(npc) != 0f) {
-				return;   // 卡顿：这一帧不更新速度，机体"僵"在原地
+			if (stutterGated && Main.GameUpdateCount % (uint)StutterInterval(npc) != 0u) {
+				return;   // 卡顿：这一帧不更新速度，机体"僵"在原地（用世界帧，联机同值）
 			}
 
 			// 主动贴近玩家：
@@ -335,7 +335,11 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 		internal static void OnPhaseStart(NPC npc, int phase)
 		{
 			npc.ai[0] = phase;
-			npc.localAI[1] = 60f;    // 阶段二马上开始召唤维修无人机
+
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				npc.localAI[1] = 60f;    // 阶段二马上开始召唤维修无人机
+				npc.netUpdate = true;
+			}
 
 			if (Main.dedServ) {
 				return;
@@ -611,6 +615,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			}
 
 			NPC.localAI[1] = DroneSummonCooldown;
+			NPC.netUpdate = true;
 
 			int alive = 0;
 
@@ -623,10 +628,6 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			}
 
 			if (alive >= MaxRepairDrones) {
-				return;
-			}
-
-			if (Main.netMode == NetmodeID.MultiplayerClient) {
 				return;
 			}
 
@@ -665,19 +666,11 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 				return;
 			}
 
-			// 下一次投放的时间不固定（**联机同值**：种子只取已同步的量）
-			// ai[2] = 投放计数，由服务端推进并标 netUpdate；客户端读到的就是同一个序号。
-			if (Main.netMode != NetmodeID.MultiplayerClient) {
-				NPC.ai[2] += 1f;
-				NPC.netUpdate = true;
-			}
-
+			// ai[2] = 投放计数；冷却掷骰必须在服务端用递增后的序号，再同步给客户端。
+			NPC.ai[2] += 1f;
 			NPC.localAI[2] = PollutionCooldown
 				+ WastelandRandom.Roll(NPC.whoAmI, (int)NPC.ai[0], (int)NPC.ai[2], -45, 46);
-
-			if (Main.netMode == NetmodeID.MultiplayerClient) {
-				return;
-			}
+			NPC.netUpdate = true;
 
 			int count = (int)NPC.ai[0] >= 2 ? 3 : 2;
 
@@ -699,6 +692,20 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			NPC.velocity.X *= 0.95f;
 			NPC.velocity.Y -= 0.2f;
 			NPC.EncourageDespawn(30);
+		}
+
+		/// <inheritdoc/>
+		public override void SendExtraAI(BinaryWriter writer)
+		{
+			writer.Write(NPC.localAI[1]);
+			writer.Write(NPC.localAI[2]);
+		}
+
+		/// <inheritdoc/>
+		public override void ReceiveExtraAI(BinaryReader reader)
+		{
+			NPC.localAI[1] = reader.ReadSingle();
+			NPC.localAI[2] = reader.ReadSingle();
 		}
 
 		// ==================== 帧动画 ====================

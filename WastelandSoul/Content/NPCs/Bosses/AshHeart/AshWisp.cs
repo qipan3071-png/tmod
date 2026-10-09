@@ -65,9 +65,13 @@ namespace WastelandSoul.Content.NPCs.Bosses.AshHeart
 				Lighting.AddLight(NPC.Center, 0.8f, 0.3f, 0.05f);
 			}
 
+			if (Main.netMode == NetmodeID.MultiplayerClient) {
+				return;
+			}
+
 			NPC.localAI[0] += 1f;
 
-			if (NPC.localAI[0] < HealInterval || Main.netMode == NetmodeID.MultiplayerClient) {
+			if (NPC.localAI[0] < HealInterval) {
 				return;
 			}
 

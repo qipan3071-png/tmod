@@ -75,29 +75,28 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			NPC.velocity = NPC.velocity * 0.90f + toHover * 0.06f;
 			NPC.rotation = NPC.velocity.X * 0.04f;
 
-			// 治疗：定时给 Boss 回血（只有服务端/单机实际改血量，客户端靠同步表现）
-			NPC.localAI[0] += 1f;
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				NPC.localAI[0] += 1f;
 
-			if (NPC.localAI[0] >= HealInterval) {
-				NPC.localAI[0] = 0f;
+				if (NPC.localAI[0] >= HealInterval) {
+					NPC.localAI[0] = 0f;
 
-				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					int heal = Math.Min(HealAmount, boss.lifeMax - boss.life);
 
 					if (heal > 0) {
 						boss.life += heal;
 						boss.HealEffect(heal, true);
+						boss.netUpdate = true;
 					}
-				}
 
-				// 维修光束：Boss 与无人机之间的一串火花
-				if (!Main.dedServ) {
-					for (int i = 0; i < 8; i++) {
-						float t = i / 8f;
-						Vector2 point = Vector2.Lerp(NPC.Center, boss.Center, t);
+					if (!Main.dedServ) {
+						for (int i = 0; i < 8; i++) {
+							float t = i / 8f;
+							Vector2 point = Vector2.Lerp(NPC.Center, boss.Center, t);
 
-						Dust dust = Dust.NewDustPerfect(point, DustID.Torch, Vector2.Zero, 100, default, 1.1f);
-						dust.noGravity = true;
+							Dust dust = Dust.NewDustPerfect(point, DustID.Torch, Vector2.Zero, 100, default, 1.1f);
+							dust.noGravity = true;
+						}
 					}
 				}
 			}
