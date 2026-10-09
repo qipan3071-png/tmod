@@ -163,7 +163,11 @@ Items: {
 	}
 	ScavengerSignalSensor: {
 		DisplayName: 清道夫信号传感器
-		Tooltip: 召唤清道夫
+		Tooltip:
+			'''
+			召唤清道夫
+			使用后不消耗
+			'''
 	}
 	CompanionCore: {
 		DisplayName: 智械核心
@@ -175,15 +179,27 @@ Items: {
 	}
 	ArchivistEcho: {
 		DisplayName: 归档者残响
-		Tooltip: 召唤归档者
+		Tooltip:
+			'''
+			召唤归档者
+			使用后不消耗
+			'''
 	}
 	AshHeartEmber: {
 		DisplayName: 灰烬之心余烬
-		Tooltip: 召唤灰烬之心
+		Tooltip:
+			'''
+			召唤灰烬之心
+			使用后不消耗
+			'''
 	}
 	FireplaceKey: {
 		DisplayName: 壁炉通行密钥
-		Tooltip: 召唤壁炉守卫
+		Tooltip:
+			'''
+			召唤壁炉守卫
+			使用后不消耗
+			'''
 	}
 	AshHeartFragment: {
 		DisplayName: 灰烬之心碎片
@@ -912,15 +928,27 @@ Items: {
 	}
 	ScavengerBeacon: {
 		DisplayName: 狩猎信标
-		Tooltip: 召唤清道夫
+		Tooltip:
+			'''
+			召唤清道夫
+			使用后不消耗
+			'''
 	}
 	AuditRequest: {
 		DisplayName: 审计申请表
-		Tooltip: 召唤归档者
+		Tooltip:
+			'''
+			召唤归档者
+			使用后不消耗
+			'''
 	}
 	EmberFuse: {
 		DisplayName: 余烬引信
-		Tooltip: 召唤灰烬之心
+		Tooltip:
+			'''
+			召唤灰烬之心
+			使用后不消耗
+			'''
 	}
 	WastelandMap: {
 		DisplayName: 废土地图残片

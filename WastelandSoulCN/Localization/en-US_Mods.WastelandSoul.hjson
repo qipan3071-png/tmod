@@ -189,7 +189,11 @@ Items: {
 
 	ScavengerSignalSensor: {
 		DisplayName: Scavenger Signal Sensor
-		Tooltip: Summons the Scavenger
+		Tooltip:
+			'''
+			Summons the Scavenger
+			Not consumed
+			'''
 	}
 
 	CompanionCore: {
@@ -204,17 +208,29 @@ Items: {
 
 	ArchivistEcho: {
 		DisplayName: Archivist Echo
-		Tooltip: Summons the Archivist
+		Tooltip:
+			'''
+			Summons the Archivist
+			Not consumed
+			'''
 	}
 
 	AshHeartEmber: {
 		DisplayName: Ash Heart Ember
-		Tooltip: Summons the Ash Heart
+		Tooltip:
+			'''
+			Summons the Ash Heart
+			Not consumed
+			'''
 	}
 
 	FireplaceKey: {
 		DisplayName: Fireplace Access Key
-		Tooltip: Summons the Fireplace Guardian
+		Tooltip:
+			'''
+			Summons the Fireplace Guardian
+			Not consumed
+			'''
 	}
 
 	AshHeartFragment: {
@@ -1080,17 +1096,29 @@ Items: {
 
 	ScavengerBeacon: {
 		DisplayName: Hunting Beacon
-		Tooltip: Summons the Scavenger
+		Tooltip:
+			'''
+			Summons the Scavenger
+			Not consumed
+			'''
 	}
 
 	AuditRequest: {
 		DisplayName: Audit Request Form
-		Tooltip: Summons the Archivist
+		Tooltip:
+			'''
+			Summons the Archivist
+			Not consumed
+			'''
 	}
 
 	EmberFuse: {
 		DisplayName: Ember Fuse
-		Tooltip: Summons the Ash Heart
+		Tooltip:
+			'''
+			Summons the Ash Heart
+			Not consumed
+			'''
 	}
 
 	WastelandMap: {
