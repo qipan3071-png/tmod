@@ -14,9 +14,17 @@ WastelandSoul 是一个面向 tModLoader 的 Terraria 模组，聚焦废土主�
 ## 目录结构
 
 - `WastelandSoul/`：主模组代码与内容
-- `WastelandSoulCN/`：中文语言包
+- `WastelandSoulCN/`：中文语言包（由 `tools/sync_cn_translation.py` 生成）
 - `tools/`：辅助脚本与校验工具
-- `art-inbox/`：素材收件箱
+- `交接说明.md` / `WastelandSoul/开发说明.md`：当前状态与批次记录
+
+## 仓库范围（2026-10-09 起）
+
+本仓库**只放能开源的东西**：源码、我们自绘/自合成的资源、脚本、文档。
+
+**不入库**（`.gitignore` 已挡）：编译产物（`*.tmod`、`obj/`、`bin/`、`.tml-*`）、
+第三方模组的二进制与反汇编、临时与备份目录（`.tmp-*`、`.backup/`）、AI 出图原始件
+（`art-inbox/`）、游戏日志、交付包（`测评包/`、`*.zip`）。
 
 ## 运行方式
 
@@ -41,9 +49,12 @@ dotnet tModLoader.dll -build E:\开发\WastelandSoul
 - `WastelandSoul/Content/Items/`：物品与材料
 - `WastelandSoul/Localization/`：本地化文本
 
-## 许可证
+## 许可证与第三方内容
 
-本项目采用 MIT License，详情见 [LICENSE](LICENSE)。
+本项目的**原创部分**采用 MIT License，详情见 [LICENSE](LICENSE)。
+
+⚠️ **MIT 不覆盖**：Terraria（Re-Logic）原版素材的演绎件、以及任何第三方模组的
+代码/二进制/反汇编内容。逐项清单见 **[NOTICE.md](NOTICE.md)** —— 再分发前请先读它。
 
 ## 贡献
 
