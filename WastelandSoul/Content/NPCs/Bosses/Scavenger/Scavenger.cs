@@ -498,7 +498,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 		internal static void PlayOverloadWarning(ScavengerContext ctx)
 		{
 			NPC npc = ctx.Npc;
-			npc.localAI[3] += 1f;
+			npc.localAI[3] += 1f; // sync-ok: client-only overload bark counter (no gameplay branch)
 
 			if (Main.dedServ) {
 				return;

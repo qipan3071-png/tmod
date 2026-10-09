@@ -18,22 +18,29 @@ def main():
             if not name.endswith(".cs"):
                 continue
             path = os.path.join(dirpath, name)
-            rel = os.path.relpath(path, os.path.join(ROOT, "..", ".."))
+            rel = os.path.relpath(path, os.path.join(ROOT, "..", "..")).replace("\\", "/")
             with open(path, encoding="utf-8") as f:
-                n = 0
-                for line in f:
-                    if PAT.search(line) and not line.strip().startswith("//"):
-                        n += 1
+                text = f.read()
+            has_extra_ai = "ReceiveExtraAI" in text and "SendExtraAI" in text
+            n = 0
+            for line in text.splitlines():
+                if not PAT.search(line) or line.strip().startswith("//"):
+                    continue
+                if "sync-ok" in line:
+                    continue
+                if has_extra_ai and (".localAI[1]" in line or ".localAI[2]" in line):
+                    continue
+                n += 1
             if n:
-                rows.append((n, rel.replace("\\", "/")))
+                rows.append((n, rel))
 
     rows.sort(key=lambda x: (-x[0], x[1]))
     if not rows:
-        print("NPC localAI：0 处（行为状态应已迁 ai[]）")
+        print("NPC localAI：0 处待关注（行为状态应已迁 ai[] 或 ExtraAI）")
         return 0
 
     total = sum(r[0] for r in rows)
-    print("NPC localAI 引用（未同步，需 ai[] / SendExtraAI / 纯客户端）：%d 处 / %d 个文件" % (total, len(rows)))
+    print("NPC localAI 引用（未同步，需 ai[] / SendExtraAI / sync-ok）：%d 处 / %d 个文件" % (total, len(rows)))
     for n, rel in rows[:20]:
         print("  %3d  %s" % (n, rel))
     if len(rows) > 20:

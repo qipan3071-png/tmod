@@ -76,10 +76,10 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			NPC.rotation = NPC.velocity.X * 0.04f;
 
 			if (Main.netMode != NetmodeID.MultiplayerClient) {
-				NPC.localAI[0] += 1f;
+				NPC.ai[2] += 1f;
 
-				if (NPC.localAI[0] >= HealInterval) {
-					NPC.localAI[0] = 0f;
+				if (NPC.ai[2] >= HealInterval) {
+					NPC.ai[2] = 0f;
 
 					int heal = Math.Min(HealAmount, boss.lifeMax - boss.life);
 

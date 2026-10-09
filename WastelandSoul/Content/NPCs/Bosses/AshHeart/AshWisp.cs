@@ -69,13 +69,14 @@ namespace WastelandSoul.Content.NPCs.Bosses.AshHeart
 				return;
 			}
 
-			NPC.localAI[0] += 1f;
+			// ai[2] = 治疗冷却（原版 ai[] 联机同步；0/1 已用于 Boss 索引与槽位）
+			NPC.ai[2] += 1f;
 
-			if (NPC.localAI[0] < HealInterval) {
+			if (NPC.ai[2] < HealInterval) {
 				return;
 			}
 
-			NPC.localAI[0] = 0f;
+			NPC.ai[2] = 0f;
 			int healed = System.Math.Min(HealAmount, boss.lifeMax - boss.life);
 
 			if (healed > 0) {
