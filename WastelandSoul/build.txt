@@ -1,6 +1,6 @@
 displayName = 废土魂穿
 author = 待定
-version = 0.1
+version = 0.1.1
 side = Both
 # InnoVault 是工具库模组（状态机 / 剧情框架 / 3D 模型等）
 # WastelandSoulCN 是简体中文语言包：这样启用主模组时会自动带上它（不想强制的话删掉这一行即可）
