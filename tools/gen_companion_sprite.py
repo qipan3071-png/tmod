@@ -52,6 +52,10 @@ FRAME_W, FRAME_H, FRAMES = 40, 56, 21
 # 像素分布定的（见 开发说明.md 批次 42）。
 NECK_Y = 22
 FRONT_X = 21
+# 背后长发从这一列往右开始算（树妖的长发是披在右后方那一大片的）
+BACK_X = 22
+# "穿衣服"的身体区域：帧内 y 27..47（把脸 y≤26、脚 y≥48 留在外面当皮肤/赤脚），x 13..27
+BODY_Y0, BODY_Y1, BODY_X0, BODY_X1 = 27, 47, 13, 27
 
 # ---------------------------------------------------------------------------
 # 目标配色（按 亮 -> 暗 排；映射时按"原版同组颜色的亮度排名 对 等级"）
@@ -128,12 +132,14 @@ def build(check_only=False):
         index = int(np.where((unique == colour).all(axis=1))[0][0])
         lookup[index] = SKIN[int(np.clip(step, 0, len(SKIN) - 1))]
 
-    # 头发 vs 斗篷：同一种绿在不同位置可能属于不同的组，所以按"位置组"分别排名
+    # 头发 vs 衣服（绿的部分）：
+    #   · **散发**：头部区域（帧内 y ≤ 26）＋**背后垂下来的那一片**（x ≥ 22 且 y ≤ 42）→ 金发
+    #   · 其余绿（胸前的藤衣 + 腰裙）→ 棕红长袍
+    # 玩家的要求："把头发改成散发，不要束发" —— 所以背后那片长发必须留成头发，不能读成斗篷。
+    hair_zone = (in_frame_y <= 26) | ((in_frame_x >= BACK_X) & (in_frame_y <= 42))
+
     for group in ("hair", "cloak"):
-        if group == "hair":
-            mask = (in_frame_y < NECK_Y) & (in_frame_x < FRONT_X)
-        else:
-            mask = ~((in_frame_y < NECK_Y) & (in_frame_x < FRONT_X))
+        mask = hair_zone if group == "hair" else ~hair_zone
 
         pixels = np.zeros(inverse.shape, dtype=bool)
         for index, colour in enumerate(unique):
@@ -161,6 +167,21 @@ def build(check_only=False):
 
     for index, target in lookup.items():
         out[inverse.reshape(rgb.shape[:2]) == index] = target
+
+    result = np.concatenate([out.astype(np.uint8), alpha[..., None].astype(np.uint8)], axis=2)
+    sheet = Image.fromarray(result, "RGBA")
+
+    # 3) 穿衣服：身体区域里露出来的皮肤（树妖的露脐装）改用长袍色阶 ——
+    #    脸（y≤26）、手（x 在 13..27 之外）、脚（y≥48）都自动保留成肤色。
+    body_zone = ((ys % FRAME_H) >= BODY_Y0) & ((ys % FRAME_H) <= BODY_Y1) \
+        & (xs >= BODY_X0) & (xs <= BODY_X1)
+    inverse2d = inverse.reshape(rgb.shape[:2])
+
+    for rank, colour in enumerate(skin_colours):
+        index = int(np.where((unique == colour).all(axis=1))[0][0])
+        where = (inverse2d == index) & body_zone
+        if where.any():
+            out[where] = CLOAK[min(rank, len(CLOAK) - 1)]
 
     result = np.concatenate([out.astype(np.uint8), alpha[..., None].astype(np.uint8)], axis=2)
     sheet = Image.fromarray(result, "RGBA")
