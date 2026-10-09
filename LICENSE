@@ -2,6 +2,24 @@ MIT License
 
 Copyright (c) 2026 WastelandSoul contributors
 
+⚠️ 适用范围（2026-10-09 补充，务必先读）
+=========================================
+上面的 MIT 许可**只覆盖本项目原创的部分**，即：
+  · 我们自己写的 C# 代码、Python/PowerShell 脚本、文档；
+  · 我们自己绘制 / 程序化生成的贴图；
+  · 我们用脚本合成（未采样任何现成音乐）的音频。
+
+它**不覆盖、也无权授权**下列内容（明细见 `NOTICE.md`）：
+  · Terraria（Re-Logic）原版素材及其演绎件 —— 例如 `Content/Items/Armor/**` 与
+    `Content/Items/UpgradeTrees/**` 下那 27 张 `_Head/_Body/_Legs.png`：
+    它们的**轮廓（alpha 通道）逐像素来自原版护甲帧表**，只把我们自己的配色映射了上去。
+  · 本项目所依赖或参考的任何第三方模组的代码、二进制、反汇编内容（InnoVault、
+    SubworldLibrary、BossChecklist、WeaponDisplay 等）。这些内容的权利归各自作者。
+
+如果你要再分发本项目，请自行确认上述两类内容的使用条件；不要把它们当作 MIT 授权的一部分。
+
+---
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
