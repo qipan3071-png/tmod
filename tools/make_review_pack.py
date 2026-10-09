@@ -31,10 +31,15 @@ import zipfile
 from datetime import datetime
 
 REPO = r"E:\开发"
-PACK_DIR = os.path.join(REPO, "测评包")
+# 发布产物统一放在 发布/ 下分两类（和 源码归档/ 分开，见 发布/README.txt）：
+#   发布/测评包/      <- 本脚本：给测评玩家装游戏用的（2 个 .tmod + 说明）
+#   发布/源码归档/    <- git archive 出来的 tag 快照（不是本脚本产物）
+PACK_DIR = os.path.join(REPO, "发布", "测评包")
 README = os.path.join(PACK_DIR, "安装与测评说明.txt")
-ZIP_PATH = os.path.join(REPO, "WastelandSoul_测评包.zip")
+ZIP_PATH = os.path.join(PACK_DIR, "WastelandSoul_测评包.zip")
 DEFAULT_SRC_DIR = os.path.join(REPO, ".tml-build", "Mods")
+LEGACY_PACK_DIR = os.path.join(REPO, "测评包")
+LEGACY_ZIP = os.path.join(REPO, "WastelandSoul_测评包.zip")
 
 MAIN_NAME = "WastelandSoul.tmod"
 PATCH_NAME = "WastelandSoulCN.tmod"

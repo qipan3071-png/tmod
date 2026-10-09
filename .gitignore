@@ -36,6 +36,7 @@ bin/
 .backup/
 art-inbox/
 测评包/
+发布/
 *.zip
 *.log
 
