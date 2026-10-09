@@ -45,7 +45,7 @@ namespace WastelandSoul.Content.Projectiles.Gear
 			Projectile.velocity *= 0.985f;
 			Projectile.alpha = (int)MathHelper.Lerp(0f, 150f, 1f - Projectile.timeLeft / 90f);
 
-			if (Main.rand.NextBool(2)) {
+			if (Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height,
 					Projectile.ai[0] >= 0.5f ? DustID.Silver : DustID.Torch);
 				dust.noGravity = true;
@@ -122,7 +122,7 @@ namespace WastelandSoul.Content.Projectiles.Gear
 				npc.AddBuff(BuffID.Frostburn, 180);
 			}
 
-			if (!Main.dedServ && Main.rand.NextBool(3)) {
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Silver);
 				dust.noGravity = true;
 				dust.scale = 1f;

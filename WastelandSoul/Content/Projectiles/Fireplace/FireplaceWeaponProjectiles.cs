@@ -41,7 +41,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			Projectile.velocity *= 0.97f;
 			Projectile.alpha = (int)MathHelper.Lerp(0f, 200f, 1f - Projectile.timeLeft / 70f);
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Silver);
 				dust.noGravity = true;
 				dust.scale = 0.9f;
@@ -75,7 +75,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.SilverCoin);
 				dust.noGravity = true;
 				dust.scale = 0.8f;
@@ -115,7 +115,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Silver);
 				dust.noGravity = true;
 				dust.scale = 0.7f;

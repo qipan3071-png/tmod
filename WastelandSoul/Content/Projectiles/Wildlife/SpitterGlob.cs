@@ -38,7 +38,7 @@ namespace WastelandSoul.Content.Projectiles.Wildlife
 			Projectile.velocity.Y += 0.09f;
 			Projectile.rotation += 0.14f * (Projectile.velocity.X >= 0f ? 1f : -1f);
 
-			if (!Main.dedServ && Main.rand.NextBool(3)) {
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke);
 				dust.velocity *= 0.25f;
 				dust.noGravity = true;

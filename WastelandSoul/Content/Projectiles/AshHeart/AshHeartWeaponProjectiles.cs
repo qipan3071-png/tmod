@@ -41,7 +41,7 @@ namespace WastelandSoul.Content.Projectiles.AshHeart
 			Projectile.velocity *= 0.975f;
 			Projectile.alpha = (int)MathHelper.Lerp(0f, 190f, 1f - Projectile.timeLeft / 60f);
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.noGravity = true;
 				dust.scale = 0.9f;
@@ -85,7 +85,7 @@ namespace WastelandSoul.Content.Projectiles.AshHeart
 				Projectile.velocity.Y = 10f;
 			}
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.noGravity = true;
 				dust.scale = 1.1f;
@@ -125,7 +125,7 @@ namespace WastelandSoul.Content.Projectiles.AshHeart
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
-			if (Main.rand.NextBool(2)) {
+			if (Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.FireworkFountain_Red);
 				dust.noGravity = true;
 				dust.scale = 0.8f;

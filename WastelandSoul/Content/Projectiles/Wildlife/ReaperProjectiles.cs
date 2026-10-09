@@ -36,7 +36,7 @@ namespace WastelandSoul.Content.Projectiles.Wildlife
 			Projectile.velocity.Y += 0.06f;
 			Projectile.rotation += 0.22f * Math.Sign(Projectile.velocity.X == 0f ? 1f : Projectile.velocity.X);
 
-			if (!Main.dedServ && Main.rand.NextBool(3)) {
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Iron);
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;
@@ -90,7 +90,7 @@ namespace WastelandSoul.Content.Projectiles.Wildlife
 				Projectile.alpha = Math.Min(255, Projectile.alpha + 4);
 			}
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.velocity = -Projectile.velocity * 0.15f;
 				dust.noGravity = true;
@@ -160,7 +160,7 @@ namespace WastelandSoul.Content.Projectiles.Wildlife
 			Projectile.velocity.Y += 0.03f;
 			Projectile.rotation += 0.24f * Math.Sign(Projectile.velocity.X == 0f ? 1f : Projectile.velocity.X);
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;

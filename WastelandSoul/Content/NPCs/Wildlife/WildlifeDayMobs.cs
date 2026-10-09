@@ -7,6 +7,7 @@ using WastelandSoul.Content.Buffs;
 using Terraria.GameContent.ItemDropRules;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons.CLine;
+using WastelandSoul.Common.Systems;
 
 namespace WastelandSoul.Content.NPCs.Wildlife
 {
@@ -518,7 +519,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 					NPC.spriteDirection = (int)NPC.localAI[2];
 
 					// 冲锋尘土
-					if (!Main.dedServ && Main.rand.NextBool(2)) {
+					if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 						Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Smoke);
 						dust.velocity.X = -NPC.localAI[2] * 1.2f;
 						dust.scale = 0.9f;
@@ -662,9 +663,9 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 					// 锁定：减速、对准、抖动（给玩家反应时间）
 					NPC.localAI[1] += 1f;
 					NPC.velocity = Vector2.Lerp(NPC.velocity, -direction * 1.2f, 0.12f);
-					NPC.velocity += Main.rand.NextVector2Circular(0.35f, 0.35f);
+					NPC.velocity += WastelandRandom.RollVector2Circular(NPC.whoAmI, (int)Main.GameUpdateCount, 66, 0.35f, 0.35f);
 
-					if (!Main.dedServ && Main.rand.NextBool(3)) {
+					if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 						Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Electric);
 						dust.velocity *= 0.2f;
 						dust.noGravity = true;
@@ -801,7 +802,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			}
 
 			if (NPC.localAI[2] == 0f) {
-				NPC.localAI[2] = Main.rand.NextBool() ? 1f : -1f;
+				NPC.localAI[2] = WastelandRandom.Roll(NPC.whoAmI, 0, 2, 0, 2) == 0 ? 1f : -1f;
 			}
 
 			// 与玩家的理想高度差（悬在玩家头上一点）

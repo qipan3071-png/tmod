@@ -128,7 +128,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 				NPC.velocity.Y += 0.22f;
 				NPC.velocity.Y = Math.Min(NPC.velocity.Y, 9f);
 
-				if (!Main.dedServ && Main.rand.NextBool(4)) {
+				if (!Main.dedServ && Main.rand.NextBool(4)) { // sync-ok: visual only
 					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Smoke);
 					dust.velocity *= 0.3f;
 					dust.noGravity = true;
@@ -264,7 +264,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			if (index >= 0 && index < Main.maxNPCs) {
 				NPC minion = Main.npc[index];
 				minion.ai[0] = NPC.whoAmI;                                  // 归属
-				minion.ai[1] = Main.rand.NextFloat(0f, MathHelper.TwoPi);   // 环绕相位
+				minion.ai[1] = WastelandRandom.RollFloatRange(NPC.whoAmI, index, 0, 0f, MathHelper.TwoPi);   // 环绕相位
 				minion.netUpdate = true;
 			}
 
@@ -391,7 +391,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			NPC.velocity = Vector2.Lerp(NPC.velocity, steer, 0.14f);
 			NPC.rotation += 0.22f;
 
-			if (!Main.dedServ && Main.rand.NextBool(6)) {
+			if (!Main.dedServ && Main.rand.NextBool(6)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Iron);
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;
@@ -519,7 +519,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 				// 护盾期间受到的伤害减半：takenDamageMultiplier 是原版自带的乘算减免
 				NPC.takenDamageMultiplier = 0.5f;
 
-				if (!Main.dedServ && Main.rand.NextBool(2)) {
+				if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Electric);
 					dust.velocity = Main.rand.NextVector2Circular(1.2f, 1.2f);
 					dust.noGravity = true;
@@ -744,7 +744,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 					if (NPC.localAI[2] >= (PhaseTwo ? PhaseTwoCooldown : PhaseOneCooldown) && grounded) {
 						NPC.localAI[2] = 0f;
 
-						if (PhaseTwo && Main.rand.NextBool(3)) {
+						if (PhaseTwo && WastelandRandom.Roll(NPC.whoAmI, (int)NPC.localAI[2], 3, 0, 3) == 0) {
 							NPC.localAI[0] = 3f;
 						}
 						else {
@@ -800,7 +800,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 						float radius = 20f + NPC.localAI[1] * 1.1f;
 
 						for (int i = 0; i < 3; i++) {
-							float angle = Main.rand.NextFloat(MathHelper.TwoPi);
+							float angle = Main.rand.NextFloat(MathHelper.TwoPi); // sync-ok: visual only
 							Vector2 spawn = NPC.Center + angle.ToRotationVector2() * radius;
 							Dust dust = Dust.NewDustDirect(spawn, 4, 4, DustID.Torch);
 							dust.velocity = (spawn - NPC.Center) * 0.05f;
@@ -826,7 +826,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 					if (!Main.dedServ) {
 						for (int i = 0; i < 4; i++) {
-							Vector2 spawn = NPC.Center + Main.rand.NextVector2Circular(34f, 34f);
+							Vector2 spawn = NPC.Center + Main.rand.NextVector2Circular(34f, 34f); // sync-ok: visual only
 							Dust dust = Dust.NewDustDirect(spawn, 6, 6, DustID.Smoke);
 							dust.velocity = Main.rand.NextVector2Circular(3.4f, 3.4f);
 							dust.velocity.Y -= 1.4f;
@@ -909,7 +909,8 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			const int count = 14;
 
 			for (int i = 0; i < count; i++) {
-				float angle = MathHelper.TwoPi * i / count + Main.rand.NextFloat(-0.06f, 0.06f);
+				float angle = MathHelper.TwoPi * i / count
+					+ WastelandRandom.RollFloatRange(NPC.whoAmI, (int)Main.GameUpdateCount, i, -0.06f, 0.06f);
 				Vector2 velocity = angle.ToRotationVector2() * 7.2f;
 
 				Projectile.NewProjectile(
@@ -943,7 +944,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			if (index >= 0 && index < Main.maxNPCs) {
 				NPC minion = Main.npc[index];
 				minion.ai[0] = NPC.whoAmI;
-				minion.ai[1] = Main.rand.NextFloat(0f, MathHelper.TwoPi);
+				minion.ai[1] = WastelandRandom.RollFloatRange(NPC.whoAmI, index, 1, 0f, MathHelper.TwoPi);
 				minion.netUpdate = true;
 			}
 		}

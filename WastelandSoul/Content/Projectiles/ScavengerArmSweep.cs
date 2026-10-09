@@ -52,7 +52,7 @@ namespace WastelandSoul.Content.Projectiles
 			Projectile.spriteDirection = Projectile.ai[1] >= 0f ? 1 : -1;
 
 			// 扫过的轨迹留下火星与烟尘
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 120, default, 1.1f);
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 120, default, 0.9f);
 			}

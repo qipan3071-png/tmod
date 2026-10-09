@@ -35,7 +35,7 @@ namespace WastelandSoul.Content.Projectiles
 				Projectile.ai[2] -= 1f;
 				Projectile.velocity *= 0.85f;
 
-				if (!Main.dedServ && Main.rand.NextBool(2)) {
+				if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 					Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, 0f, 0f, 100, default, 1.2f);
 				}
 
@@ -62,7 +62,7 @@ namespace WastelandSoul.Content.Projectiles
 				Projectile.rotation = Projectile.velocity.ToRotation();
 			}
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Torch, -Projectile.velocity.X * 0.1f, -Projectile.velocity.Y * 0.1f, 120, default, 1f);
 			}
 		}

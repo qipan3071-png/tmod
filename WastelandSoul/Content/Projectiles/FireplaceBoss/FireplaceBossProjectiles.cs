@@ -26,7 +26,7 @@ namespace WastelandSoul.Content.Projectiles.FireplaceBoss
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
-			if (!Main.dedServ && Main.rand.NextBool(3)) {
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch);
 				dust.noGravity = true;
 				dust.scale = 0.8f;
@@ -55,7 +55,7 @@ namespace WastelandSoul.Content.Projectiles.FireplaceBoss
 		{
 			Projectile.rotation += 0.18f;
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Frost);
 				dust.noGravity = true;
 			}
@@ -95,7 +95,7 @@ namespace WastelandSoul.Content.Projectiles.FireplaceBoss
 				Projectile.Center = new Vector2(stopX, Projectile.Center.Y);
 			}
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch);
 				dust.noGravity = true;
 				dust.scale = 1.1f;

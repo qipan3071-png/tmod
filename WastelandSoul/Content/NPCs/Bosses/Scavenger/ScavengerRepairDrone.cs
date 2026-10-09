@@ -103,7 +103,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			}
 
 			// 破损推进器的污染颗粒
-			if (!Main.dedServ && Main.rand.NextBool(6)) {
+			if (!Main.dedServ && Main.rand.NextBool(6)) { // sync-ok: visual only
 				Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Smoke, 0f, -1f, 120, default, 0.9f);
 			}
 		}

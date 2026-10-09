@@ -83,8 +83,8 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 
 			for (int i = 0; i < count; i++) {
 				// 符文沿圆周向内收拢：预警时向外飘，封住后向内压
-				float angle = Main.rand.NextFloat(MathHelper.TwoPi);
-				Vector2 offset = angle.ToRotationVector2() * (SealRadius + Main.rand.NextFloat(-6f, 10f));
+				float angle = Main.rand.NextFloat(MathHelper.TwoPi); // sync-ok: visual only
+				Vector2 offset = angle.ToRotationVector2() * (SealRadius + Main.rand.NextFloat(-6f, 10f)); // sync-ok: visual only
 				Vector2 position = Projectile.Center + offset;
 				Vector2 velocity = holding ? -offset * 0.05f : offset * 0.03f;
 

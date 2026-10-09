@@ -351,7 +351,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			}
 
 			for (int i = 0; i < 40; i++) {
-				Vector2 velocity = Main.rand.NextVector2Circular(4f, 4f);
+				Vector2 velocity = Main.rand.NextVector2Circular(4f, 4f); // sync-ok: Dust only
 				Dust.NewDust(npc.position, npc.width, npc.height, DustID.Smoke, velocity.X, velocity.Y, 100, default, 1.6f);
 				Dust.NewDust(npc.position, npc.width, npc.height, DustID.Torch, velocity.X, velocity.Y, 100, default, 1.2f);
 			}
@@ -359,9 +359,9 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			WastelandFxSystem.Impact(npc.Center, new Color(255, 168, 70), 1.2f);
 
 			for (int i = 0; i < 4; i++) {
-				Vector2 drift = Main.rand.NextVector2Circular(0.9f, 0.4f);
+				Vector2 drift = Main.rand.NextVector2Circular(0.9f, 0.4f); // sync-ok: WastelandFx only
 				drift.Y -= 0.55f;
-				WastelandFxSystem.Smoke(npc.Center, drift, new Color(86, 82, 76), Main.rand.NextFloat(0.8f, 1.3f), Main.rand.Next(26, 40));
+				WastelandFxSystem.Smoke(npc.Center, drift, new Color(86, 82, 76), Main.rand.NextFloat(0.8f, 1.3f), Main.rand.Next(26, 40)); // sync-ok
 			}
 
 			// ⚠️ 这里原来还会随机甩 2 道 72px 的白色闪电（WastelandFxSystem.Bolt）。
@@ -479,9 +479,11 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 
 			Vector2 lockedPosition = target.Center;
 
+			int cycle = (int)npc.ai[2];
+
 			for (int i = 0; i < 3; i++) {
-				float delay = 15f + i * 18f + Main.rand.NextFloat(-6f, 6f);
-				Vector2 spawnPosition = npc.Center + Main.rand.NextVector2Circular(50f, 50f);
+				float delay = 15f + i * 18f + WastelandRandom.RollFloatRange(npc.whoAmI, cycle, i, -6f, 6f);
+				Vector2 spawnPosition = npc.Center + WastelandRandom.RollVector2Circular(npc.whoAmI, cycle, 50 + i, 50f, 50f);
 
 				Projectile.NewProjectile(npc.GetSource_FromAI(), spawnPosition, Vector2.Zero,
 					ModContent.ProjectileType<ScavengerBullet>(), BossShotDamage.Half(26), 2f, Main.myPlayer,
@@ -504,7 +506,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 
 		internal static void EmitOverloadDust(NPC npc)
 		{
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: Dust only
 				Dust.NewDust(npc.position, npc.width, npc.height, DustID.Smoke, 0f, 0f, 120, default, 1.4f);
 			}
 		}
@@ -579,7 +581,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 				SoundEngine.PlaySound(SoundID.Item14, npc.Center);
 
 				for (int i = 0; i < 60; i++) {
-					Vector2 velocity = Main.rand.NextVector2Circular(8f, 8f);
+					Vector2 velocity = Main.rand.NextVector2Circular(8f, 8f); // sync-ok: Dust only
 					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Smoke, velocity.X, velocity.Y, 80, default, 2f);
 					Dust.NewDust(npc.position, npc.width, npc.height, DustID.Torch, velocity.X, velocity.Y, 80, default, 2f);
 				}
@@ -629,7 +631,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			}
 
 			int slot = alive;
-			Vector2 spawnPosition = NPC.Center + Main.rand.NextVector2Circular(70f, 70f);
+			Vector2 spawnPosition = NPC.Center + WastelandRandom.RollVector2Circular(NPC.whoAmI, slot, (int)NPC.ai[2], 70f, 70f);
 
 			int droneIndex = NPC.NewNPC(NPC.GetSource_FromAI(), (int)spawnPosition.X, (int)spawnPosition.Y,
 				ModContent.NPCType<ScavengerRepairDrone>(), 0, NPC.whoAmI, slot);
@@ -679,9 +681,11 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 
 			int count = (int)NPC.ai[0] >= 2 ? 3 : 2;
 
+			int barrageCycle = (int)NPC.ai[2];
+
 			for (int i = 0; i < count; i++) {
-				Vector2 spawnPosition = NPC.Center + Main.rand.NextVector2Circular(56f, 56f);
-				Vector2 velocity = Main.rand.NextVector2Circular(2.4f, 2.4f);
+				Vector2 spawnPosition = NPC.Center + WastelandRandom.RollVector2Circular(NPC.whoAmI, barrageCycle, i * 2, 56f, 56f);
+				Vector2 velocity = WastelandRandom.RollVector2Circular(NPC.whoAmI, barrageCycle, i * 2 + 1, 2.4f, 2.4f);
 
 				Projectile.NewProjectile(NPC.GetSource_FromAI(), spawnPosition, velocity,
 					ModContent.ProjectileType<PollutionHoming>(), BossShotDamage.Half(24), 1f, Main.myPlayer);

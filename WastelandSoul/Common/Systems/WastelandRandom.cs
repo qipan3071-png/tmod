@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 
 namespace WastelandSoul.Common.Systems
 {
@@ -69,6 +70,25 @@ namespace WastelandSoul.Common.Systems
 				^ (ulong)(uint)seedC * 0x165667B19E3779F9UL);
 
 			return (float)(mixed >> 40) / (1 << 24);
+		}
+
+		/// <summary>均匀取 <c>[minValue, maxValue)</c> 的浮点，任意机器同值。</summary>
+		public static float RollFloatRange(int seedA, int seedB, int seedC, float minValue, float maxValue)
+		{
+			if (maxValue <= minValue) {
+				return minValue;
+			}
+
+			return minValue + RollFloat(seedA, seedB, seedC) * (maxValue - minValue);
+		}
+
+		/// <summary>与 <c>Main.rand.NextVector2Circular</c> 同口径：单位圆盘内均匀一点，再按半径缩放。</summary>
+		public static Vector2 RollVector2Circular(int seedA, int seedB, int seedC, float radiusX, float radiusY)
+		{
+			float angle = RollFloat(seedA, seedB, seedC) * MathHelper.TwoPi;
+			float radial = (float)Math.Sqrt(RollFloat(seedA, seedB, seedC + 17));
+
+			return new Vector2((float)Math.Cos(angle) * radiusX * radial, (float)Math.Sin(angle) * radiusY * radial);
 		}
 
 		private static ulong Mix(ulong value)

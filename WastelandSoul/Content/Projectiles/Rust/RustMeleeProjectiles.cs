@@ -41,7 +41,7 @@ namespace WastelandSoul.Content.Projectiles.Rust
 			Projectile.rotation += 0.38f * Projectile.direction;
 			Projectile.velocity *= 0.99f;
 
-			if (Main.rand.NextBool(4)) {
+			if (Main.rand.NextBool(4)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Iron);
 				dust.noGravity = true;
 				dust.scale = 0.8f;
@@ -77,13 +77,13 @@ namespace WastelandSoul.Content.Projectiles.Rust
 			Projectile.rotation += 0.46f * Projectile.direction;
 			Projectile.velocity *= 0.992f;
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.noGravity = true;
 				dust.scale = 0.9f;
 			}
 
-			if (Main.rand.NextBool(5)) {
+			if (Main.rand.NextBool(5)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Iron);
 				dust.noGravity = true;
 				dust.scale = 0.7f;
@@ -127,7 +127,7 @@ namespace WastelandSoul.Content.Projectiles.Rust
 				}
 			}
 			// aiStyle 99 已经把运动做完了，这里只加「转起来掉铁屑」的表现
-			if (Main.rand.NextBool(6)) {
+			if (Main.rand.NextBool(6)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Iron);
 				dust.noGravity = true;
 				dust.scale = 0.7f;

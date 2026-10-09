@@ -43,7 +43,7 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 				projectile.penetrate = ScavengerBeam.PenetrateHits;
 			}
 
-			if (!Main.dedServ && Main.rand.NextBool(4)) {
+			if (!Main.dedServ && Main.rand.NextBool(4)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Iron, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f);
 				dust.noGravity = true;
 				dust.scale = 0.8f;

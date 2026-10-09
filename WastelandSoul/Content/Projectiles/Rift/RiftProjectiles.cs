@@ -121,7 +121,7 @@ namespace WastelandSoul.Content.Projectiles.Rift
 			WastelandFxSystem.Glow(Projectile.Center, Core, 0.9f * power, 8);
 
 			for (int i = 0; i < 3; i++) {
-				Vector2 from = Projectile.Center + Main.rand.NextVector2Circular(36f * power, 36f * power);
+				Vector2 from = Projectile.Center + Main.rand.NextVector2Circular(36f * power, 36f * power); // sync-ok: WastelandFx only
 				Vector2 inward = Projectile.Center - from;
 				WastelandFxSystem.Spark(from, inward * 0.12f, Color.Lerp(Edge, Core, 0.5f), 0.6f, 12, 0f);
 			}
@@ -141,11 +141,11 @@ namespace WastelandSoul.Content.Projectiles.Rift
 
 		private void Scatter(float power)
 		{
-			if (Main.dedServ || Main.rand.NextBool(2)) {
+			if (Main.dedServ || Main.rand.NextBool(2)) { // sync-ok: WastelandFx only
 				return;
 			}
 
-			Vector2 velocity = Main.rand.NextVector2Circular(3.4f, 3.4f) * power;
+			Vector2 velocity = Main.rand.NextVector2Circular(3.4f, 3.4f) * power; // sync-ok: WastelandFx only
 			WastelandFxSystem.Spark(Projectile.Center, velocity, Core, 0.7f, 16, 0f);
 			WastelandFxSystem.Flakes(Projectile.Center, 1, Edge);
 		}
@@ -171,7 +171,7 @@ namespace WastelandSoul.Content.Projectiles.Rift
 		{
 			Projectile.velocity *= 0.985f;
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				// ⚠️ 原来是近纯白 (236,246,255)，按「特效红线」换成淡紫蓝（与星隙套同色系）
 				WastelandFxSystem.Glow(Projectile.Center, new Color(196, 170, 255), 0.5f, 8);
 				WastelandFxSystem.Motes(Projectile.Center, 12f, 1, new Color(124, 86, 255));
@@ -217,7 +217,7 @@ namespace WastelandSoul.Content.Projectiles.Rift
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				WastelandFxSystem.Spark(Projectile.Center, -Projectile.velocity * 0.05f, new Color(170, 210, 255), 0.45f, 10, 0f);
 			}
 		}
@@ -273,7 +273,7 @@ namespace WastelandSoul.Content.Projectiles.Rift
 			Projectile.rotation += 0.4f;
 			Projectile.velocity *= 0.98f;
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				WastelandFxSystem.Spark(Projectile.Center, Projectile.velocity * 0.05f, new Color(124, 86, 255), 0.55f, 10, 0f);
 			}
 		}

@@ -45,7 +45,7 @@ namespace WastelandSoul.Content.Projectiles
 
 			Projectile.rotation += Projectile.velocity.X * 0.02f;
 
-			if (!Main.dedServ && Main.rand.NextBool(3)) {
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: Dust only
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 120, default, 1.2f);
 			}
 		}
@@ -91,7 +91,7 @@ namespace WastelandSoul.Content.Projectiles
 			}
 
 			for (int i = 0; i < 12; i++) {
-				Vector2 velocity = Main.rand.NextVector2Circular(2.5f, 2.5f);
+				Vector2 velocity = Main.rand.NextVector2Circular(2.5f, 2.5f); // sync-ok: Dust only
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, velocity.X, velocity.Y, 100, default, 1.4f);
 			}
 		}

@@ -90,7 +90,7 @@ namespace WastelandSoul.Content.NPCs.Town
 		/// <summary>随机抽一个候选名字（到达时用；名字还没定，之后换掉这个列表即可）。</summary>
 		public static string PickName()
 		{
-			return CandidateNames[Main.rand.Next(CandidateNames.Length)];
+			return CandidateNames[Main.rand.Next(CandidateNames.Length)]; // sync-ok: name roll on server only
 		}
 
 		/// <summary>
@@ -206,48 +206,48 @@ namespace WastelandSoul.Content.NPCs.Town
 			modPlayer.metCompanion = true;
 
 			if (WastelandStorySystem.endingChoice == WastelandStorySystem.EndingVessel) {
-				return Language.GetTextValue(DialogueKey + "EndingVessel" + Main.rand.Next(1, 3));
+				return Language.GetTextValue(DialogueKey + "EndingVessel" + Main.rand.Next(1, 3)); // sync-ok: local chat UI
 			}
 
 			if (WastelandStorySystem.endingChoice == WastelandStorySystem.EndingRefuse) {
-				return Language.GetTextValue(DialogueKey + "EndingRefuse" + Main.rand.Next(1, 3));
+				return Language.GetTextValue(DialogueKey + "EndingRefuse" + Main.rand.Next(1, 3)); // sync-ok: local chat UI
 			}
 
 			if (WastelandStorySystem.fourthMemoryRestored) {
-				return Language.GetTextValue(DialogueKey + "AfterFourth" + Main.rand.Next(1, 3));
+				return Language.GetTextValue(DialogueKey + "AfterFourth" + Main.rand.Next(1, 3)); // sync-ok: local chat UI
 			}
 
 			// 骷髅王之后、还没弄到面罩：先把"壁炉的毒气"这件事说清楚。
 			// 放在第三段记忆之前 —— 第三段是世纪之花之后的事，那时玩家早就该有面罩了。
 			if (MaskHintActive()) {
-				return Language.GetTextValue(DialogueKey + "MaskNeeded" + Main.rand.Next(1, 3));
+				return Language.GetTextValue(DialogueKey + "MaskNeeded" + Main.rand.Next(1, 3)); // sync-ok: local chat UI
 			}
 
 			if (WastelandStorySystem.thirdMemoryRestored) {
-				return Language.GetTextValue(DialogueKey + "AfterThird" + Main.rand.Next(1, 3));
+				return Language.GetTextValue(DialogueKey + "AfterThird" + Main.rand.Next(1, 3)); // sync-ok: local chat UI
 			}
 
 			if (WastelandStorySystem.ashHeartDefeated) {
-				return Language.GetTextValue(DialogueKey + "AfterAsh" + Main.rand.Next(1, 3));
+				return Language.GetTextValue(DialogueKey + "AfterAsh" + Main.rand.Next(1, 3)); // sync-ok: local chat UI
 			}
 
 			if (WastelandStorySystem.secondMemoryRestored) {
-				return Language.GetTextValue(DialogueKey + "AfterSecondMemory" + Main.rand.Next(1, 4));
+				return Language.GetTextValue(DialogueKey + "AfterSecondMemory" + Main.rand.Next(1, 4)); // sync-ok: local chat UI
 			}
 
 			if (WastelandStorySystem.firstMemoryRestored) {
-				return Language.GetTextValue(DialogueKey + "AfterMemory" + Main.rand.Next(1, 4));
+				return Language.GetTextValue(DialogueKey + "AfterMemory" + Main.rand.Next(1, 4)); // sync-ok: local chat UI
 			}
 
 			if (WastelandStorySystem.archivistDefeated) {
-				return Language.GetTextValue(DialogueKey + "AfterArchivist" + Main.rand.Next(1, 3));
+				return Language.GetTextValue(DialogueKey + "AfterArchivist" + Main.rand.Next(1, 3)); // sync-ok: local chat UI
 			}
 
 			if (WastelandStorySystem.scavengerDefeated) {
-				return Language.GetTextValue(DialogueKey + "AfterScavenger" + Main.rand.Next(1, 4));
+				return Language.GetTextValue(DialogueKey + "AfterScavenger" + Main.rand.Next(1, 4)); // sync-ok: local chat UI
 			}
 
-			return Language.GetTextValue(DialogueKey + "Intro" + Main.rand.Next(1, 5));
+			return Language.GetTextValue(DialogueKey + "Intro" + Main.rand.Next(1, 5)); // sync-ok: local chat UI
 		}
 
 		public override void SetChatButtons(ref string button, ref string button2)

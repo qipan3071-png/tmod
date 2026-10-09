@@ -42,7 +42,7 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 			Projectile.rotation += 0.14f * (Projectile.velocity.X >= 0f ? 1f : -1f);
 			Projectile.velocity *= 0.9985f;
 
-			if (!Main.dedServ && Main.rand.NextBool(4)) {
+			if (!Main.dedServ && Main.rand.NextBool(4)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.BlueTorch, 0f, 0f);
 				dust.noGravity = true;
 				dust.scale = 0.7f;

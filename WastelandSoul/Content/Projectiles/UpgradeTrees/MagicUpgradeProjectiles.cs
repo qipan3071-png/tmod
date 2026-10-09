@@ -40,7 +40,7 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Electric);
 				dust.noGravity = true;
 				dust.scale = 0.85f;
@@ -89,7 +89,7 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 				Projectile.velocity = Vector2.Lerp(Projectile.velocity, desired, 0.06f);
 			}
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch);
 				dust.noGravity = true;
 				dust.scale = 0.8f;

@@ -49,7 +49,7 @@ namespace WastelandSoul.Content.Projectiles
 					// 落地污染扩散的视觉
 					if (!Main.dedServ) {
 						for (int i = 0; i < 16; i++) {
-							Vector2 velocity = Main.rand.NextVector2Circular(3f, 1.5f);
+							Vector2 velocity = Main.rand.NextVector2Circular(3f, 1.5f); // sync-ok: visual only
 							Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, velocity.X, velocity.Y, 100, default, 1.3f);
 						}
 					}
@@ -59,7 +59,7 @@ namespace WastelandSoul.Content.Projectiles
 				Projectile.velocity = Vector2.Zero;
 
 				// 地面上缓慢冒出的污染气泡
-				if (!Main.dedServ && Main.rand.NextBool(4)) {
+				if (!Main.dedServ && Main.rand.NextBool(4)) { // sync-ok: visual only
 					Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, -0.8f, 120, default, 1.1f);
 				}
 			}

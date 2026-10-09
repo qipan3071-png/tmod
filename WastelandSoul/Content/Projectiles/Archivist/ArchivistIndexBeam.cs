@@ -179,7 +179,7 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 				float progress = Projectile.localAI[0] / ArchivistNpc.BeamWindup;
 
 				for (int i = 0; i < (progress > 0.6f ? 3 : 1); i++) {
-					Vector2 position = origin + direction * Main.rand.NextFloat(20f, 260f * progress + 20f);
+					Vector2 position = origin + direction * Main.rand.NextFloat(20f, 260f * progress + 20f); // sync-ok: visual only
 					Dust dust = Dust.NewDustDirect(position, 4, 4, DustID.BlueTorch, 0f, 0f);
 					dust.noGravity = true;
 					dust.scale = 1.2f + progress;
@@ -190,7 +190,7 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 
 			// 开火后：沿光束喷出纸屑与冷光
 			for (int i = 0; i < 4; i++) {
-				Vector2 position = origin + direction * Main.rand.NextFloat(0f, MaxLength);
+				Vector2 position = origin + direction * Main.rand.NextFloat(0f, MaxLength); // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(position, 4, 4, Main.rand.NextBool(3) ? DustID.Bone : DustID.BlueTorch, -direction.X * 2f, -direction.Y * 2f);
 				dust.noGravity = true;
 				dust.scale = 1.1f;

@@ -41,7 +41,7 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 			// 轻微上下摆动，让整面墙看起来像被翻动的档案
 			Projectile.velocity.Y = (float)System.Math.Sin((Projectile.timeLeft + Projectile.whoAmI * 13) * 0.05f) * 0.25f;
 
-			if (!Main.dedServ && Main.rand.NextBool(5)) {
+			if (!Main.dedServ && Main.rand.NextBool(5)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Bone, 0f, 0f);
 				dust.noGravity = true;
 				dust.scale = 0.75f;

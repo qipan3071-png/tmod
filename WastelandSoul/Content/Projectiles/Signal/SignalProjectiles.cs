@@ -28,7 +28,7 @@ namespace WastelandSoul.Content.Projectiles.Signal
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
 			Projectile.velocity *= 0.98f;
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				WastelandFxSystem.Ember(Projectile.Center, Projectile.velocity * 0.08f, new Color(255, 140, 48), 0.55f, 12);
 			}
 		}
@@ -72,7 +72,7 @@ namespace WastelandSoul.Content.Projectiles.Signal
 				}
 			}
 
-			if (!Main.dedServ && Main.rand.NextBool(3)) {
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 				WastelandFxSystem.Glow(Projectile.Center, new Color(140, 220, 255), 0.45f, 8);
 			}
 		}
@@ -174,7 +174,7 @@ namespace WastelandSoul.Content.Projectiles.Signal
 		{
 			Projectile.rotation += 0.35f * Projectile.direction;
 
-			if (!Main.dedServ && Main.rand.NextBool(3)) {
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 				WastelandFxSystem.Ember(Projectile.Center, Vector2.Zero, new Color(255, 120, 40), 0.45f, 10);
 			}
 		}

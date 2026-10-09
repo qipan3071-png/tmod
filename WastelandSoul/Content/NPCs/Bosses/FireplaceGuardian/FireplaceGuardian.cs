@@ -253,7 +253,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			float side = context.Target.Center.X >= context.Npc.Center.X ? -1f : 1f;
 			float spawnX = context.Target.Center.X + side * 780f;
 			float startY = context.Target.Center.Y - spacing * (rows - 1) * 0.5f;
-			int gap = Main.rand.Next(rows);
+			int gap = WastelandRandom.Roll(context.Npc.whoAmI, (int)context.Npc.ai[2], rows, 0, rows);
 
 			for (int i = 0; i < rows; i++) {
 				if (i == gap || i == (gap + 3) % rows) {
@@ -278,7 +278,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			}
 
 			int count = (int)context.Npc.ai[0] >= 2 ? 14 : 10;
-			float gap = Main.rand.Next(count);
+			int gap = WastelandRandom.Roll(context.Npc.whoAmI, (int)context.Npc.ai[2], count + 3, 0, count);
 
 			for (int i = 0; i < count; i++) {
 				if (i == gap || i == (gap + 1) % count) {

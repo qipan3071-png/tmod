@@ -40,7 +40,7 @@ namespace WastelandSoul.Content.Projectiles.Rust
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Electric);
 				dust.noGravity = true;
 				dust.scale = 0.85f;
@@ -84,7 +84,7 @@ namespace WastelandSoul.Content.Projectiles.Rust
 				Projectile.velocity = Vector2.Lerp(Projectile.velocity, desired, 0.06f);
 			}
 
-			if (Main.rand.NextBool(2)) {
+			if (Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.noGravity = true;
 				dust.scale = 0.95f;
@@ -159,7 +159,7 @@ namespace WastelandSoul.Content.Projectiles.Rust
 				Projectile.velocity.Y = 12f;
 			}
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.GreenMoss);
 				dust.noGravity = true;
 				dust.scale = 0.8f;

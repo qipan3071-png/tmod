@@ -41,7 +41,7 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 			// 越接近消失越暗（用 alpha 模拟弧光淡出）
 			Projectile.alpha = (int)MathHelper.Lerp(0f, 200f, 1f - Projectile.timeLeft / 34f);
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Bone);
 				dust.noGravity = true;
 				dust.scale = 0.8f;
@@ -77,7 +77,7 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 			}
 			Projectile.rotation += 0.12f * Projectile.direction;
 
-			if (Main.rand.NextBool(4)) {
+			if (Main.rand.NextBool(4)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.BlueTorch);
 				dust.noGravity = true;
 				dust.scale = 0.7f;
@@ -135,7 +135,7 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.velocity.Y *= 0.995f;   // 几乎不下坠
 
-			if (Main.rand.NextBool(5)) {
+			if (Main.rand.NextBool(5)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Bone);
 				dust.noGravity = true;
 				dust.scale = 0.7f;

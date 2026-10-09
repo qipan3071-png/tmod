@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Common.Effects;
+using WastelandSoul.Common.Systems;
 
 namespace WastelandSoul.Content.Projectiles.Scrap
 {
@@ -49,7 +50,7 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 			}
 			Projectile.rotation += 0.12f * Projectile.direction;
 
-			if (Main.rand.NextBool(2)) {
+			if (Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleTorch);
 				dust.noGravity = true;
 				dust.scale = 1.0f;
@@ -67,7 +68,8 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 		{
 			if (Projectile.owner == Main.myPlayer) {
 				for (int i = 0; i < FragmentCount; i++) {
-					float angle = MathHelper.TwoPi * i / FragmentCount + Main.rand.NextFloat(-0.18f, 0.18f);
+					float angle = MathHelper.TwoPi * i / FragmentCount
+						+ WastelandRandom.RollFloatRange(Projectile.identity, Projectile.owner, i, -0.18f, 0.18f);
 					Vector2 velocity = angle.ToRotationVector2() * 7f;
 
 					Projectile.NewProjectile(
@@ -114,7 +116,7 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 			}
 			base.AI();
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.SilverFlame);
 				dust.noGravity = true;
 				dust.scale = 0.9f;
@@ -157,7 +159,7 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 				Projectile.velocity = Vector2.Lerp(Projectile.velocity, desired, 0.10f);
 			}
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleTorch);
 				dust.noGravity = true;
 				dust.scale = 0.8f;

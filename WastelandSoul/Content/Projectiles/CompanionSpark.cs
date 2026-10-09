@@ -27,7 +27,7 @@ namespace WastelandSoul.Content.Projectiles
 		{
 			Projectile.rotation += 0.3f;
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.BlueTorch);
 				dust.noGravity = true;
 				dust.scale = 0.7f;

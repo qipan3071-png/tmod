@@ -52,7 +52,7 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 		{
 			Projectile.velocity *= 0.9f;
 
-			if (!Main.dedServ && Main.rand.NextBool(3)) {
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, 0f, -0.6f, 130, default, 1.1f);
 				dust.noGravity = true;
 			}

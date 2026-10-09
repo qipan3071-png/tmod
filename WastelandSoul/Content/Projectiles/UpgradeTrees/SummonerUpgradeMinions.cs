@@ -231,7 +231,7 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 			}
 			base.AI();
 
-			if (Main.rand.NextBool(7)) {
+			if (Main.rand.NextBool(7)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Iron);
 				dust.noGravity = true;
 				dust.scale = 0.6f;
@@ -305,7 +305,7 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 			}
 			base.AI();
 
-			if (Main.rand.NextBool(7)) {
+			if (Main.rand.NextBool(7)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Silver);
 				dust.noGravity = true;
 				dust.scale = 0.6f;
@@ -384,7 +384,7 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
-			if (Main.rand.NextBool(4)) {
+			if (Main.rand.NextBool(4)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Silver);
 				dust.noGravity = true;
 				dust.scale = 0.6f;
@@ -478,7 +478,7 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 			// 基类 AI 末尾会按速度重设 rotation，所以自转放在它后面覆盖
 			Projectile.rotation += 0.38f * Projectile.direction;
 
-			if (Main.rand.NextBool(4)) {
+			if (Main.rand.NextBool(4)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.noGravity = true;
 				dust.scale = 0.7f;
@@ -556,7 +556,7 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 				Projectile.velocity = Vector2.Lerp(Projectile.velocity, desired, 0.10f);
 			}
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.noGravity = true;
 				dust.scale = 0.8f;

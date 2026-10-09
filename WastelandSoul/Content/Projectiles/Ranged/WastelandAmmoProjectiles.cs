@@ -48,7 +48,7 @@ namespace WastelandSoul.Content.Projectiles.Ranged
 				Projectile.rotation = Projectile.velocity.ToRotation();
 			}
 
-			if (!Main.dedServ && Main.rand.NextBool(4)) {
+			if (!Main.dedServ && Main.rand.NextBool(4)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Iron);
 				dust.velocity = -Projectile.velocity * 0.08f;
 				dust.noGravity = true;
@@ -230,7 +230,7 @@ namespace WastelandSoul.Content.Projectiles.Ranged
 			Projectile.rotation += 0.22f * (Projectile.velocity.X >= 0f ? 1f : -1f);
 			Projectile.velocity *= 0.99f;
 
-			if (!Main.dedServ && Main.rand.NextBool(5)) {
+			if (!Main.dedServ && Main.rand.NextBool(5)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleTorch);
 				dust.velocity *= 0.3f;
 				dust.noGravity = true;

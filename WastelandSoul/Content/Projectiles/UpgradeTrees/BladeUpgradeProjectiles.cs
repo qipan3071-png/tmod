@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Common.Effects;
+using WastelandSoul.Common.Systems;
 
 namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 {
@@ -42,7 +43,7 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 			Projectile.rotation += 0.42f * Projectile.direction;
 			Projectile.velocity *= 0.992f;
 
-			if (Main.rand.NextBool(4)) {
+			if (Main.rand.NextBool(4)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Silver);
 				dust.noGravity = true;
 				dust.scale = 0.8f;
@@ -91,7 +92,7 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 			Projectile.velocity.Y *= 0.90f;
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
-			if (Main.rand.NextBool(2)) {
+			if (Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleTorch);
 				dust.noGravity = true;
 				dust.scale = 0.95f;
@@ -110,8 +111,12 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 
 			Projectile.ai[0] += 1f;
 
-			Vector2 offset = new Vector2(Main.rand.NextFloat(-12f, 12f), Main.rand.NextFloat(-12f, 12f));
-			Vector2 speed = Main.rand.NextVector2Circular(4f, 4f) + Projectile.velocity * 0.25f;
+			int salt = (int)Projectile.ai[0];
+			Vector2 offset = new Vector2(
+				WastelandRandom.RollFloatRange(Projectile.whoAmI, Projectile.identity, salt, -12f, 12f),
+				WastelandRandom.RollFloatRange(Projectile.whoAmI, Projectile.identity, salt + 1, -12f, 12f));
+			Vector2 speed = WastelandRandom.RollVector2Circular(Projectile.whoAmI, Projectile.identity, salt + 2, 4f, 4f)
+				+ Projectile.velocity * 0.25f;
 
 			Projectile.NewProjectile(
 				Projectile.GetSource_FromThis(),
@@ -158,7 +163,7 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 				Vector2 desired = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitX) * speed;
 				Projectile.velocity = Vector2.Lerp(Projectile.velocity, desired, 0.09f);
 
-				if (Main.rand.NextBool(5)) {
+				if (Main.rand.NextBool(5)) { // sync-ok: visual only
 					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.PurpleTorch);
 					dust.noGravity = true;
 					dust.scale = 0.7f;

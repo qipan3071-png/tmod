@@ -48,7 +48,7 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 			}
 			base.AI();
 
-			if (Main.rand.NextBool(6)) {
+			if (Main.rand.NextBool(6)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.SilverFlame);
 				dust.noGravity = true;
 				dust.scale = 0.7f;
@@ -105,7 +105,7 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
-			if (Main.rand.NextBool(3)) {
+			if (Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Electric);
 				dust.noGravity = true;
 				dust.scale = 0.8f;

@@ -379,9 +379,10 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 			float spacing = 76f;
 			float startY = centerY - spacing * (pageCount - 1) * 0.5f;
 
-			// 缝隙：随机挑一格（并且再挑一格，两格不会相邻）
-			int gapA = Main.rand.Next(pageCount);
-			int gapB = (gapA + pageCount / 2 + Main.rand.Next(2)) % pageCount;
+			// 缝隙：随机挑一格（并且再挑一格，两格不会相邻）——种子只用已同步的 whoAmI + 出招计数
+			int cycle = (int)npc.ai[2];
+			int gapA = WastelandRandom.Roll(npc.whoAmI, cycle, pageCount, 0, pageCount);
+			int gapB = (gapA + pageCount / 2 + WastelandRandom.Roll(npc.whoAmI, cycle, pageCount + 1, 0, 2)) % pageCount;
 
 			for (int i = 0; i < pageCount; i++) {
 				if (i == gapA || i == gapB) {
@@ -537,7 +538,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 			}
 
 			for (int i = 0; i < 36; i++) {
-				Vector2 velocity = Main.rand.NextVector2Circular(3.6f, 3.6f);
+				Vector2 velocity = Main.rand.NextVector2Circular(3.6f, 3.6f); // sync-ok: Dust only
 				Dust.NewDust(npc.position, npc.width, npc.height, DustID.BlueTorch, velocity.X, velocity.Y, 100, default, 1.4f);
 				Dust.NewDust(npc.position, npc.width, npc.height, DustID.Bone, velocity.X, velocity.Y, 100, default, 1.2f);
 			}

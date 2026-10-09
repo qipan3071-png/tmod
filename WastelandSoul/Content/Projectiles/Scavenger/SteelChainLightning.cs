@@ -5,6 +5,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Common.Effects;
+using WastelandSoul.Common.Systems;
 
 namespace WastelandSoul.Content.Projectiles.Scavenger
 {
@@ -156,7 +157,7 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 				Damage = damage,
 				Knockback = knockback,
 				HitDirection = direction,
-				Crit = Main.rand.Next(100) < Projectile.CritChance,
+				Crit = WastelandRandom.Roll(Projectile.whoAmI, Projectile.identity, Projectile.owner, 0, 100) < Projectile.CritChance,
 				DamageType = DamageClass.Magic
 			};
 
@@ -165,7 +166,7 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 			// 命中特效：一小团原地电花，不做线状拖尾
 			if (!Main.dedServ) {
 				WastelandFxSystem.Glow(hitPoint, new Color(150, 220, 255), 0.9f, 16);
-				WastelandFxSystem.Spark(hitPoint, Main.rand.NextVector2Circular(2.5f, 2.5f), new Color(210, 240, 255), 0.8f, 14, 0.02f);
+				WastelandFxSystem.Spark(hitPoint, Main.rand.NextVector2Circular(2.5f, 2.5f), new Color(210, 240, 255), 0.8f, 14, 0.02f); // sync-ok
 			}
 
 			// 服务端把这一下命中广播出去（伤害数字 / 击退表现）

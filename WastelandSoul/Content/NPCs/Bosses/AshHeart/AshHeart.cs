@@ -97,10 +97,10 @@ namespace WastelandSoul.Content.NPCs.Bosses.AshHeart
 			if (!Main.dedServ) {
 				Lighting.AddLight(NPC.Center, 1.15f, 0.42f, 0.12f);
 
-				if (Main.rand.NextBool(3)) {
+				if (Main.rand.NextBool(3)) { // sync-ok: Dust only
 					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Torch);
 					dust.noGravity = true;
-					dust.velocity = Main.rand.NextVector2Circular(1.4f, 1.4f);
+					dust.velocity = Main.rand.NextVector2Circular(1.4f, 1.4f); // sync-ok: Dust only
 					dust.scale = 1.3f;
 				}
 			}
@@ -248,7 +248,8 @@ namespace WastelandSoul.Content.NPCs.Bosses.AshHeart
 				return;
 			}
 
-			Vector2 spot = context.Target.Center + new Vector2(Main.rand.NextFloat(-40f, 40f), 8f);
+			float xOffset = WastelandRandom.RollFloatRange(context.Npc.whoAmI, (int)context.Npc.ai[2], 41, -40f, 40f);
+			Vector2 spot = context.Target.Center + new Vector2(xOffset, 8f);
 
 			Projectile.NewProjectile(
 				context.Npc.GetSource_FromAI(),
@@ -270,7 +271,8 @@ namespace WastelandSoul.Content.NPCs.Bosses.AshHeart
 			int columns = (int)context.Npc.ai[0] >= 2 ? 11 : 9;
 			float spacing = 70f;
 			float left = context.Target.Center.X - spacing * (columns - 1) * 0.5f;
-			int gapA = Main.rand.Next(columns);
+			int cycle = (int)context.Npc.ai[2];
+			int gapA = WastelandRandom.Roll(context.Npc.whoAmI, cycle, columns, 0, columns);
 			int gapB = (gapA + columns / 2) % columns;
 
 			for (int i = 0; i < columns; i++) {

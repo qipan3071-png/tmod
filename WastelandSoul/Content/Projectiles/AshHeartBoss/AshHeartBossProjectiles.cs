@@ -38,7 +38,7 @@ namespace WastelandSoul.Content.Projectiles.AshHeartBoss
 
 			Projectile.rotation += 0.2f;
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) {
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.noGravity = true;
 				dust.scale = 1.1f;
@@ -95,13 +95,13 @@ namespace WastelandSoul.Content.Projectiles.AshHeartBoss
 			Projectile.velocity = Vector2.Zero;
 			Projectile.rotation = 0f;
 
-			if (!Main.dedServ && Main.rand.NextBool(3)) {
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke);
 				dust.velocity.Y = -0.6f;
 				dust.noGravity = true;
 
-				if (Main.rand.NextBool(2)) {
-					Vector2 drift = new Vector2(Main.rand.NextFloat(-0.4f, 0.4f), Main.rand.NextFloat(-0.8f, -0.15f));
+				if (Main.rand.NextBool(2)) { // sync-ok: visual only
+					Vector2 drift = new Vector2(Main.rand.NextFloat(-0.4f, 0.4f), Main.rand.NextFloat(-0.8f, -0.15f)); // sync-ok: visual only
 					Common.Effects.WastelandFxSystem.Smoke(Projectile.Center, drift, new Color(96, 78, 68), 0.75f, 28);
 				}
 			}
@@ -134,7 +134,7 @@ namespace WastelandSoul.Content.Projectiles.AshHeartBoss
 		{
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
-			if (!Main.dedServ && Main.rand.NextBool(3)) {
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.noGravity = true;
 				dust.scale = 0.8f;
@@ -205,14 +205,14 @@ namespace WastelandSoul.Content.Projectiles.AshHeartBoss
 
 			if (!Main.dedServ) {
 				for (int i = 0; i < 3; i++) {
-					Vector2 spot = Projectile.Center + Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2() * radius;
+					Vector2 spot = Projectile.Center + Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2() * radius; // sync-ok: visual only
 					Dust dust = Dust.NewDustPerfect(spot, DustID.Torch);
 					dust.noGravity = true;
 					dust.scale = 1.4f;
 				}
 
 				if (Main.GameUpdateCount % 2u == 0u) {
-					float angle = Main.rand.NextFloat(MathHelper.TwoPi);
+					float angle = Main.rand.NextFloat(MathHelper.TwoPi); // sync-ok: visual only
 					Vector2 spot = Projectile.Center + angle.ToRotationVector2() * radius;
 					Common.Effects.WastelandFxSystem.Ember(spot, angle.ToRotationVector2() * Main.rand.NextFloat(0.6f, 1.8f), new Color(255, 150, 60), 0.85f, 18);
 				}

@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using WastelandSoul.Content.Buffs;
 using Terraria.GameContent.ItemDropRules;
 using WastelandSoul.Content.Items.Materials;
+using WastelandSoul.Common.Systems;
 
 namespace WastelandSoul.Content.NPCs.Wildlife
 {
@@ -100,7 +101,8 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 				return;
 			}
 
-			if (WildlifeAI.IsGrounded(NPC) && distance < 130f && NPC.localAI[1] <= 0f && Main.rand.NextBool(40)) {
+			if (WildlifeAI.IsGrounded(NPC) && distance < 130f && NPC.localAI[1] <= 0f
+				&& WastelandRandom.Roll(NPC.whoAmI, (int)Main.GameUpdateCount, 40, 0, 40) == 0) {
 				NPC.localAI[0] = Math.Sign(toTarget.X);
 				NPC.localAI[1] = 22f;
 				NPC.netUpdate = true;
@@ -238,8 +240,8 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 					// 每 20~40 帧换一个游荡目标（乱飞的关键）
 					if (NPC.localAI[1] > 22f || NPC.localAI[2] == 0f) {
 						NPC.localAI[1] = 0f;
-						NPC.localAI[2] = target.Center.X + Main.rand.Next(-320, 321);
-						NPC.localAI[3] = target.Center.Y + Main.rand.Next(-240, 121);
+						NPC.localAI[2] = target.Center.X + WastelandRandom.Roll(NPC.whoAmI, (int)NPC.localAI[1], 0, -320, 321);
+						NPC.localAI[3] = target.Center.Y + WastelandRandom.Roll(NPC.whoAmI, (int)NPC.localAI[1], 1, -240, 121);
 					}
 
 					Vector2 wanderTarget = new Vector2(NPC.localAI[2], NPC.localAI[3]);
@@ -249,9 +251,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 						steer = Vector2.Normalize(steer) * WanderSpeed;
 					}
 
-					NPC.velocity = Vector2.Lerp(NPC.velocity, steer + Main.rand.NextVector2Circular(1.1f, 1.1f), 0.07f);
+					NPC.velocity = Vector2.Lerp(NPC.velocity,
+						steer + WastelandRandom.RollVector2Circular(NPC.whoAmI, (int)Main.GameUpdateCount, 52, 1.1f, 1.1f), 0.07f);
 
-					if (distance < 260f && Math.Abs(toTarget.Y) < 200f && Main.rand.NextBool(50)) {
+					if (distance < 260f && Math.Abs(toTarget.Y) < 200f
+						&& WastelandRandom.Roll(NPC.whoAmI, (int)NPC.localAI[0], 50, 0, 50) == 0) {
 						NPC.localAI[0] = 1f;
 						NPC.localAI[1] = 0f;
 						NPC.velocity = Vector2.Normalize(toTarget) * SwoopSpeed;

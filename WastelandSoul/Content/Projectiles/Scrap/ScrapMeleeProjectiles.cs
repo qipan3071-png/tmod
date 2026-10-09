@@ -41,14 +41,14 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 			Projectile.scale = 1f + (45 - Projectile.timeLeft) * 0.014f;
 			Projectile.velocity.Y *= 0.90f;
 
-			if (Main.rand.NextBool(2)) {
+			if (Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.SilverFlame);
 				dust.noGravity = true;
 				dust.scale = 0.9f;
 				dust.velocity *= 0.4f;
 			}
 
-			if (Main.rand.NextBool(4)) {
+			if (Main.rand.NextBool(4)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Iron);
 				dust.noGravity = true;
 				dust.scale = 0.8f;
@@ -124,7 +124,7 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 				Projectile.velocity = Vector2.Lerp(Projectile.velocity, toPlayer * ReturnSpeed, ReturnLerp);
 			}
 
-			if (Main.rand.NextBool(6)) {
+			if (Main.rand.NextBool(6)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Iron);
 				dust.noGravity = true;
 				dust.scale = 0.7f;
