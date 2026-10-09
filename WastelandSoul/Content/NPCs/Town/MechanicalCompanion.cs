@@ -164,90 +164,28 @@ namespace WastelandSoul.Content.NPCs.Town
 				new Color(226, 200, 120), name);
 		}
 
-		// ==================== 偶尔的小动作（低头 / 抬头） ====================
+		// ==================== 走路 / 待机 = 完全交给原版（2026-10-09 批次 43） ====================
 
-		// 槽位说明：城镇 NPC 的 ai[0..3] 被原版 AI 占用，所以状态一律放 localAI。
-		//   localAI[0] = 距下次小动作还有多少帧（只在「站定」时才递减）
-		//   localAI[1] = 当前动作剩余帧数（0 = 没有动作）
-		//   localAI[2] = 动作类型：1 = 低头，2 = 抬头
-		private const float IdleActionMinGap = 60f * 120f;   // 最少 2 分钟
-		private const float IdleActionMaxGap = 60f * 180f;   // 最多 3 分钟
-		private const float IdleActionHold = 36f;            // 动作持续帧数
-
-		public override void AI()
-		{
-			NPC npc = NPC;
-
-			if (npc.localAI[0] <= 0f) {
-				npc.localAI[0] = Main.rand.Next((int)IdleActionMinGap, (int)IdleActionMaxGap);
-			}
-
-			if (npc.localAI[1] > 0f) {
-				npc.localAI[1] -= 1f;
-				return;
-			}
-
-			// 只有站定时才倒数（走动时做低头动作很怪）
-			bool standing = npc.velocity.X == 0f && npc.velocity.Y == 0f;
-
-			if (!standing) {
-				return;
-			}
-
-			npc.localAI[0] -= 1f;
-
-			if (npc.localAI[0] <= 0f) {
-				npc.localAI[2] = Main.rand.NextBool() ? 1f : 2f;   // 低头 / 抬头
-				npc.localAI[1] = IdleActionHold;
-			}
-		}
-
-		/// <summary>
-		/// 朝向与帧。
-		///
-		/// <para/>玩家要求：**向左走就朝左、向右走就朝右**，并且**不要正面 / 背面朝像**。
-		/// 所以：
-		/// <list type="number">
-		/// <item>帧表（<c>MechanicalCompanion.png</c>，25 帧）已经重排成**全部侧身像**
-		/// （见 <c>tools/reorient_companion.py</c>）：0-3 行走 / 4 站立 / 5 低头 / 6 站立 / 7 抬头 /
-		/// 8-15 行走 / 16-20 站立 / 21-24 攻击；</item>
-		/// <item>左右不各画一套，而是**按走路方向设 spriteDirection**，让游戏水平翻转 ——
-		/// 这样"走路方向 = 朝向"永远一致，也不会再冒出正面像。注意取的是
-		/// <c>direction</c> 的**反号**：原版画 NPC 时 <c>spriteDirection == 1</c> 会水平翻转
-		/// （<c>Main.DrawNPCDirect_Inner</c>：spriteDirection == 1 → SpriteEffects.FlipHorizontally），
-		/// 而这张表的图本身是**朝右**画的，所以要"朝右"就不能让它翻；</item>
-		/// <item>小动作（低头/抬头）仍然强制用 5 / 7 帧，并且只在站定时触发（见 <see cref="AI"/>）。</item>
-		/// </list>
-		/// </summary>
-		public override void FindFrame(int frameHeight)
-		{
-			// 1) 朝向 = 走路方向（站着不动时保持上一次朝向）
-			if (NPC.velocity.X > 0.05f) {
-				NPC.direction = 1;
-			}
-			else if (NPC.velocity.X < -0.05f) {
-				NPC.direction = -1;
-			}
-
-			// 2) spriteDirection 直接等于 direction —— 2026-10-09 换帧表后**改了符号**：
-			//    原版城镇 NPC 的帧表（树妖/向导都一样）本身是**朝左**画的，
-			//    而原版对 spriteDirection == 1 会做水平翻转，所以"朝右"才需要翻。
-			//    旧版那张手画表是**朝右**画的，才需要取反号；现在换成原版骨架，必须改回来，
-			//    否则走路方向会左右颠倒（玩家实测过这一类 bug）。
-			NPC.spriteDirection = NPC.direction;
-
-			// 3) 小动作期间强制用低头 / 抬头帧
-			if (NPC.localAI[1] > 0f) {
-				// 14 / 16 是树妖表里的两个**待机小动作帧**（0..13 是走路/待机，14..20 是 extra）；
-				// 旧版写 5 / 7，那在树妖表里是走路帧，站定时强行切过去会像卡帧。
-				int frame = NPC.localAI[2] == 1f ? 14 : 16;
-				NPC.frame.Y = frame * frameHeight;
-				NPC.frameCounter = 0.0;
-				return;
-			}
-
-			// 4) 其余情况交给原版城镇 NPC 的帧逻辑（AnimationType = Guide）
-		}
+		// 本类**故意不重写** AI() 与 FindFrame()：她的行走动画、待机摆头、朝向翻转
+		// 全部由原版城镇 NPC 的帧逻辑负责（`NPC.AnimationType = NPCID.Dryad`，见 SetDefaults）。
+		//
+		// 为什么必须这样（原版 IL 实证，别再改回去）
+		// ------------------------------------------
+		// · tML 的 NPCLoader.FindFrame 是**先**跑原版 `NPC.VanillaFindFrame`、**后**跑本类的
+		//   FindFrame() 重写 —— 也就是说重写里的每一个赋值都会**盖掉**原版刚算好的结果。
+		// · 原版城镇 NPC 的行走分支（VanillaFindFrame，isLikeATownNPC = true）：
+		//     倒数计时 frameCounter += |velocity.X| + 1，每满 9 计数走一帧；
+		//     帧号在**身体帧**里递增，越界（<1 或 >4）回 0 —— 帧表 = 「0..13 身体 + extra + 攻击帧」，
+		//     所以实际走路循环是 **帧 2..13**，站着不动时用 **帧 0**。
+		// · 帧表就是原版 `Dryad_Default`（40×1176 = 21 帧 × 56）的**逐像素换色**，
+		//   连 alpha 都 100% 相同（tools/gen_companion_sprite.py），所以原版帧号在她身上天然对齐。
+		//
+		// 旧版那段重写（已删，别再加回来）做错了两件事：
+		//   1. 用 localAI 计时，每隔 2~3 分钟把帧**硬切**到 14 / 16（她以为那两帧是"低头/抬头"，
+		//      其实按上面的帧号，8..13 而 14+ 是 extra 区）—— 播放动画时看着就是"忽然歪一下头"；
+		//   2. 每帧都自己写 `NPC.spriteDirection = NPC.direction`，跟原版的朝向逻辑抢方向盘。
+		//
+		// 教训：**只要能把帧表和 AnimationType 对齐原版，就一个字节的帧逻辑都别自己写。**
 
 		/// <summary>
 		/// 她作为全程引导者，前期就应该能入住（不设 Boss 前置）。
