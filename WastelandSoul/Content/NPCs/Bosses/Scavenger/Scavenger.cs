@@ -11,6 +11,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using WastelandSoul.Common.Effects;
 using WastelandSoul.Common.Systems;
+using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Decor;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Projectiles;
@@ -115,23 +116,8 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 		/// </summary>
 		public static bool TrySummonNear(Player player)
 		{
-			if (player == null || !player.active || AnyAlive()) {
-				return false;
-			}
-
-			int salt = (int)(Main.GameUpdateCount & 0x7FFFFFFF);
-			float side = WastelandRandom.Roll(player.whoAmI, salt, 0, 2) == 0 ? -1f : 1f;
-			float distance = WastelandRandom.RollFloatRange(player.whoAmI, salt, 1, 520f, 760f);
-			Vector2 position = player.Center + new Vector2(side * distance, -380f);
-
-			int index = NPC.NewNPC(new EntitySource_SpawnNPC(), (int)position.X, (int)position.Y, ModContent.NPCType<Scavenger>());
-
-			if (index >= 0 && index < Main.maxNPCs) {
-				Main.npc[index].netUpdate = true;
-			}
-
-			WastelandStorySystem.AnnounceFormat("Mods.WastelandSoul.Messages.ScavengerSummoned", new Color(226, 90, 70));
-			return true;
+			return WastelandSummonItem.TrySummonNear(player, ModContent.NPCType<Scavenger>(), 520f, 760f, -380f,
+				"Mods.WastelandSoul.Messages.ScavengerSummoned");
 		}
 
 		// ==================== 状态位置说明 ====================

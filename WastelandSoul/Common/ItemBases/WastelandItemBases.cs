@@ -5,6 +5,8 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using WastelandSoul.Common.Bosses;
+using WastelandSoul.Common.Systems;
 
 namespace WastelandSoul.Common.ItemBases
 {
@@ -85,6 +87,31 @@ namespace WastelandSoul.Common.ItemBases
 			return false;
 		}
 
+		/// <summary>
+		/// **服务端 / 单机**权威生成 Boss（各召唤物与联机请求包共用）。
+		/// </summary>
+		public static bool TrySummonNear(Player player, int bossType, float distMin, float distMax, float spawnHeight,
+			string announceKey = "Mods.WastelandSoul.Messages.BossSummoned")
+		{
+			if (player == null || !player.active || !WastelandBossRegistry.IsSummonableBossNpc(bossType) || BossActive(bossType)) {
+				return false;
+			}
+
+			int salt = (int)(Main.GameUpdateCount & 0x7FFFFFFF);
+			float side = WastelandRandom.Roll(player.whoAmI, salt, 0, 2) == 0 ? -1f : 1f;
+			float distance = WastelandRandom.RollFloatRange(player.whoAmI, salt, 1, distMin, distMax);
+			Vector2 position = player.Center + new Vector2(side * distance, spawnHeight);
+
+			int index = NPC.NewNPC(new EntitySource_SpawnNPC(), (int)position.X, (int)position.Y, bossType);
+
+			if (index >= 0 && index < Main.maxNPCs) {
+				Main.npc[index].netUpdate = true;
+			}
+
+			WastelandStorySystem.AnnounceFormat(announceKey, new Color(226, 90, 70));
+			return true;
+		}
+
 		public override bool CanUseItem(Player player)
 		{
 			// 对应的 Boss 还没实现（BossType 为 0）：给出提示而不是静默什么都不做
@@ -121,23 +148,16 @@ namespace WastelandSoul.Common.ItemBases
 				return null;
 			}
 
-			if (BossType <= 0 || Main.netMode == NetmodeID.MultiplayerClient) {
-				return true;   // 未实现 / 联机同步方案待定
+			if (BossType <= 0) {
+				return true;
 			}
 
-			float side = Main.rand.NextBool() ? 1f : -1f;
-			Vector2 position = player.Center + new Vector2(side * Main.rand.NextFloat(SpawnDistanceMin, SpawnDistanceMax), SpawnHeight);
-
-			int index = NPC.NewNPC(new EntitySource_SpawnNPC(), (int)position.X, (int)position.Y, BossType);
-
-			if (index >= 0 && index < Main.maxNPCs) {
-				Main.npc[index].netUpdate = true;
+			if (Main.netMode == NetmodeID.MultiplayerClient) {
+				WastelandStorySystem.RequestBossSummon(BossType, SpawnDistanceMin, SpawnDistanceMax, SpawnHeight);
+				return true;
 			}
 
-			if (!Main.dedServ) {
-				Main.NewText(Language.GetTextValue("Mods.WastelandSoul.Messages.BossSummoned"), 226, 90, 70);
-			}
-
+			TrySummonNear(player, BossType, SpawnDistanceMin, SpawnDistanceMax, SpawnHeight);
 			return true;
 		}
 	}

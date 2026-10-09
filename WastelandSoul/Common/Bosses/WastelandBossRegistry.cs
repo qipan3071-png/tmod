@@ -71,6 +71,28 @@ namespace WastelandSoul.Common.Bosses
 		/// 代号 → NPC 类型。未实现的返回 0。
 		/// <para/>注意：必须在内容加载完成后调用（不要在静态字段初始化里调用 ModContent）。
 		/// </summary>
+		/// <summary>是否为已登记、可经召唤物生成的 Boss NPC 类型（联机服务端校验用）。</summary>
+		public static bool IsSummonableBossNpc(int npcType)
+		{
+			if (npcType <= 0) {
+				return false;
+			}
+
+			for (int i = 0; i < All.Count; i++) {
+				WastelandBossEntry entry = All[i];
+
+				if (!entry.Implemented) {
+					continue;
+				}
+
+				if (ResolveNpcType(entry.InternalName) == npcType) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 		public static int ResolveNpcType(string internalName)
 		{
 			switch (internalName) {

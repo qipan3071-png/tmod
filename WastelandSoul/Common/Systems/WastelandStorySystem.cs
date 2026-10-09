@@ -84,6 +84,9 @@ namespace WastelandSoul.Common.Systems
 
 			/// <summary>使用清道夫信号传感器（无负载；落点由服务端按发起玩家计算）。</summary>
 			public const byte ScavengerSummon = 6;
+
+			/// <summary>通用 Boss 召唤物：int32 npcType + float 水平距 min/max + float 高度偏移。</summary>
+			public const byte BossSummon = 7;
 		}
 
 		/// <summary>
@@ -513,6 +516,21 @@ namespace WastelandSoul.Common.Systems
 			}
 
 			WastelandNet.SendRequest(PacketKindStoryRequest, StoryRequest.ScavengerSummon, null);
+		}
+
+		/// <summary>客户端请求「在本人附近召唤已登记 Boss」（<see cref="Common.ItemBases.WastelandSummonItem.TrySummonNear"/>）。</summary>
+		public static void RequestBossSummon(int bossType, float distMin, float distMax, float spawnHeight)
+		{
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				return;
+			}
+
+			WastelandNet.SendRequest(PacketKindStoryRequest, StoryRequest.BossSummon, writer => {
+				writer.WriteInt32(bossType);
+				writer.WriteSingle(distMin);
+				writer.WriteSingle(distMax);
+				writer.WriteSingle(spawnHeight);
+			});
 		}
 
 		/// <summary>
