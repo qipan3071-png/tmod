@@ -435,6 +435,10 @@ RunChecker "$PSScriptRoot\check_cn_parity.py"     'check_cn_parity (post-load)'
 Step '6.5 check_sync_rand (multiplayer Main.rand)'
 RunChecker "$PSScriptRoot\check_sync_rand.py" 'check_sync_rand'
 
+# REPORT ONLY: remaining NPC localAI debt (batch 51 cleared wildlife; bosses may still use it).
+Step '6.6 check_npc_localai_sync (REPORT ONLY)'
+RunChecker "$PSScriptRoot\check_npc_localai_sync.py" 'check_npc_localai_sync'
+
 # ---------------------------------------------------------------- 7. review pack
 # Optional: refresh the review package folder (two .tmod + the human-written readme
 # with fresh sizes/hashes) and re-zip it. Off by default - use -ReviewPack when the
