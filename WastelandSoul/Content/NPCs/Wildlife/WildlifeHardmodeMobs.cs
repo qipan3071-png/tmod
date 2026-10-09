@@ -53,7 +53,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WildlifeAI.OutsideSubworld(spawnInfo) || !Main.hardMode) {
+			if (!Main.hardMode || !WastelandNaturalSpawn.AllowsModNaturalSpawn(spawnInfo)) {
 				return 0f;
 			}
 
@@ -188,11 +188,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WildlifeAI.OutsideSubworld(spawnInfo) || !Main.hardMode) {
-				return 0f;
-			}
-
-			if (!spawnInfo.Player.ZoneRockLayerHeight && !spawnInfo.Player.ZoneDirtLayerHeight) {
+			if (!Main.hardMode || !WastelandNaturalSpawn.Underground(spawnInfo)) {
 				return 0f;
 			}
 
@@ -346,6 +342,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			NPC.aiStyle = -1;
 		}
 
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			return 0f;   // 仅 GearSwarmHive 召唤，不进自然刷怪池
+		}
+
 		public override void AI()
 		{
 			// ai[0]：母体的 NPC 索引
@@ -465,11 +466,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WildlifeAI.OutsideSubworld(spawnInfo) || !Main.hardMode) {
-				return 0f;
-			}
-
-			if (!spawnInfo.Player.ZoneRockLayerHeight && !spawnInfo.Player.ZoneDirtLayerHeight) {
+			if (!Main.hardMode || !WastelandNaturalSpawn.Underground(spawnInfo)) {
 				return 0f;
 			}
 
@@ -672,7 +669,8 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			// 只有打赢过清道夫、并且进了困难模式，它才会作为"野外威胁"出现
-			if (!WildlifeAI.OutsideSubworld(spawnInfo) || !Main.hardMode || !WastelandStorySystem.scavengerDefeated) {
+			if (!Main.hardMode || !WastelandStorySystem.scavengerDefeated
+				|| !WastelandNaturalSpawn.AllowsModNaturalSpawn(spawnInfo)) {
 				return 0f;
 			}
 

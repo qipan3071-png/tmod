@@ -32,10 +32,10 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 	/// </summary>
 	public static class WildlifeAI
 	{
-		/// <summary>子世界（壁炉，很小的地图）里不刷新，避免把大厅填满怪。</summary>
+		/// <summary>见 <see cref="WastelandNaturalSpawn.AllowsModNaturalSpawn"/>。</summary>
 		public static bool OutsideSubworld(NPCSpawnInfo spawnInfo)
 		{
-			return Main.maxTilesX >= 1200 && !spawnInfo.PlayerSafe && spawnInfo.Player.active;
+			return WastelandNaturalSpawn.AllowsModNaturalSpawn(spawnInfo);
 		}
 
 		/// <summary>取最近的存活玩家（不限定视线，近战怪不需要）。</summary>
@@ -285,11 +285,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WildlifeAI.OutsideSubworld(spawnInfo) || Main.hardMode || !Main.dayTime) {
-				return 0f;
-			}
-
-			if (!spawnInfo.Player.ZoneOverworldHeight) {
+			if (!WastelandNaturalSpawn.Surface(spawnInfo) || Main.hardMode || !Main.dayTime) {
 				return 0f;
 			}
 
@@ -440,11 +436,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WildlifeAI.OutsideSubworld(spawnInfo) || Main.hardMode || !Main.dayTime) {
-				return 0f;
-			}
-
-			if (!spawnInfo.Player.ZoneOverworldHeight) {
+			if (!WastelandNaturalSpawn.Surface(spawnInfo) || Main.hardMode || !Main.dayTime) {
 				return 0f;
 			}
 
@@ -609,11 +601,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WildlifeAI.OutsideSubworld(spawnInfo) || Main.dayTime) {
-				return 0f;
-			}
-
-			if (!spawnInfo.Player.ZoneOverworldHeight) {
+			if (!WastelandNaturalSpawn.Surface(spawnInfo) || Main.dayTime) {
 				return 0f;
 			}
 
@@ -765,11 +753,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WildlifeAI.OutsideSubworld(spawnInfo) || Main.dayTime) {
-				return 0f;
-			}
-
-			if (!spawnInfo.Player.ZoneOverworldHeight) {
+			if (!WastelandNaturalSpawn.Surface(spawnInfo) || Main.dayTime) {
 				return 0f;
 			}
 

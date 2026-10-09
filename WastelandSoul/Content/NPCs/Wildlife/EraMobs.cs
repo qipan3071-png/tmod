@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Systems;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons.CLine;
 
@@ -11,6 +10,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 {
 	/// <summary>
 	/// 四个时期的野生敌人。子世界（很小的地图）里不刷新，避免壁炉大厅被怪填满。
+	/// <para/>刷怪：仅 <see cref="ModNPC.SpawnChance"/>，条件见 <see cref="WastelandNaturalSpawn"/>。
 	/// </summary>
 	public abstract class EraMob : ModNPC
 	{
@@ -49,11 +49,6 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 				npcLoot.Add(ItemDropRule.OneFromOptions(22, RareWeapons));
 			}
 		}
-
-		protected static bool OutsideSubworld(NPCSpawnInfo spawnInfo)
-		{
-			return Main.maxTilesX >= 1200 && !spawnInfo.PlayerSafe && spawnInfo.Player.active;
-		}
 	}
 
 	public class ScrapCrawler : EraMob
@@ -85,7 +80,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!OutsideSubworld(spawnInfo) || Main.hardMode || !spawnInfo.Player.ZoneOverworldHeight || !Main.dayTime) {
+			if (!WastelandNaturalSpawn.Surface(spawnInfo) || Main.hardMode || !Main.dayTime) {
+				return 0f;
+			}
+
+			if (!WastelandNaturalSpawn.EraBeforeScavenger) {
 				return 0f;
 			}
 
@@ -123,7 +122,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!OutsideSubworld(spawnInfo) || !WastelandStorySystem.scavengerDefeated || !spawnInfo.Player.ZoneDirtLayerHeight) {
+			if (!WastelandNaturalSpawn.AllowsModNaturalSpawn(spawnInfo) || !spawnInfo.Player.ZoneDirtLayerHeight) {
+				return 0f;
+			}
+
+			if (!WastelandNaturalSpawn.EraBeforeArchivist) {
 				return 0f;
 			}
 
@@ -161,11 +164,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!OutsideSubworld(spawnInfo) || !Main.hardMode || !WastelandStorySystem.archivistDefeated) {
+			if (!WastelandNaturalSpawn.CavernOrUnderworld(spawnInfo)) {
 				return 0f;
 			}
 
-			if (!spawnInfo.Player.ZoneRockLayerHeight && !spawnInfo.Player.ZoneUnderworldHeight) {
+			if (!WastelandNaturalSpawn.EraBeforeAshHeart) {
 				return 0f;
 			}
 
@@ -203,11 +206,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!OutsideSubworld(spawnInfo) || !Main.hardMode || Main.dayTime || !WastelandStorySystem.ashHeartDefeated) {
+			if (!WastelandNaturalSpawn.Surface(spawnInfo) || Main.dayTime) {
 				return 0f;
 			}
 
-			if (!spawnInfo.Player.ZoneOverworldHeight) {
+			if (!WastelandNaturalSpawn.EraBeforeFireplaceGuardian) {
 				return 0f;
 			}
 
