@@ -346,6 +346,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			NPC.aiStyle = -1;
 		}
 
+		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+		{
+			return 0f;
+		}
+
 		public override void AI()
 		{
 			// ai[0]：母体的 NPC 索引
