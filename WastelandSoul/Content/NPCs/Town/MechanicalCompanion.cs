@@ -25,11 +25,15 @@ namespace WastelandSoul.Content.NPCs.Town
 
 		public override void SetStaticDefaults()
 		{
-			// 城镇 NPC 标准帧参数，与原版向导一致：
-			// 25 帧 = 16 帧行走/待机 + 9 帧特殊动作（其中 4 帧为攻击帧）
-			Main.npcFrameCount[Type] = 25;
-			NPCID.Sets.ExtraFramesCount[Type] = 9;
-			NPCID.Sets.AttackFrameCount[Type] = 4;
+			// 城镇 NPC 帧参数。**下面是实测的原版真值，别再按印象改**：
+			//   树妖 Dryad：帧 21 / ExtraFrames 7 / AttackFrames 2
+			//   向导 Guide：帧 26 / ExtraFrames 10 / AttackFrames 5
+			//   （护士 23/9/4，机械师 23/9/4，公主 23/7/2）
+			// 本模组 2026-10-09 起改用**树妖的帧表骨架**（见 tools/gen_companion_sprite.py），
+			// 所以这三个数必须跟树妖一致；旧版写的 25/9/4 + AnimationType=Guide 三个数全错。
+			Main.npcFrameCount[Type] = 21;
+			NPCID.Sets.ExtraFramesCount[Type] = 7;
+			NPCID.Sets.AttackFrameCount[Type] = 2;
 
 			// 遇敌时会主动攻击范围内的敌人（智械核心的自卫协议）
 			NPCID.Sets.DangerDetectRange[Type] = 700;
@@ -55,8 +59,8 @@ namespace WastelandSoul.Content.NPCs.Town
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.knockBackResist = 0.5f;
 
-			// 复制原版向导的帧逻辑，这样精灵表布局可以直接沿用原版约定（25 帧纵向排列）
-			AnimationType = NPCID.Guide;
+			// 复制原版树妖的帧逻辑，这样精灵表布局可以直接沿用原版约定（21 帧纵向排列）
+			AnimationType = NPCID.Dryad;
 
 			// 生物群落与邻居偏好（幸福度）
 			NPC.Happiness
@@ -225,14 +229,18 @@ namespace WastelandSoul.Content.NPCs.Town
 				NPC.direction = -1;
 			}
 
-			// 2) spriteDirection 取 direction 的反号 —— 表里的图是"朝右"画的，
-			//    而原版对 spriteDirection == 1 会做水平翻转，直接相等就会左右颠倒
-			//    （玩家实测：往右走却朝左）。站着不动时 direction 不变，朝向自然保持。
-			NPC.spriteDirection = -NPC.direction;
+			// 2) spriteDirection 直接等于 direction —— 2026-10-09 换帧表后**改了符号**：
+			//    原版城镇 NPC 的帧表（树妖/向导都一样）本身是**朝左**画的，
+			//    而原版对 spriteDirection == 1 会做水平翻转，所以"朝右"才需要翻。
+			//    旧版那张手画表是**朝右**画的，才需要取反号；现在换成原版骨架，必须改回来，
+			//    否则走路方向会左右颠倒（玩家实测过这一类 bug）。
+			NPC.spriteDirection = NPC.direction;
 
 			// 3) 小动作期间强制用低头 / 抬头帧
 			if (NPC.localAI[1] > 0f) {
-				int frame = NPC.localAI[2] == 1f ? 5 : 7;   // 5 = 低头，7 = 抬头
+				// 14 / 16 是树妖表里的两个**待机小动作帧**（0..13 是走路/待机，14..20 是 extra）；
+				// 旧版写 5 / 7，那在树妖表里是走路帧，站定时强行切过去会像卡帧。
+				int frame = NPC.localAI[2] == 1f ? 14 : 16;
 				NPC.frame.Y = frame * frameHeight;
 				NPC.frameCounter = 0.0;
 				return;
