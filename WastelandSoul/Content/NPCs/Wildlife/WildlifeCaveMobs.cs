@@ -53,7 +53,12 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WastelandNaturalSpawn.Underground(spawnInfo)) {
+			if (!WildlifeAI.OutsideSubworld(spawnInfo)) {
+				return 0f;
+			}
+
+			// 地下开始就有；困难模式之后变多（那时它是基础威胁之一）
+			if (!spawnInfo.Player.ZoneDirtLayerHeight && !spawnInfo.Player.ZoneRockLayerHeight) {
 				return 0f;
 			}
 
@@ -195,7 +200,12 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WastelandNaturalSpawn.Underground(spawnInfo)) {
+			if (!WildlifeAI.OutsideSubworld(spawnInfo)) {
+				return 0f;
+			}
+
+			// 洞穴层（石层）为主，困难模式之后整片地下都有
+			if (!spawnInfo.Player.ZoneRockLayerHeight && !spawnInfo.Player.ZoneDirtLayerHeight) {
 				return 0f;
 			}
 

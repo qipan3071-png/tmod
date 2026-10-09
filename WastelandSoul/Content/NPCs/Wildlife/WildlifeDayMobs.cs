@@ -32,7 +32,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 	/// </summary>
 	public static class WildlifeAI
 	{
-		/// <summary>见 <see cref="WastelandNaturalSpawn.AllowsModNaturalSpawn"/>。</summary>
+		/// <summary>子世界（壁炉，很小的地图）里不刷新，避免把大厅填满怪。</summary>
 		public static bool OutsideSubworld(NPCSpawnInfo spawnInfo)
 		{
 			return WastelandNaturalSpawn.AllowsModNaturalSpawn(spawnInfo);
@@ -285,7 +285,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WastelandNaturalSpawn.Surface(spawnInfo) || Main.hardMode || !Main.dayTime) {
+			if (!WildlifeAI.OutsideSubworld(spawnInfo) || Main.hardMode || !Main.dayTime) {
+				return 0f;
+			}
+
+			if (!spawnInfo.Player.ZoneOverworldHeight) {
 				return 0f;
 			}
 
@@ -436,7 +440,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WastelandNaturalSpawn.Surface(spawnInfo) || Main.hardMode || !Main.dayTime) {
+			if (!WildlifeAI.OutsideSubworld(spawnInfo) || Main.hardMode || !Main.dayTime) {
+				return 0f;
+			}
+
+			if (!spawnInfo.Player.ZoneOverworldHeight) {
 				return 0f;
 			}
 
@@ -601,7 +609,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WastelandNaturalSpawn.Surface(spawnInfo) || Main.dayTime) {
+			if (!WildlifeAI.OutsideSubworld(spawnInfo) || Main.dayTime) {
+				return 0f;
+			}
+
+			if (!spawnInfo.Player.ZoneOverworldHeight) {
 				return 0f;
 			}
 
@@ -753,7 +765,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			if (!WastelandNaturalSpawn.Surface(spawnInfo) || Main.dayTime) {
+			if (!WildlifeAI.OutsideSubworld(spawnInfo) || Main.dayTime) {
+				return 0f;
+			}
+
+			if (!spawnInfo.Player.ZoneOverworldHeight) {
 				return 0f;
 			}
 
