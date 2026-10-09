@@ -431,13 +431,33 @@ Step '6. re-sync localisation after the load test'
 RunChecker "$PSScriptRoot\sync_cn_translation.py" 'sync_cn_translation (post-load)'
 RunChecker "$PSScriptRoot\check_cn_parity.py"     'check_cn_parity (post-load)'
 
+# ---------------------------------------------------------------- 6.5 sync report
+# Multiplayer sync watchdog. REPORT ONLY on purpose: the repo still has ~105 known
+# "Main.rand inside NPC/projectile AI" sites (see the sync section in the dev doc).
+# It must be visible in every run, yet must NOT mask real failures - so it runs with
+# Continue and its exit code is deliberately NOT added to $failed.
+# Once that backlog is empty, promote it to RunChecker like the other guards.
+Step '6.5 sync watchdog (report only)'
+if (Test-Path "$PSScriptRoot\check_sync_rand.py") {
+    $syncOut = & $Python "$PSScriptRoot\check_sync_rand.py" 2>&1
+    Write-Host ("  [INFO] " + (($syncOut | Select-Object -First 1) -join ''))
+    Write-Host '  [INFO] full list: python tools\check_sync_rand.py'
+    Write-Host '  [INFO] policy: WastelandSoul/dev doc -> multiplayer sync'
+} else {
+    Write-Host '  [SKIP] check_sync_rand.py (not found)'
+}
+
 # ---------------------------------------------------------------- 7. review pack
-# Optional: refresh E:\开发\测评包 (the two .tmod + the human-written readme with
-# fresh sizes/hashes) and re-zip it. Off by default - use -ReviewPack when the
+# Optional: refresh the review package folder (two .tmod + the human-written readme
+# with fresh sizes/hashes) and re-zip it. Off by default - use -ReviewPack when the
 # build is meant to go out for play-testing.
 if ($ReviewPack) {
-    Step '7. review pack (测评包 + zip)'
-    RunChecker "$PSScriptRoot\make_review_pack.py" 'make_review_pack' @('--src-dir', (Join-Path $SaveDir 'Mods'))
+    Step '7. review pack (review package + zip)'
+    # NOTE: no --src-dir here on purpose. Windows PowerShell 5.1 decodes a BOM-less
+    # UTF-8 .ps1 as GBK, so any non-ASCII literal passed as an argument (e.g. the
+    # Chinese repo path) arrives mojibake and the Python side cannot find the file.
+    # make_review_pack.py derives its own default path instead.
+    RunChecker "$PSScriptRoot\make_review_pack.py" 'make_review_pack'
 }
 
 # ---------------------------------------------------------------- summary

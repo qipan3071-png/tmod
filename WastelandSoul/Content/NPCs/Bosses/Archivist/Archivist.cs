@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -452,19 +452,25 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 
 		// ==================== 出招选择 ====================
 
-		/// <summary>掷下一次攻击的等待帧数（终盘压制阶段额外提速）。</summary>
+		/// <summary>掷下一次攻击的等待帧数（终盘压制阶段额外提速）。
+		/// <para/>⚠️ **联机安全**：这里以前用 <c>Main.rand</c> —— 服务端和每个客户端各自掷一次，
+		/// 掷出来的等待帧数不同 ⇒ 出招时机错开（单机永远看不出来）。
+		/// 现在改用 <see cref="WastelandRandom"/>：种子只取**已经同步过的**
+		/// <c>whoAmI</c> + 出招轮换计数 <c>ai[2]</c>，所以三方算出来的是同一个数。</summary>
 		internal static int RollAttackDelay(ArchivistContext context)
 		{
 			NPC npc = context.Npc;
+			int seedA = npc.whoAmI;
+			int seedB = (int)npc.ai[2];
 
 			if (npc.life / (float)npc.lifeMax <= SuppressionThreshold) {
-				return AttackIntervalSuppressed + Main.rand.Next(-8, 9);
+				return AttackIntervalSuppressed + WastelandRandom.Roll(seedA, seedB, -8, 9);
 			}
 
 			return (int)npc.ai[0] switch {
-				>= 2 => AttackIntervalPhaseThree + Main.rand.Next(-12, 13),
-				1 => AttackIntervalPhaseTwo + Main.rand.Next(-15, 16),
-				_ => AttackIntervalPhaseOne + Main.rand.Next(-20, 21)
+				>= 2 => AttackIntervalPhaseThree + WastelandRandom.Roll(seedA, seedB, -12, 13),
+				1 => AttackIntervalPhaseTwo + WastelandRandom.Roll(seedA, seedB, -15, 16),
+				_ => AttackIntervalPhaseOne + WastelandRandom.Roll(seedA, seedB, -20, 21)
 			};
 		}
 

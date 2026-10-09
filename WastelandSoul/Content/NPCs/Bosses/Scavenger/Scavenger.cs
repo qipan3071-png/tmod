@@ -112,6 +112,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 		// ModNPC 实例是所有同类 NPC 共用的，因此状态不能放实例字段：
 		//   ai[0] = 阶段序号（0/1/2），由阶段状态写入
 		//   ai[1] = 状态机当前状态 ID（InnoVault NpcStateMachine 占用，自动同步）
+		//   ai[2] = 污染团投放计数（**联机**：ai[] 原版会自动同步，用它给掷骰当种子，见 UpdatePollutionBarrage）
 		//   ai[3] = 过载自毁标记（掉落判定用）
 		//   localAI[0] = 卡顿计时器
 		//   localAI[1] = 维修无人机召唤冷却
@@ -268,7 +269,15 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			}
 
 			float speed = (int)npc.ai[0] >= 1 ? 5.2f : 6.4f;
-			Vector2 desiredVelocity = direction * speed + new Vector2(Main.rand.NextFloat(-0.6f, 0.6f), Main.rand.NextFloat(-0.6f, 0.6f));
+
+			// 抖动 **联机安全**：这里改的是 NPC.velocity（同步字段），而服务端与客户端都会跑这段 AI ——
+			// 用 Main.rand 的话两边抖的方向不同，机体就会轻微来回跳。
+			// 种子取 whoAmI + 世界帧数（都不是随机的），三方同值。
+			Vector2 jitter = new Vector2(
+				WastelandRandom.RollFloat(npc.whoAmI, (int)Main.GameUpdateCount, 11) * 1.2f - 0.6f,
+				WastelandRandom.RollFloat(npc.whoAmI, (int)Main.GameUpdateCount, 23) * 1.2f - 0.6f);
+
+			Vector2 desiredVelocity = direction * speed + jitter;
 
 			npc.velocity = Vector2.Lerp(npc.velocity, desiredVelocity, 0.18f);
 		}
@@ -635,6 +644,12 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 		/// <summary>
 		/// 阶段二起，破损推进器不断喷出会追踪玩家的「污染团」。
 		/// <para/>投放间隔带随机浮动，对应设备老化造成的卡顿与不规则。
+		///
+		/// <para/>⚠️ **联机安全**（2026-10-09 修）：这里的冷却**必须每台机器都算成同一个值** ——
+		/// 旧代码用 <c>Main.rand.Next</c> 掷间隔，服务端和客户端的冷却会不一样长
+		/// （客户端虽然不生成弹幕，但它一样在跑这段 AI：冷却不同步会让服务端的下一发
+		/// "看起来"比客户端预期的更早/更晚）。现在用 <see cref="WastelandRandom"/>，
+		/// 种子取已同步的 <c>whoAmI</c> + 阶段 <c>ai[0]</c> + c冷却序号，三方同值。
 		/// </summary>
 		private void UpdatePollutionBarrage()
 		{
@@ -648,8 +663,15 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 				return;
 			}
 
-			// 下一次投放的时间不固定
-			NPC.localAI[2] = PollutionCooldown + Main.rand.Next(-45, 46);
+			// 下一次投放的时间不固定（**联机同值**：种子只取已同步的量）
+			// ai[2] = 投放计数，由服务端推进并标 netUpdate；客户端读到的就是同一个序号。
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				NPC.ai[2] += 1f;
+				NPC.netUpdate = true;
+			}
+
+			NPC.localAI[2] = PollutionCooldown
+				+ WastelandRandom.Roll(NPC.whoAmI, (int)NPC.ai[0], (int)NPC.ai[2], -45, 46);
 
 			if (Main.netMode == NetmodeID.MultiplayerClient) {
 				return;

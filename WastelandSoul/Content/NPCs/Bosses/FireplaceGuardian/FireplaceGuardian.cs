@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using InnoVault.StateMachines;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -178,12 +178,18 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			npc.velocity = (current + MathHelper.Clamp(delta, -maxTurn, maxTurn)).ToRotationVector2() * speed;
 		}
 
+		/// <summary>掷下一次攻击的等待帧数。
+		/// <para/>⚠️ **联机安全**：不许用 <c>Main.rand</c>（服务端/客户端会掷出不同帧数 ⇒ 出招错开）。
+		/// 种子只用已同步的 <c>whoAmI</c> + <c>ai[2]</c>（见 <see cref="WastelandRandom"/>）。</summary>
 		internal static int RollAttackDelay(FireplaceGuardianContext context)
 		{
+			int seedA = context.Npc.whoAmI;
+			int seedB = (int)context.Npc.ai[2];
+
 			return (int)context.Npc.ai[0] switch {
-				>= 2 => AttackIntervalPhaseThree + Main.rand.Next(-6, 7),
-				1 => AttackIntervalPhaseTwo + Main.rand.Next(-8, 9),
-				_ => AttackIntervalPhaseOne + Main.rand.Next(-12, 13)
+				>= 2 => AttackIntervalPhaseThree + WastelandRandom.Roll(seedA, seedB, -6, 7),
+				1 => AttackIntervalPhaseTwo + WastelandRandom.Roll(seedA, seedB, -8, 9),
+				_ => AttackIntervalPhaseOne + WastelandRandom.Roll(seedA, seedB, -12, 13)
 			};
 		}
 

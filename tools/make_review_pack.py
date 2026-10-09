@@ -34,6 +34,7 @@ REPO = r"E:\开发"
 PACK_DIR = os.path.join(REPO, "测评包")
 README = os.path.join(PACK_DIR, "安装与测评说明.txt")
 ZIP_PATH = os.path.join(REPO, "WastelandSoul_测评包.zip")
+DEFAULT_SRC_DIR = os.path.join(REPO, ".tml-build", "Mods")
 
 MAIN_NAME = "WastelandSoul.tmod"
 PATCH_NAME = "WastelandSoulCN.tmod"
@@ -103,7 +104,7 @@ def update_readme(entries):
 
 def main():
     parser = argparse.ArgumentParser(description="打包测评包（.tmod + 说明 + zip）")
-    parser.add_argument("--src-dir", default=os.path.join(REPO, ".tml-build", "Mods"),
+    parser.add_argument("--src-dir", default=DEFAULT_SRC_DIR,
                         help="构建产物目录（默认 .tml-build\\Mods）")
     parser.add_argument("--keep-hash", action="store_true", help="不刷新说明里的 sha256")
     args = parser.parse_args()
