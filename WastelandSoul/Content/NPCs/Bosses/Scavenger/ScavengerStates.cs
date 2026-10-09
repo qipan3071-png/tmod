@@ -92,7 +92,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			base.OnUpdate(machine, ctx);
 
 			if (ctx.Target != null) {
-				Scavenger.LungeTowards(ctx.Npc, ctx.Target, 120f, 12f);
+				Scavenger.LungeTowards(ctx.Npc, ctx.Target, 120f, 9.6f);
 			}
 
 			if (Timer >= Scavenger.SweepWindup) {
@@ -115,7 +115,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			base.OnUpdate(machine, ctx);
 
 			if (ctx.Target != null) {
-				Scavenger.LungeTowards(ctx.Npc, ctx.Target, 110f, 9f);
+				Scavenger.LungeTowards(ctx.Npc, ctx.Target, 110f, 7.2f);
 			}
 
 			return Timer >= 40 ? new ScavengerIdleState() : null;

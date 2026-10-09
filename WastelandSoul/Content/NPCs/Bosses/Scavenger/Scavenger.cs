@@ -59,6 +59,27 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 
 		private const int NpcChargeDamage = 120;            // 冲锋期间的接触伤害（重击级：对骷髅王之后的玩家是重伤但不是必死）
 
+		// 移速：原悬停 6.4 / 5.2、撞击 16、冲锋 22。整体下调到「原基准 ×1.2」
+		// （按更慢的基准算：约等于旧值 ×0.8）。大师难度不再额外加速。
+		private const float HoverSpeedPhaseOne = 5.1f;
+		private const float HoverSpeedPhaseTwo = 4.2f;
+		private const float SlamSpeed = 12.8f;
+		private const float ChargeSpeed = 17.6f;
+
+		/// <summary>接触/撞击/冲锋伤害：专家 2x；大师默认 3x，这里收到 2.25x。</summary>
+		internal static int DifficultyContact(int classic)
+		{
+			if (Main.masterMode) {
+				return (int)(classic * 2.25f);
+			}
+
+			if (Main.expertMode) {
+				return classic * 2;
+			}
+
+			return classic;
+		}
+
 		// ==================== 过载自毁（未在冲锋前击败）的判定 ====================
 
 		/// <summary>过载自毁标记（写入 NPC.ai[3]）：这次结束不是玩家击杀。</summary>
@@ -160,6 +181,21 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			NPC.HitSound = SoundID.NPCHit4;   // 金属
 			NPC.DeathSound = SoundID.NPCDeath14;
 			Music = MusicLoader.GetMusicSlot(Mod, "Music/Scavenger");
+		}
+
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+		{
+			// 大师默认约 3x 血 / 3x 接触伤；这里血量略收、伤害多收一档。
+			if (Main.masterMode) {
+				NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 0.88f);
+				NPC.damage = (int)(NPC.damage * balance * 0.75f);
+			}
+			else {
+				NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment);
+				NPC.damage = (int)(NPC.damage * balance);
+			}
+
+			NPC.defDamage = NPC.damage;
 		}
 
 		// ==================== 主 AI ====================
@@ -279,7 +315,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 				direction = Vector2.Zero;
 			}
 
-			float speed = (int)npc.ai[0] >= 1 ? 5.2f : 6.4f;
+			float speed = (int)npc.ai[0] >= 1 ? HoverSpeedPhaseTwo : HoverSpeedPhaseOne;
 
 			// 抖动 **联机安全**：这里改的是 NPC.velocity（同步字段），而服务端与客户端都会跑这段 AI ——
 			// 用 Main.rand 的话两边抖的方向不同，机体就会轻微来回跳。
@@ -321,7 +357,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			float speed = npc.velocity.Length();
 
 			if (speed < 1f) {
-				speed = 22f;
+				speed = ChargeSpeed;
 			}
 
 			float currentAngle = npc.velocity.ToRotation();
@@ -419,8 +455,8 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 		/// <summary>机体撞击：把速度甩向目标，撞击期间接触伤害提高一档。</summary>
 		internal static void ExecuteSlam(NPC npc, Player target)
 		{
-			npc.damage = NpcSlamDamage;
-			npc.defDamage = NpcSlamDamage;
+			npc.damage = DifficultyContact(NpcSlamDamage);
+			npc.defDamage = npc.damage;
 
 			Vector2 direction = target.Center - npc.Center;
 
@@ -428,7 +464,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 				direction = Vector2.UnitY;
 			}
 
-			npc.velocity = Vector2.Normalize(direction) * 16f;
+			npc.velocity = Vector2.Normalize(direction) * SlamSpeed;
 
 			if (!Main.dedServ) {
 				SoundEngine.PlaySound(SoundID.Roar, npc.Center);
@@ -441,7 +477,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			float speed = npc.velocity.Length();
 
 			if (speed < 1f) {
-				speed = 16f;
+				speed = SlamSpeed;
 			}
 
 			float currentAngle = npc.velocity.ToRotation();
@@ -456,8 +492,8 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 		/// <summary>撞击结束后恢复正常接触伤害。</summary>
 		internal static void EndSlam(NPC npc)
 		{
-			npc.damage = NpcContactDamage;
-			npc.defDamage = NpcContactDamage;
+			npc.damage = DifficultyContact(NpcContactDamage);
+			npc.defDamage = npc.damage;
 		}
 
 		internal static void PlayWindupSound(NPC npc)
@@ -477,8 +513,9 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			float startAngle = (target.Center - npc.Center).ToRotation() - MathHelper.PiOver2;
 			float sweepDirection = target.Center.X >= npc.Center.X ? 1f : -1f;
 
+			int slashNominal = Main.masterMode ? 36 : 44;
 			Projectile.NewProjectile(npc.GetSource_FromAI(), npc.Center, Vector2.Zero,
-				ModContent.ProjectileType<ScavengerArmSweep>(), BossShotDamage.Half(44), 4f, Main.myPlayer,
+				ModContent.ProjectileType<ScavengerArmSweep>(), BossShotDamage.Half(slashNominal), 4f, Main.myPlayer,
 				startAngle, sweepDirection, npc.whoAmI);
 		}
 
@@ -529,8 +566,8 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 		/// <summary>最终手段：因过载自毁式冲锋。</summary>
 		internal static void ExecuteCharge(NPC npc, Player target)
 		{
-			npc.damage = NpcChargeDamage;
-			npc.defDamage = NpcChargeDamage;
+			npc.damage = DifficultyContact(NpcChargeDamage);
+			npc.defDamage = npc.damage;
 
 			Vector2 direction = target.Center - npc.Center;
 
@@ -538,7 +575,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 				direction = Vector2.UnitY;
 			}
 
-			npc.velocity = Vector2.Normalize(direction) * 22f;
+			npc.velocity = Vector2.Normalize(direction) * ChargeSpeed;
 
 			if (!Main.dedServ) {
 				SoundEngine.PlaySound(SoundID.Item14, npc.Center);

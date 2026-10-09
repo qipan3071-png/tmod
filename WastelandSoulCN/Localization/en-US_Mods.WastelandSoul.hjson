@@ -94,500 +94,327 @@ Items: {
 
 	SalvagedSteelWarriorHelm: {
 		DisplayName: Salvaged Steel Warrior Helm
-		Tooltip: ""
+		Tooltip: 6% increased melee damage
 	}
 
 	SalvagedSteelWarriorPlate: {
 		DisplayName: Salvaged Steel Warrior Plate
-		SetBonus: +10% melee damage and +10% melee speed
-		Tooltip: ""
+		SetBonus: 10% increased melee damage and speed
+		Tooltip: 6% increased melee damage
 	}
 
 	SalvagedSteelWarriorGreaves: {
 		DisplayName: Salvaged Steel Warrior Greaves
-		Tooltip: ""
+		Tooltip: 8% increased melee speed
 	}
 
 	SalvagedSteelMageHood: {
 		DisplayName: Salvaged Steel Mage Hood
-		Tooltip: ""
+		Tooltip:
+			'''
+			Increases maximum mana by 30
+			6% increased magic damage
+			'''
 	}
 
 	SalvagedSteelMageRobe: {
 		DisplayName: Salvaged Steel Mage Robe
-		SetBonus: +10% magic damage and -10% mana cost
-		Tooltip: ""
+		SetBonus:
+			'''
+			10% increased magic damage
+			10% reduced mana cost
+			'''
+		Tooltip: 6% increased magic damage
 	}
 
 	SalvagedSteelMageLeggings: {
 		DisplayName: Salvaged Steel Mage Leggings
-		Tooltip: ""
+		Tooltip: 6% reduced mana cost
 	}
 
 	SalvagedSteelRangerVisor: {
 		DisplayName: Salvaged Steel Ranger Visor
-		Tooltip: ""
+		Tooltip: 6% increased ranged damage
 	}
 
 	SalvagedSteelRangerVest: {
 		DisplayName: Salvaged Steel Ranger Vest
-		SetBonus: +10% ranged damage and a 20% chance to save ammo
-		Tooltip: ""
+		SetBonus:
+			'''
+			10% increased ranged damage
+			20% chance to not consume ammo
+			'''
+		Tooltip: 6% increased ranged damage
 	}
 
 	SalvagedSteelRangerLeggings: {
 		DisplayName: Salvaged Steel Ranger Leggings
-		Tooltip: ""
+		Tooltip: 8% increased movement speed
 	}
 
 	SalvagedSteelSummonerCowl: {
 		DisplayName: Salvaged Steel Summoner Cowl
-		Tooltip: ""
+		Tooltip: 6% increased summon damage
 	}
 
 	SalvagedSteelSummonerTunic: {
 		DisplayName: Salvaged Steel Summoner Tunic
-		SetBonus: +10% summon damage and +1 minion slot
-		Tooltip: ""
+		SetBonus:
+			'''
+			10% increased summon damage
+			Increases your max number of minions by 1
+			'''
+		Tooltip: 6% increased summon damage
 	}
 
 	SalvagedSteelSummonerLeggings: {
 		DisplayName: Salvaged Steel Summoner Leggings
-		Tooltip: ""
+		Tooltip: 5% increased summon damage
 	}
 
 	SalvagedSteelChunk: {
 		DisplayName: Salvaged Steel Chunk
-		Tooltip:
-			'''
-			A high-strength alloy fragment torn off the Scavenger
-			Must be smelted into Salvaged Steel
-			'''
+		Tooltip: Torn from an old execution chassis
 	}
 
 	SalvagedSteelBar: {
 		DisplayName: Salvaged Steel
-		Tooltip:
-			'''
-			Old-world military grade alloy
-			Used to forge Salvaged Steel armor
-			'''
+		Tooltip: ""
 	}
 
 	ScavengerFragment: {
 		DisplayName: Scavenger Fragment
-		Tooltip:
-			'''
-			The core wreckage of Execution Unit-07
-			A section of its code was deliberately removed
-			'''
+		Tooltip: A core with a page of code missing
 	}
 
 	ScavengerSignalSensor: {
 		DisplayName: Scavenger Signal Sensor
-		Tooltip:
-			'''
-			Broadcasts a forged execution order across the wasteland, luring the Scavenger to you
-			Not consumed, but only one Scavenger may exist at a time
-			'''
+		Tooltip: Summons the Scavenger
 	}
 
 	CompanionCore: {
 		DisplayName: Companion Core
-		Tooltip:
-			'''
-			The machine core you carried across time
-			Use it on the body at the elven ruin to awaken Machina
-			'''
+		Tooltip: Use on the body at the elven ruin to awaken Machina
 	}
 
 	ArchivistFragment: {
 		DisplayName: Archivist Fragment
-		Tooltip:
-			'''
-			A resonance shard left behind by the Archivist
-			The audit unit the Watchman Project sent to reclaim its own memories
-			'''
+		Tooltip: ""
 	}
 
 	ArchivistEcho: {
 		DisplayName: Archivist Echo
-		Tooltip:
-			'''
-			Plays back a forged fragment of the old logs
-			Not consumed, but only one Archivist may audit at a time
-			'''
+		Tooltip: Summons the Archivist
 	}
 
 	AshHeartEmber: {
 		DisplayName: Ash Heart Ember
-		Tooltip:
-			'''
-			Breathe on an ember that has smouldered since the old war
-			Not consumed, but only one Ash Heart may burn at a time
-			'''
+		Tooltip: Summons the Ash Heart
 	}
 
 	FireplaceKey: {
 		DisplayName: Fireplace Access Key
-		Tooltip:
-			'''
-			Returns the last line of defence its own recognition code
-			Not consumed, but only one Guardian may wake at a time
-			'''
+		Tooltip: Summons the Fireplace Guardian
 	}
 
 	AshHeartFragment: {
 		DisplayName: Ash Heart Fragment
-		Tooltip:
-			'''
-			A self-sustaining ember torn from the Ash Heart
-			Smelt it with Adamantite Forge heat to make Ash Heart Alloy
-			'''
+		Tooltip: ""
 	}
 
 	AshHeartAlloyBar: {
 		DisplayName: Ash Heart Alloy Bar
-		Tooltip: Ash Heart fragment fused into old-world alloy
+		Tooltip: ""
 	}
 
 	FireplaceFragment: {
 		DisplayName: Fireplace Fragment
-		Tooltip:
-			'''
-			A shard of the Fireplace's last defensive line
-			Smelt it with Adamantite Forge heat to make Fireplace Alloy
-			'''
+		Tooltip: ""
 	}
 
 	FireplaceAlloyBar: {
 		DisplayName: Fireplace Alloy Bar
-		Tooltip: Cold white alloy that once clad the Fireplace Guardian
+		Tooltip: ""
 	}
 
 	ScavengerWarriorWeapon: {
 		DisplayName: Scavenger Scrap Cleaver
-		Tooltip:
-			'''
-			Salvaged from the Scavenger's wreck - crude, but it works.
-			Swing it to cut down everything inside the arc
-			'''
+		Tooltip: Creates a wide cutting arc
 	}
 
 	ScavengerMageWeapon: {
 		DisplayName: Scavenger Spark Rod
-		Tooltip:
-			'''
-			Salvaged from the Scavenger's wreck - crude, but it works.
-			Consumes mana
-			'''
+		Tooltip: ""
 	}
 
 	ScavengerRangerWeapon: {
 		DisplayName: Scavenger Scrap Pistol
-		Tooltip:
-			'''
-			Salvaged from the Scavenger's wreck - crude, but it works.
-			Consumes bullets
-			'''
+		Tooltip: ""
 	}
 
 	ScavengerSummonerWeapon: {
 		DisplayName: Scavenger Drone Beacon
-		Tooltip:
-			'''
-			Salvaged from the Scavenger's wreck - crude, but it works.
-			Summons a minion
-			'''
+		Tooltip: Summons a salvage drone
 	}
 
 	ScavengerWarriorWeaponEX: {
 		DisplayName: Scavenger Scrap Cleaver MK-II
-		Tooltip:
-			'''
-			Salvaged from the Scavenger's wreck - crude, but it works.
-			Swing it to cut down everything inside the arc
-			'''
+		Tooltip: Creates a wide cutting arc
 	}
 
 	ScavengerMageWeaponEX: {
 		DisplayName: Scavenger Spark Rod MK-II
-		Tooltip:
-			'''
-			Salvaged from the Scavenger's wreck - crude, but it works.
-			Consumes mana
-			'''
+		Tooltip: ""
 	}
 
 	ScavengerRangerWeaponEX: {
 		DisplayName: Scavenger Scrap Pistol MK-II
-		Tooltip:
-			'''
-			Salvaged from the Scavenger's wreck - crude, but it works.
-			Consumes bullets
-			'''
+		Tooltip: ""
 	}
 
 	ScavengerSummonerWeaponEX: {
 		DisplayName: Scavenger Drone Beacon MK-II
-		Tooltip:
-			'''
-			Salvaged from the Scavenger's wreck - crude, but it works.
-			Summons a minion
-			'''
+		Tooltip: Summons a salvage drone
 	}
 
 	ScavengerGreatblade: {
 		DisplayName: Scavenger Greatblade
-		Tooltip:
-			'''
-			The Scavenger's own blade, still warm from the wreck.
-			Heavy and slow - each swing throws a fan of crescent edges that ride further than you expect
-			'''
+		Tooltip: Shoots a fan of crescent edges
 	}
 
 	SteelDischarger: {
 		DisplayName: Steel Discharger
-		Tooltip:
-			'''
-			Salvaged arc coils wrapped around a fist of salvaged steel.
-			Hold to build the charge, release to arc a chain of lightning through everything nearby
-			Consumes mana
-			'''
+		Tooltip: Hold to charge, release to chain lightning
 	}
 
 	PollutionCannon: {
 		DisplayName: Pollution Cannon
-		Tooltip:
-			'''
-			Scavenged pressure drum that fires raw gel as a heavy, arcing shell.
-			Every shell bursts into a small cloud of pollution that keeps eating whatever stands in it
-			'''
+		Tooltip: Shells burst into a lingering pollution cloud
 	}
 
 	SteelBow: {
 		DisplayName: Steel Bow
-		Tooltip:
-			'''
-			Salvaged steel limbs strung with scavenged cable.
-			Plain arrows come out cursed and lean toward the nearest thing still moving
-			'''
+		Tooltip: Wooden arrows become cursed and home in
 	}
 
 	ArchivistWarriorWeapon: {
 		DisplayName: Archivist Boneblade
-		Tooltip:
-			'''
-			Archived bone and cold blue light - the Watchman's audit log made manifest.
-			Swing it to cut down everything inside the arc
-			'''
+		Tooltip: Creates a wide cutting arc
 	}
 
 	ArchivistMageWeapon: {
 		DisplayName: Archivist Index Tome
-		Tooltip:
-			'''
-			Archived bone and cold blue light - the Watchman's audit log made manifest.
-			Consumes mana
-			'''
+		Tooltip: ""
 	}
 
 	ArchivistRangerWeapon: {
 		DisplayName: Archivist Bone Scattergun
-		Tooltip:
-			'''
-			Archived bone and cold blue light - the Watchman's audit log made manifest.
-			Consumes bullets
-			'''
+		Tooltip: ""
 	}
 
 	ArchivistSummonerWeapon: {
 		DisplayName: Archivist Familiar Staff
-		Tooltip:
-			'''
-			Archived bone and cold blue light - the Watchman's audit log made manifest.
-			Summons a minion
-			'''
+		Tooltip: Summons a familiar
 	}
 
 	ArchivistWarriorWeaponEX: {
 		DisplayName: Archivist Boneblade MK-II
-		Tooltip:
-			'''
-			Archived bone and cold blue light - the Watchman's audit log made manifest.
-			Swing it to cut down everything inside the arc
-			'''
+		Tooltip: Creates a wide cutting arc
 	}
 
 	ArchivistMageWeaponEX: {
 		DisplayName: Archivist Index Tome MK-II
-		Tooltip:
-			'''
-			Archived bone and cold blue light - the Watchman's audit log made manifest.
-			Consumes mana
-			'''
+		Tooltip: ""
 	}
 
 	ArchivistRangerWeaponEX: {
 		DisplayName: Archivist Bone Scattergun MK-II
-		Tooltip:
-			'''
-			Archived bone and cold blue light - the Watchman's audit log made manifest.
-			Consumes bullets
-			'''
+		Tooltip: ""
 	}
 
 	ArchivistSummonerWeaponEX: {
 		DisplayName: Archivist Familiar Staff MK-II
-		Tooltip:
-			'''
-			Archived bone and cold blue light - the Watchman's audit log made manifest.
-			Summons a minion
-			'''
+		Tooltip: Summons a familiar
 	}
 
 	AshHeartWarriorWeapon: {
 		DisplayName: Ash Heart Greatblade
-		Tooltip:
-			'''
-			Forged from the Ash Heart's ember - it still smoulders.
-			Swing it to cut down everything inside the arc
-			'''
+		Tooltip: Creates a wide cutting arc
 	}
 
 	AshHeartMageWeapon: {
 		DisplayName: Ash Heart Core Staff
-		Tooltip:
-			'''
-			Forged from the Ash Heart's ember - it still smoulders.
-			Consumes mana
-			'''
+		Tooltip: ""
 	}
 
 	AshHeartRangerWeapon: {
 		DisplayName: Ash Heart Ember Rifle
-		Tooltip:
-			'''
-			Forged from the Ash Heart's ember - it still smoulders.
-			Consumes bullets
-			'''
+		Tooltip: ""
 	}
 
 	AshHeartSummonerWeapon: {
 		DisplayName: Ash Heart Cinder Staff
-		Tooltip:
-			'''
-			Forged from the Ash Heart's ember - it still smoulders.
-			Summons a minion
-			'''
+		Tooltip: Summons an ember minion
 	}
 
 	AshHeartWarriorWeaponEx: {
 		DisplayName: Ash Heart Greatblade MK-II
-		Tooltip:
-			'''
-			Forged from the Ash Heart's ember - it still smoulders.
-			Swing it to cut down everything inside the arc
-			'''
+		Tooltip: Creates a wide cutting arc
 	}
 
 	AshHeartMageWeaponEx: {
 		DisplayName: Ash Heart Core Staff MK-II
-		Tooltip:
-			'''
-			Forged from the Ash Heart's ember - it still smoulders.
-			Consumes mana
-			'''
+		Tooltip: ""
 	}
 
 	AshHeartRangerWeaponEx: {
 		DisplayName: Ash Heart Ember Rifle MK-II
-		Tooltip:
-			'''
-			Forged from the Ash Heart's ember - it still smoulders.
-			Consumes bullets
-			'''
+		Tooltip: ""
 	}
 
 	AshHeartSummonerWeaponEx: {
 		DisplayName: Ash Heart Cinder Staff MK-II
-		Tooltip:
-			'''
-			Forged from the Ash Heart's ember - it still smoulders.
-			Summons a minion
-			'''
+		Tooltip: Summons an ember minion
 	}
 
 	FireplaceWarriorWeapon: {
 		DisplayName: Fireplace Guardian Greatblade
-		Tooltip:
-			'''
-			Fireplace-grade alloy. The last line of the old world's defence.
-			Swing it to cut down everything inside the arc
-			'''
+		Tooltip: Creates a wide cutting arc
 	}
 
 	FireplaceMageWeapon: {
 		DisplayName: Fireplace Guardian Scepter
-		Tooltip:
-			'''
-			Fireplace-grade alloy. The last line of the old world's defence.
-			Consumes mana
-			'''
+		Tooltip: ""
 	}
 
 	FireplaceRangerWeapon: {
 		DisplayName: Fireplace Guardian Rifle
-		Tooltip:
-			'''
-			Fireplace-grade alloy. The last line of the old world's defence.
-			Consumes bullets
-			'''
+		Tooltip: ""
 	}
 
 	FireplaceSummonerWeapon: {
 		DisplayName: Fireplace Guardian Beacon
-		Tooltip:
-			'''
-			Fireplace-grade alloy. The last line of the old world's defence.
-			Summons a minion
-			'''
+		Tooltip: Summons a hearth sentry
 	}
 
 	FireplaceWarriorWeaponEx: {
 		DisplayName: Fireplace Guardian Greatblade MK-II
-		Tooltip:
-			'''
-			Fireplace-grade alloy. The last line of the old world's defence.
-			Swing it to cut down everything inside the arc
-			'''
+		Tooltip: Creates a wide cutting arc
 	}
 
 	FireplaceMageWeaponEx: {
 		DisplayName: Fireplace Guardian Scepter MK-II
-		Tooltip:
-			'''
-			Fireplace-grade alloy. The last line of the old world's defence.
-			Consumes mana
-			'''
+		Tooltip: ""
 	}
 
 	FireplaceRangerWeaponEx: {
 		DisplayName: Fireplace Guardian Rifle MK-II
-		Tooltip:
-			'''
-			Fireplace-grade alloy. The last line of the old world's defence.
-			Consumes bullets
-			'''
+		Tooltip: ""
 	}
 
 	FireplaceSummonerWeaponEx: {
 		DisplayName: Fireplace Guardian Beacon MK-II
-		Tooltip:
-			'''
-			Fireplace-grade alloy. The last line of the old world's defence.
-			Summons a minion
-			'''
+		Tooltip: Summons a hearth sentry
 	}
 
 	ArchivistBag: {
@@ -612,7 +439,7 @@ Items: {
 
 	Chip: {
 		DisplayName: Chip
-		Tooltip: A stamped wafer pulled out of wasteland machines. Machina will trade for these.
+		Tooltip: Machina will trade for these
 	}
 
 	DawnSeal: {
@@ -627,674 +454,919 @@ Items: {
 
 	ScavengerWarriorCharm: {
 		DisplayName: Scavenger Warrior Charm
-		Tooltip: Melee damage and swing speed, salvaged from a purge unit.
+		Tooltip:
+			'''
+			6% increased melee damage
+			4% increased melee speed
+			'''
 	}
 
 	ScavengerMageCharm: {
 		DisplayName: Scavenger Mage Charm
-		Tooltip: A little more mana, and spells cost less to cast.
+		Tooltip:
+			'''
+			Increases maximum mana by 20
+			6% reduced mana cost
+			'''
 	}
 
 	ScavengerRangerCharm: {
 		DisplayName: Scavenger Ranger Charm
-		Tooltip: Ranged damage, and a chance to keep the round.
+		Tooltip:
+			'''
+			6% increased ranged damage
+			10% chance to not consume ammo
+			'''
 	}
 
 	ScavengerSummonerCharm: {
 		DisplayName: Scavenger Summoner Charm
-		Tooltip: One extra minion slot, bolted on.
+		Tooltip: Increases your max number of minions by 1
 	}
 
 	ArchivistWarriorCharm: {
 		DisplayName: Archivist Warrior Charm
-		Tooltip: Melee damage and critical chance, indexed.
+		Tooltip:
+			'''
+			8% increased melee damage
+			4% increased melee critical strike chance
+			'''
 	}
 
 	ArchivistMageCharm: {
 		DisplayName: Archivist Mage Charm
-		Tooltip: Magic damage, and spells burn less mana.
+		Tooltip:
+			'''
+			8% increased magic damage
+			8% reduced mana cost
+			'''
 	}
 
 	ArchivistRangerCharm: {
 		DisplayName: Archivist Ranger Charm
-		Tooltip: Ranged damage and a sharper eye.
+		Tooltip:
+			'''
+			8% increased ranged damage
+			5% increased ranged critical strike chance
+			'''
 	}
 
 	ArchivistSummonerCharm: {
 		DisplayName: Archivist Summoner Charm
-		Tooltip: Summon damage, filed and returned.
+		Tooltip: 12% increased summon damage
 	}
 
 	AshHeartWarriorCharm: {
 		DisplayName: Ash Heart Warrior Charm
-		Tooltip: Melee damage, and the body knits a little while it burns.
+		Tooltip:
+			'''
+			10% increased melee damage
+			Increases life regeneration
+			'''
 	}
 
 	AshHeartMageCharm: {
 		DisplayName: Ash Heart Mage Charm
-		Tooltip: Magic damage and faster mana recovery.
+		Tooltip:
+			'''
+			10% increased magic damage
+			Increases mana regeneration
+			'''
 	}
 
 	AshHeartRangerCharm: {
 		DisplayName: Ash Heart Ranger Charm
-		Tooltip: Ranged damage, and rounds that sometimes stay in the gun.
+		Tooltip:
+			'''
+			10% increased ranged damage
+			15% chance to not consume ammo
+			'''
 	}
 
 	AshHeartSummonerCharm: {
 		DisplayName: Ash Heart Summoner Charm
-		Tooltip: Summon damage and one more minion.
+		Tooltip:
+			'''
+			12% increased summon damage
+			Increases your max number of minions by 1
+			'''
 	}
 
 	FireplaceWarriorCharm: {
 		DisplayName: Fireplace Warrior Charm
-		Tooltip: Melee damage and swing speed from the last lock.
+		Tooltip:
+			'''
+			12% increased melee damage
+			8% increased melee speed
+			'''
 	}
 
 	FireplaceMageCharm: {
 		DisplayName: Fireplace Mage Charm
-		Tooltip: Magic damage, and spells cost noticeably less.
+		Tooltip:
+			'''
+			12% increased magic damage
+			12% reduced mana cost
+			'''
 	}
 
 	FireplaceRangerCharm: {
 		DisplayName: Fireplace Ranger Charm
-		Tooltip: Ranged damage and critical chance.
+		Tooltip:
+			'''
+			12% increased ranged damage
+			8% increased ranged critical strike chance
+			'''
 	}
 
 	FireplaceSummonerCharm: {
 		DisplayName: Fireplace Summoner Charm
-		Tooltip: Summon damage and one more minion.
+		Tooltip:
+			'''
+			14% increased summon damage
+			Increases your max number of minions by 1
+			'''
 	}
 
 	ScavengerCWarrior: {
 		DisplayName: Scrap Cleaver
-		Tooltip: A crawler was still holding this. It throws a shard of scrap.
+		Tooltip: Shoots a scrap shard
 	}
 
 	ScavengerCMage: {
 		DisplayName: Scrap Spark
-		Tooltip: A cracked coil that still throws charged scrap.
+		Tooltip: Shoots charged scrap
 	}
 
 	ScavengerCRanger: {
 		DisplayName: Scrap Pistol
-		Tooltip: Ugly, loud, and surprisingly straight.
+		Tooltip: ""
 	}
 
 	ScavengerCSummoner: {
 		DisplayName: Scrap Drone Staff
-		Tooltip: Calls a small salvage drone. It is not the repair kind.
+		Tooltip: Summons a salvage drone
 	}
 
 	ArchivistCWarrior: {
 		DisplayName: Index Blade
-		Tooltip: A short bone-white arc, torn out of a moth's wings.
+		Tooltip: Creates a short bone-white arc
 	}
 
 	ArchivistCMage: {
 		DisplayName: Loose Index
-		Tooltip: Pages that bounce and confuse whatever they hit.
+		Tooltip: Bouncing pages confuse hit enemies
 	}
 
 	ArchivistCRanger: {
 		DisplayName: Bone Sliver Gun
-		Tooltip: Fires thin archive slivers.
+		Tooltip: Fires thin archive slivers
 	}
 
 	ArchivistCSummoner: {
 		DisplayName: Familiar Splinter
-		Tooltip: A cracked staff that still remembers one familiar.
+		Tooltip: Summons a familiar
 	}
 
 	AshHeartCWarrior: {
 		DisplayName: Cinder Edge
-		Tooltip: A stalker's rib, still hot, swung as a sword.
+		Tooltip: ""
 	}
 
 	AshHeartCMage: {
 		DisplayName: Heart Coal
-		Tooltip: Throws a falling coal that burns on impact.
+		Tooltip: Throws a falling coal that ignites on impact
 	}
 
 	AshHeartCRanger: {
 		DisplayName: Ash Shot
-		Tooltip: Fast cinders instead of bullets' manners.
+		Tooltip: ""
 	}
 
 	AshHeartCSummoner: {
 		DisplayName: Ember Husk Staff
-		Tooltip: Calls a cinder that used to be part of the Heart.
+		Tooltip: Summons a cinder
 	}
 
 	FireplaceCWarrior: {
 		DisplayName: Hearth Blade
-		Tooltip: Cold metal with a furnace edge. A warden dropped it.
+		Tooltip: ""
 	}
 
 	FireplaceCMage: {
 		DisplayName: Cold Lamp
-		Tooltip: A slow, bright bolt from the Fireplace's spare parts.
+		Tooltip: Fires a slow, bright bolt
 	}
 
 	FireplaceCRanger: {
 		DisplayName: Nail Thrower
-		Tooltip: Fires the nails the Guardian used to hold the reset shut.
+		Tooltip: ""
 	}
 
 	FireplaceCSummoner: {
 		DisplayName: Sentry Wick
-		Tooltip: Calls a floating sentry that still knows the hearth.
+		Tooltip: Summons a floating sentry
 	}
 
 	RustedGear: {
 		DisplayName: Rusted Gear
-		Tooltip: Salvaged drivetrain parts, still greasy. General-purpose hardware for early gear, guns and mechanisms
+		Tooltip: ""
 	}
 
 	ScrapReaperBlade: {
 		DisplayName: Scrap Reaper's Blade
-		Tooltip2: Landing a hit straps a scrap shield onto you
-		Tooltip: Hurls a chunk of scrap that leans toward your target
+		Tooltip2: Hitting enemies grants a scrap shield
+		Tooltip: Hurls scrap that homes in on enemies
 	}
 
 	RustCleaver: {
 		DisplayName: Rust Cleaver
-		Tooltip: Sends a spinning scrap shard flying with every swing
+		Tooltip: Shoots a spinning scrap shard
 	}
 
 	ScrapYoyo: {
 		DisplayName: Scrap Yoyo
-		Tooltip: Spin it into a crowd and let the sharp edges work
+		Tooltip: ""
 	}
 
 	RustCleaverEX: {
 		DisplayName: Rust Cleaver MK-II
-		Tooltip: Its shard burns and punches through three targets
+		Tooltip: Shoots a burning shard that pierces 3 times
 	}
 
 	RustBoltWand: {
 		DisplayName: Rust Bolt Wand
-		Tooltip: Cheap sparks for cheap monsters
+		Tooltip: ""
 	}
 
 	RustAcidTome: {
 		DisplayName: Rust Acid Tome
-		Tooltip: Three arcs of acid that poison whatever they splash
+		Tooltip: Shoots 3 arcs of poison
 	}
 
 	RustBoltWandEX: {
 		DisplayName: Rust Bolt Wand MK-II
-		Tooltip: Homing sparks that pierce three targets
+		Tooltip: Shoots homing sparks that pierce 3 times
 	}
 
 	ScrapShotgun: {
 		DisplayName: Scrap Shotgun
-		Tooltip: Four pellets in one blast, wide enough to miss at range
+		Tooltip: Fires a spread of 4 pellets
 	}
 
 	RustNailgun: {
 		DisplayName: Rust Nailgun
-		Tooltip: Nails fly straight and skewer two enemies at a time
+		Tooltip: Fires nails that pierce 2 times
 	}
 
 	ScrapShotgunEX: {
 		DisplayName: Scrap Shotgun MK-II
-		Tooltip: Five pellets, and they ricochet once off walls
+		Tooltip: Fires 5 pellets that bounce once
 	}
 
 	RustDroneStaff: {
 		DisplayName: Rust Drone Staff
-		Tooltip: The drone rams enemies head-on instead of shooting
+		Tooltip: Summons a drone that rams enemies
 	}
 
 	RustSpitterStaff: {
 		DisplayName: Rust Spitter Staff
-		Tooltip: Spits a glob of acid at the nearest enemy
+		Tooltip: Summons a spitter that lobs acid
 	}
 
 	RustSpitterStaffEX: {
 		DisplayName: Rust Spitter Staff MK-II
-		Tooltip: Two acid globs per volley, and they pierce
+		Tooltip: Summons a spitter that lobs 2 piercing globs
 	}
 
 	ScrapGreatsword: {
 		DisplayName: Scrap Greatsword
-		Tooltip: Slow and heavy, it drags a shockwave along the ground
+		Tooltip: Creates a ground shockwave
 	}
 
 	RebarBoomerang: {
 		DisplayName: Rebar Boomerang
-		Tooltip: Comes back - and hits everything on the way out and back
+		Tooltip: Hits enemies on the way out and back
 	}
 
 	ScrapNovaStaff: {
 		DisplayName: Scrap Nova Staff
-		Tooltip: Bursts into four homing fragments on impact
+		Tooltip: Bursts into 4 homing fragments
 	}
 
 	ScrapNovaStaffEX: {
 		DisplayName: Scrap Nova Staff MK-II
-		Tooltip: Bursts into six fragments that hunt down survivors
+		Tooltip: Bursts into 6 homing fragments
 	}
 
 	ScrapRailgun: {
 		DisplayName: Scrap Railgun
-		Tooltip: One slug, six enemies, no mercy
+		Tooltip: Pierces 6 enemies
 	}
 
 	ScrapRailgunEX: {
 		DisplayName: Scrap Railgun MK-II
-		Tooltip: A single slug that pierces eight enemies
+		Tooltip: Pierces 8 enemies
 	}
 
 	ScrapWardenStaff: {
 		DisplayName: Scrap Warden Staff
-		Tooltip: A walking bulwark that slams and shells your enemies
+		Tooltip: Summons a warden that slams and shells enemies
 	}
 
 	ScavengerGraceHood: {
 		DisplayName: Scavenger's Grace Hood
-		Tooltip: 5% ranged damage
+		Tooltip: 5% increased ranged damage
 	}
 
 	ScavengerGraceJacket: {
 		DisplayName: Scavenger's Grace Jacket
-		SetBonus: No fall damage, and 22% movement speed plus faster mining while below 35% life
-		Tooltip: 4% damage, 6% movement speed
+		SetBonus:
+			'''
+			Grants immunity to fall damage
+			22% increased movement speed and mining speed when below 35% life
+			'''
+		Tooltip:
+			'''
+			4% increased damage
+			6% increased movement speed
+			'''
 	}
 
 	ScavengerGraceBoots: {
 		DisplayName: Scavenger's Grace Boots
-		Tooltip: 4% attack speed, 6% movement speed
+		Tooltip:
+			'''
+			4% increased attack speed
+			6% increased movement speed
+			'''
 	}
 
 	AshHeartMask: {
 		DisplayName: Ash Heart Mask
-		Tooltip: 7% melee and ranged damage
+		Tooltip: 7% increased melee and ranged damage
 	}
 
 	AshHeartPlate: {
 		DisplayName: Ash Heart Plate
-		SetBonus: Hits gain another 18% chance to set the target alight, +8% melee speed, and you regenerate while you are burning
-		Tooltip: 6% damage, hits have a 10% chance to set the target alight
+		SetBonus:
+			'''
+			18% chance to inflict On Fire!
+			8% increased melee speed
+			Life regeneration while you are on fire
+			'''
+		Tooltip:
+			'''
+			6% increased damage
+			10% chance to inflict On Fire!
+			'''
 	}
 
 	AshHeartGreaves: {
 		DisplayName: Ash Heart Greaves
-		Tooltip: 4% damage, 5% movement speed
+		Tooltip:
+			'''
+			4% increased damage
+			5% increased movement speed
+			'''
 	}
 
 	HearthGuardVisor: {
 		DisplayName: Hearth Guard Visor
-		Tooltip: 3% damage reduction, immune to chill
+		Tooltip:
+			'''
+			3% reduced damage taken
+			Immunity to Chilled
+			'''
 	}
 
 	HearthGuardCuirass: {
 		DisplayName: Hearth Guard Cuirass
-		SetBonus: +4 defense, another 5% damage reduction, and taking a hit vents a ring of cold fire
-		Tooltip: 4% damage reduction, immune to knockback
+		SetBonus:
+			'''
+			+4 defense
+			5% reduced damage taken
+			Taking damage vents a ring of cold fire
+			'''
+		Tooltip:
+			'''
+			4% reduced damage taken
+			Immunity to knockback
+			'''
 	}
 
 	HearthGuardGreaves: {
 		DisplayName: Hearth Guard Greaves
-		Tooltip: 3% damage reduction, slightly slower movement
+		Tooltip:
+			'''
+			3% reduced damage taken
+			Slightly reduced movement speed
+			'''
 	}
 
 	ScavengerHarness: {
 		DisplayName: Scavenger Harness
-		Tooltip: Immune to knockback and fall damage, 10% movement speed
+		Tooltip:
+			'''
+			10% increased movement speed
+			Immunity to knockback and fall damage
+			'''
 	}
 
 	FilteredRebreather: {
 		DisplayName: Filtered Rebreather
-		Tooltip: +2 defense. Pollution and toxic atmosphere hurt you 65% less
+		Tooltip:
+			'''
+			+2 defense
+			Reduces pollution and toxic atmosphere damage by 65%
+			'''
 	}
 
 	WastelandCompass: {
 		DisplayName: Wasteland Compass
-		Tooltip: +0.4 luck, a 15% chance to save ammo, and enemies notice you less
+		Tooltip:
+			'''
+			Increases luck by 0.4
+			15% chance to not consume ammo
+			Enemies are less likely to target you
+			'''
 	}
 
 	AbyssBreather: {
 		DisplayName: Abyss Breather
-		Tooltip: +200 breath, you can swim, and you shake off the wet debuff
+		Tooltip:
+			'''
+			Increases breath by 200
+			Grants the ability to swim
+			Immunity to Wet
+			'''
 	}
 
 	CinderstepBoots: {
 		DisplayName: Cinderstep Boots
-		Tooltip: Press Down with Left or Right to dash. You are briefly invulnerable and trail embers
+		Tooltip:
+			'''
+			Allows the wearer to dash
+			Double tap a direction
+			Grants brief invulnerability while dashing
+			'''
 	}
 
 	EmberglassLens: {
 		DisplayName: Emberglass Lens
-		Tooltip: 8% ranged damage, 5% ranged critical chance, 25% chance to set the target alight
+		Tooltip:
+			'''
+			8% increased ranged damage
+			5% increased ranged critical strike chance
+			25% chance to inflict On Fire!
+			'''
 	}
 
 	ConsecratedCore: {
 		DisplayName: Consecrated Core
-		Tooltip: 12% summon damage, +1 minion slot, 20% longer whips and stronger minion knockback
+		Tooltip:
+			'''
+			12% increased summon damage
+			Increases your max number of minions by 1
+			Increases whip range by 20%
+			'''
 	}
 
 	AshEchoCharm: {
 		DisplayName: Ash Echo Charm
-		Tooltip: 9% melee damage, 8% melee speed, 20% chance to set the target alight
+		Tooltip:
+			'''
+			9% increased melee damage
+			8% increased melee speed
+			20% chance to inflict On Fire!
+			'''
 	}
 
 	HearthBeacon: {
 		DisplayName: Hearth Beacon
-		Tooltip: +3 life regeneration, and hearts fly to you from further away
+		Tooltip:
+			'''
+			Increases life regeneration
+			Increases heart pickup range
+			'''
 	}
 
 	HearthAegis: {
 		DisplayName: Hearth Aegis
-		Tooltip: +5 defense, immune to knockback, and 14% less damage until the shield breaks. It repairs after 8 seconds
+		Tooltip:
+			'''
+			+5 defense
+			Immunity to knockback
+			14% reduced damage taken until the shield breaks
+			'''
 	}
 
 	HearthMirror: {
 		DisplayName: Hearth Mirror
-		Tooltip: +3 defense. When you are hurt, 35% of the damage is thrown back at the nearest enemy as an ember shard
+		Tooltip:
+			'''
+			+3 defense
+			Taking damage reflects 35% as an ember shard
+			'''
 	}
 
 	MorrowFragment: {
 		DisplayName: Morrow Fragment
-		Tooltip: 5% damage. Once every 45 seconds, a blow that would kill you is simply cancelled
+		Tooltip:
+			'''
+			5% increased damage
+			Prevents death once every 45 seconds
+			'''
 	}
 
 	Coke: {
 		DisplayName: Coke
-		Tooltip: A fuel block pressed from burnt leftovers. Burns hot and long
+		Tooltip: ""
 	}
 
 	CircuitBoard: {
 		DisplayName: Old-World Circuit Board
-		Tooltip: Copper traces that have not fully rotted. Carries old-world orders and precision devices
+		Tooltip: ""
 	}
 
 	Coolant: {
 		DisplayName: Coolant Canister
-		Tooltip: Still half full, still cold. The machines of the Fireplace run on it
+		Tooltip: ""
 	}
 
 	AshCrystal: {
 		DisplayName: Ash Crystal
-		Tooltip: Ash that grew into crystal where the pollution grew thick enough. Feeds the Ash Heart era gear and medicine
+		Tooltip: ""
 	}
 
 	SalvagedSteelBundle: {
 		DisplayName: Salvaged Steel Bundle
-		Tooltip: Rebarred chunks of salvaged steel. Easier to carry than the chunks, easier to work than the bars
+		Tooltip: ""
 	}
 
 	GasFilterPotion: {
 		DisplayName: Filter Cartridge
-		Tooltip: Grants complete immunity to toxic atmosphere and pollution for 12 minutes
+		Tooltip: Grants immunity to toxic atmosphere and pollution
 	}
 
 	MinersSolution: {
 		DisplayName: Burrowing Solution
-		Tooltip: Speeds up mining, building and wall work, and extends your reach by one tile
+		Tooltip:
+			'''
+			Increases mining, building and placement speed
+			Increases block range by 1
+			'''
 	}
 
 	ColdSpotlight: {
 		DisplayName: Cold Spotlight
-		Tooltip: Night vision, danger sense and treasure sight. Now you can see what is about to kill you
+		Tooltip:
+			'''
+			Shows the location of enemies, traps and treasure
+			Improves vision
+			'''
 	}
 
 	NaniteSalve: {
 		DisplayName: Nanite Salve
-		Tooltip: Slowly repairs you and greatly speeds up natural regeneration
+		Tooltip: Increases life regeneration
 	}
 
 	BeastWhistle: {
 		DisplayName: Beast Whistle Echo
-		Tooltip: Summon damage up, whips faster and longer. Quantity is the other potion's job
+		Tooltip:
+			'''
+			Increases summon damage
+			Increases whip speed and range
+			'''
 	}
 
 	AshenRation: {
 		DisplayName: Ashen Ration
-		Tooltip: A pressed wasteland ration. Filling, and it makes everything hit a little harder
+		Tooltip:
+			'''
+			Minor improvements to all stats
+			5% increased damage
+			'''
 	}
 
 	ScrapNail: {
 		DisplayName: Scrap Nail
-		Tooltip: Scrap iron cut into nails and fired on old primers. The cheapest thing you can call ammunition
+		Tooltip: ""
 	}
 
 	ColdlightRound: {
 		DisplayName: Coldlight Round
-		Tooltip: A coolant capsule in a bullet. Glows, punches through one target and leaves frostbite
+		Tooltip:
+			'''
+			Pierces 1 enemy
+			Inflicts Frostbite
+			'''
 	}
 
 	EmberShell: {
 		DisplayName: Ember Shell
-		Tooltip: Coke dust packed into a casing. Hits hard, punches through two targets and sets them on fire
+		Tooltip:
+			'''
+			Pierces 2 enemies
+			Inflicts On Fire!
+			'''
 	}
 
 	TornPage: {
 		DisplayName: Torn Page
-		Tooltip: A loose index page from the Archivist. Flies wildly, punches through four targets, and is a magic round
+		Tooltip: Pierces 4 enemies
 	}
 
 	ScavengerBeacon: {
 		DisplayName: Hunting Beacon
-		Tooltip: Relights the Scavenger's clearing program and calls it to you. Reusable, one at a time
+		Tooltip: Summons the Scavenger
 	}
 
 	AuditRequest: {
 		DisplayName: Audit Request Form
-		Tooltip: A filled-in request to re-audit a prototype's memory. The Archivist always answers paperwork
+		Tooltip: Summons the Archivist
 	}
 
 	EmberFuse: {
 		DisplayName: Ember Fuse
-		Tooltip: A fuse still smouldering at the tip. Plant it in the ash and the Ash Heart wakes up
+		Tooltip: Summons the Ash Heart
 	}
 
 	WastelandMap: {
 		DisplayName: Wasteland Map Fragment
-		Tooltip: A half-drawn map with usable margins. Unfold it and it points somewhere different every time
+		Tooltip: Reveals a random location
 	}
 
 	ScrapCache: {
 		DisplayName: Scrap Cache
-		Tooltip: A sealed crate dug out of the wasteland. Something useful is always inside
+		Tooltip: Right click to open
 	}
 
 	GasMask: {
 		DisplayName: Gas Mask
-		Tooltip: Filters out the exhaust the Fireplace keeps venting. Wearing it inside keeps the toxic atmosphere off you
+		Tooltip: Grants immunity to toxic atmosphere
 	}
 
 	SalvagedSteelSaber: {
 		DisplayName: Salvaged Steel Saber
-		Tooltip: A reforged cleaver with a straightened edge. Every swing throws a steel shard that cuts through four enemies and leaves them bleeding
+		Tooltip:
+			'''
+			Shoots a steel shard that pierces 4 times
+			Inflicts Bleeding
+			'''
 	}
 
 	ArchivistVerdictBlade: {
 		DisplayName: Archivist's Verdict
-		Tooltip: The wave it throws cuts through six enemies, strips their armor, and splits off shards that hunt down whatever is left
+		Tooltip:
+			'''
+			Shoots a wave that pierces 6 times
+			Splits into homing shards
+			'''
 	}
 
 	SalvagedSteelScattergun: {
 		DisplayName: Salvaged Steel Scattergun
-		Tooltip: Six tighter pellets per blast, and every pellet punches through two bodies before it slows
+		Tooltip: Fires 6 pellets that pierce 2 times
 	}
 
 	AshHeartFlechette: {
 		DisplayName: Ash Heart Flechette
-		Tooltip: Three fast flechettes that drive through three enemies each and leave the wound burning
+		Tooltip:
+			'''
+			Fires 3 flechettes that pierce 3 times
+			Inflicts On Fire!
+			'''
 	}
 
 	SalvagedSteelArcWand: {
 		DisplayName: Salvaged Steel Arc Wand
-		Tooltip: Fires three arcs in a fan, and everything they touch is left crackling
+		Tooltip: Fires 3 arcs that inflict Electrified
 	}
 
 	HearthGuardFrostCodex: {
 		DisplayName: Hearth Guardian Frost Codex
-		Tooltip: Five cold lances that seek their own targets, pierce three enemies each and leave frostbite behind
+		Tooltip:
+			'''
+			Fires 5 homing lances that pierce 3 times
+			Inflicts Frostbite
+			'''
 	}
 
 	ReinforcedFilterMask: {
 		DisplayName: Reinforced Filter Mask
-		Tooltip: A swappable filter stack. Keeps the Fireplace's toxic air off you, blunts pollution damage by 45%, adds 3 defense and makes you immune to poison
+		Tooltip:
+			'''
+			+3 defense
+			Grants immunity to toxic atmosphere and Poisoned
+			Reduces pollution damage by 45%
+			'''
 	}
 
 	AshHeartPurifierMask: {
 		DisplayName: Ash Heart Purifier Mask
-		Tooltip: A self-cleaning ash-heart filter. Blocks the Fireplace's air, blunts pollution damage by 70%, adds 5 defense, and makes you immune to poison and venom while slowly mending you
+		Tooltip:
+			'''
+			+5 defense
+			Grants immunity to toxic atmosphere, Poisoned and Venom
+			Reduces pollution damage by 70%
+			Increases life regeneration
+			'''
 	}
 
 	AshAlloyWarriorHelm: {
 		DisplayName: Ash Alloy War Helm
-		Tooltip: Ash-heart alloy over a steel shell. 8% more melee damage
+		Tooltip: 8% increased melee damage
 	}
 
 	AshAlloyWarriorPlate: {
 		DisplayName: Ash Alloy War Plate
-		Tooltip: 8% more melee damage
-		SetBonus: Set bonus: 12% more melee damage and speed, a 15% chance to ignite on hit, and pollution hurts 15% less
+		Tooltip: 8% increased melee damage
+		SetBonus:
+			'''
+			12% increased melee damage and speed
+			15% chance to inflict On Fire!
+			Reduces pollution damage by 15%
+			'''
 	}
 
 	AshAlloyWarriorGreaves: {
 		DisplayName: Ash Alloy War Greaves
-		Tooltip: 8% more melee speed
+		Tooltip: 8% increased melee speed
 	}
 
 	HearthAlloyWarriorHelm: {
 		DisplayName: Hearth Alloy War Helm
-		Tooltip: 9% more melee damage, 3% less damage taken
+		Tooltip:
+			'''
+			9% increased melee damage
+			3% reduced damage taken
+			'''
 	}
 
 	HearthAlloyWarriorPlate: {
 		DisplayName: Hearth Alloy War Plate
-		Tooltip: 9% more melee damage, immune to knockback
-		SetBonus: Set bonus: 15% more melee damage and speed, 6% less damage taken, and immunity to knockback
+		Tooltip:
+			'''
+			9% increased melee damage
+			Immunity to knockback
+			'''
+		SetBonus:
+			'''
+			15% increased melee damage and speed
+			6% reduced damage taken
+			Immunity to knockback
+			'''
 	}
 
 	HearthAlloyWarriorGreaves: {
 		DisplayName: Hearth Alloy War Greaves
-		Tooltip: 9% more melee speed, 3% less damage taken
+		Tooltip:
+			'''
+			9% increased melee speed
+			3% reduced damage taken
+			'''
 	}
 
 	RustedGearWhistle: {
 		DisplayName: Rusted Gear Whistle
-		Tooltip: Summons a rusted gear sentry that hurls itself at whatever is closest. One slot, no tricks
+		Tooltip: Summons a rusted gear sentry
 	}
 
 	SalvagedSteelGearWhistle: {
 		DisplayName: Salvaged Steel Gear Whistle
-		Tooltip: Calls a matched pair - one steel gear rams, one hovers back and spits bolts that leave the wound bleeding
+		Tooltip: Summons a pair of steel gear sentries
 	}
 
 	AshHeartGearWhistle: {
 		DisplayName: Ash Heart Gear Whistle
-		Tooltip: Calls two ash-heart gears that circle you, setting fire to whatever they touch, and lob homing embers. Also wraps you in a gear shield - 5 defense, no knockback, 8% less damage taken
+		Tooltip:
+			'''
+			Summons two ash-heart gears
+			+5 defense, 8% reduced damage taken, immunity to knockback
+			'''
 	}
 
 	ScavengerChip: {
 		DisplayName: Scavenger Chip
-		Tooltip: 8% more summon damage, and it pulls loose items and hearts to you from much further away
+		Tooltip:
+			'''
+			8% increased summon damage
+			Increases item and heart pickup range
+			'''
 	}
 
 	ReinforcedScavengerChip: {
 		DisplayName: Reinforced Scavenger Chip
-		Tooltip: 12% more summon damage, coins and mana stars fly to you as well, and you take 5% less damage
+		Tooltip:
+			'''
+			12% increased summon damage
+			5% reduced damage taken
+			Increases coin and mana star pickup range
+			'''
 	}
 
 	WastelandOverlordCore: {
 		DisplayName: Wasteland Overlord Core
-		Tooltip: 15% more summon damage, one extra minion slot, 8% less damage taken and a little more luck
+		Tooltip:
+			'''
+			15% increased summon damage
+			Increases your max number of minions by 1
+			8% reduced damage taken
+			Increases luck
+			'''
 	}
 
 	ScavengerTrophy: {
 		DisplayName: Scavenger Trophy
-		Tooltip: The execution unit's severed skull, its gears still idling.
+		Tooltip: ""
 	}
 
 	ArchivistTrophy: {
 		DisplayName: Archivist Trophy
-		Tooltip: The audit unit's mask, filed away for good.
+		Tooltip: ""
 	}
 
 	AshHeartTrophy: {
 		DisplayName: Ash Heart Trophy
-		Tooltip: A cinder that can no longer set anything alight.
+		Tooltip: ""
 	}
 
 	FireplaceGuardianTrophy: {
 		DisplayName: Fireplace Guardian Trophy
-		Tooltip: The Fireplace's last door, pried clean off its hinges.
+		Tooltip: ""
 	}
 
 	ScrapReaperTrophy: {
 		DisplayName: Rusted Claw Trophy
-		Tooltip: A rusted claw, still gripping the gear it never let go of.
+		Tooltip: ""
 	}
 
 	ScavengerBanner: {
 		DisplayName: Scavenger Banner
-		Tooltip: A banner stitched from Scavenger plating and scrap.
+		Tooltip: ""
 	}
 
 	ArchivistBanner: {
 		DisplayName: Archivist Banner
-		Tooltip: A banner bearing the audit unit's index seal.
+		Tooltip: ""
 	}
 
 	AshHeartBanner: {
 		DisplayName: Ash Heart Banner
-		Tooltip: A banner that still smells faintly of ash.
+		Tooltip: ""
 	}
 
 	FireplaceGuardianBanner: {
 		DisplayName: Fireplace Guardian Banner
-		Tooltip: The colours of the Fireplace's last guard.
+		Tooltip: ""
 	}
 
 	SignalCleaver: {
 		DisplayName: Rustjaw Cleaver
-		Tooltip: A hot-edged slab of scrap. The swing throws a burning shard
+		Tooltip: Shoots a burning scrap shard
 	}
 
 	SignalCodex: {
 		DisplayName: Lantern Codex
-		Tooltip: Throws a cold lantern-light that bends toward enemies
+		Tooltip: Casts homing lantern-light
 	}
 
 	SignalNailgun: {
 		DisplayName: Coil Nailgun
-		Tooltip: Fires nails. They spark when they land
+		Tooltip: Sparks on impact
 	}
 
 	SignalEmberFan: {
 		DisplayName: Ember Fan
-		Tooltip: Throws three burning blades at once
+		Tooltip: Throws 3 burning blades
 	}
 
 	SignalWispStaff: {
 		DisplayName: Signal Wisp Staff
-		Tooltip: Summons a small lantern that hunts for you
+		Tooltip: Summons a hunting lantern
 	}
 
 	SignalRigHelm: {
 		DisplayName: Signal Rig Helm
-		Tooltip: A rusted hood with a cyan slit
+		Tooltip: ""
 	}
 
 	SignalRigPlate: {
 		DisplayName: Signal Rig Plate
-		Tooltip: Welded scrap, one cold cable down the chest
-		SetBonus: The rig hums. You move a little faster, and a mote follows you
+		Tooltip: ""
+		SetBonus: 6% increased movement speed
 	}
 
 	SignalRigGreaves: {
 		DisplayName: Signal Rig Greaves
-		Tooltip: Shin stripes that still hold a charge
+		Tooltip: 4% increased movement speed
 	}
 
 	RiftCleaver: {
 		DisplayName: Rift Cleaver
-		Tooltip: A split blade. The swing tears a rift that collapses
+		Tooltip: Tears a collapsing rift
 	}
 
 	OrbitScepter: {
@@ -1304,12 +1376,12 @@ Items: {
 
 	StarstringBow: {
 		DisplayName: Starstring Bow
-		Tooltip: Converts arrows. They open a rift where they land
+		Tooltip: Wooden arrows open a rift where they land
 	}
 
 	GapChakram: {
 		DisplayName: Gap Chakram
-		Tooltip: A broken ring that collapses at the end of its flight
+		Tooltip: Collapses at the end of its flight
 	}
 
 	VoidSeed: {

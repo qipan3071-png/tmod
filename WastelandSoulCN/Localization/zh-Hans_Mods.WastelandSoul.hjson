@@ -83,440 +83,267 @@ Items: {
 	}
 	SalvagedSteelWarriorHelm: {
 		DisplayName: 精钢战士头盔
-		Tooltip: ""
+		Tooltip: 增加6%近战伤害
 	}
 	SalvagedSteelWarriorPlate: {
 		DisplayName: 精钢战士胸甲
-		SetBonus: 近战伤害 +10%、近战速度 +10%
-		Tooltip: ""
+		SetBonus: 增加10%近战伤害和近战速度
+		Tooltip: 增加6%近战伤害
 	}
 	SalvagedSteelWarriorGreaves: {
 		DisplayName: 精钢战士护腿
-		Tooltip: ""
+		Tooltip: 增加8%近战速度
 	}
 	SalvagedSteelMageHood: {
 		DisplayName: 精钢法师兜帽
-		Tooltip: ""
+		Tooltip:
+			'''
+			最大魔力值增加30
+			增加6%魔法伤害
+			'''
 	}
 	SalvagedSteelMageRobe: {
 		DisplayName: 精钢法袍
-		SetBonus: 魔法伤害 +10%、魔力消耗 -10%
-		Tooltip: ""
+		SetBonus:
+			'''
+			增加10%魔法伤害
+			减少10%魔力消耗
+			'''
+		Tooltip: 增加6%魔法伤害
 	}
 	SalvagedSteelMageLeggings: {
 		DisplayName: 精钢法师护腿
-		Tooltip: ""
+		Tooltip: 减少6%魔力消耗
 	}
 	SalvagedSteelRangerVisor: {
 		DisplayName: 精钢射手目镜
-		Tooltip: ""
+		Tooltip: 增加6%远程伤害
 	}
 	SalvagedSteelRangerVest: {
 		DisplayName: 精钢射手背心
-		SetBonus: 远程伤害 +10%、20% 几率不消耗弹药
-		Tooltip: ""
+		SetBonus:
+			'''
+			增加10%远程伤害
+			20%几率不消耗弹药
+			'''
+		Tooltip: 增加6%远程伤害
 	}
 	SalvagedSteelRangerLeggings: {
 		DisplayName: 精钢射手护腿
-		Tooltip: ""
+		Tooltip: 增加8%移动速度
 	}
 	SalvagedSteelSummonerCowl: {
 		DisplayName: 精钢召唤师头巾
-		Tooltip: ""
+		Tooltip: 增加6%召唤伤害
 	}
 	SalvagedSteelSummonerTunic: {
 		DisplayName: 精钢召唤师外衣
-		SetBonus: 召唤伤害 +10%、仆从栏位 +1
-		Tooltip: ""
+		SetBonus:
+			'''
+			增加10%召唤伤害
+			最大仆从数增加1
+			'''
+		Tooltip: 增加6%召唤伤害
 	}
 	SalvagedSteelSummonerLeggings: {
 		DisplayName: 精钢召唤师护腿
-		Tooltip: ""
+		Tooltip: 增加5%召唤伤害
 	}
 	SalvagedSteelChunk: {
 		DisplayName: 精钢碎块
-		Tooltip:
-			'''
-			从清道夫身上撕下来的高强度合金碎片
-			需要熔炼成精钢
-			'''
+		Tooltip: “从旧执行机体上撕下来的”
 	}
 	SalvagedSteelBar: {
 		DisplayName: 精钢
-		Tooltip:
-			'''
-			旧时代军用级合金
-			用来锻造精钢套装
-			'''
+		Tooltip: ""
 	}
 	ScavengerFragment: {
 		DisplayName: 清道夫残片
-		Tooltip:
-			'''
-			执行单元-07 的核心残骸
-			它的一段代码被刻意抹掉了
-			'''
+		Tooltip: “缺了一页代码的核心”
 	}
 	ScavengerSignalSensor: {
 		DisplayName: 清道夫信号传感器
-		Tooltip:
-			'''
-			向废土广播一段伪造的执行指令，把清道夫引到你身边
-			使用后不消耗，但同一时间只允许存在一只清道夫
-			'''
+		Tooltip: 召唤清道夫
 	}
 	CompanionCore: {
 		DisplayName: 智械核心
-		Tooltip:
-			'''
-			你穿越时间带来的机械核心
-			在精灵族遗迹的躯体上使用，唤醒智械人
-			'''
+		Tooltip: 在精灵族遗迹的躯体上使用，唤醒智械人
 	}
 	ArchivistFragment: {
 		DisplayName: 归档者残响碎片
-		Tooltip:
-			'''
-			归档者留下的共振碎片
-			「守望者计划」派来回收自身记忆的审计单元
-			'''
+		Tooltip: ""
 	}
 	ArchivistEcho: {
 		DisplayName: 归档者残响
-		Tooltip:
-			'''
-			播放一段伪造的旧日志残片
-			使用后不消耗，但同一时间只允许存在一只归档者
-			'''
+		Tooltip: 召唤归档者
 	}
 	AshHeartEmber: {
 		DisplayName: 灰烬之心余烬
-		Tooltip:
-			'''
-			往一簇自旧时代战争起就在阴燃的余烬上吹一口气
-			使用后不消耗，但同一时间只允许存在一颗灰烬之心
-			'''
+		Tooltip: 召唤灰烬之心
 	}
 	FireplaceKey: {
 		DisplayName: 壁炉通行密钥
-		Tooltip:
-			'''
-			把最后一道防线自己的识别码还给它
-			使用后不消耗，但同一时间只允许存在一名壁炉守卫
-			'''
+		Tooltip: 召唤壁炉守卫
 	}
 	AshHeartFragment: {
 		DisplayName: 灰烬之心碎片
-		Tooltip:
-			'''
-			从灰烬之心上撕下的自持余烬
-			需要精金熔炉的热度才能熔成灰烬合金
-			'''
+		Tooltip: ""
 	}
 	AshHeartAlloyBar: {
 		DisplayName: 灰烬之心合金锭
-		Tooltip: 灰烬碎片与旧时代合金熔合而成
+		Tooltip: ""
 	}
 	FireplaceFragment: {
 		DisplayName: 壁炉残骸
-		Tooltip:
-			'''
-			壁炉最后一道防线的碎片
-			需要精金熔炉的热度才能熔成壁炉合金
-			'''
+		Tooltip: ""
 	}
 	FireplaceAlloyBar: {
 		DisplayName: 壁炉合金锭
-		Tooltip: 曾包覆壁炉守卫的冷白合金
+		Tooltip: ""
 	}
 	ScavengerWarriorWeapon: {
 		DisplayName: 清道夫废料砍刀
-		Tooltip:
-			'''
-			从清道夫残骸里拆出来的——粗糙，但能用
-			挥砍时切开弧线内的一切
-			'''
+		Tooltip: 挥砍时放出一道宽弧
 	}
 	ScavengerMageWeapon: {
 		DisplayName: 清道夫电火花棒
-		Tooltip:
-			'''
-			从清道夫残骸里拆出来的——粗糙，但能用
-			消耗魔力
-			'''
+		Tooltip: ""
 	}
 	ScavengerRangerWeapon: {
 		DisplayName: 清道夫废料手枪
-		Tooltip:
-			'''
-			从清道夫残骸里拆出来的——粗糙，但能用
-			消耗子弹
-			'''
+		Tooltip: ""
 	}
 	ScavengerSummonerWeapon: {
 		DisplayName: 清道夫无人机信标
-		Tooltip:
-			'''
-			从清道夫残骸里拆出来的——粗糙，但能用
-			召唤一个仆从
-			'''
+		Tooltip: 召唤一台回收无人机
 	}
 	ScavengerWarriorWeaponEX: {
 		DisplayName: 清道夫废料砍刀 MK-II
-		Tooltip:
-			'''
-			从清道夫残骸里拆出来的——粗糙，但能用
-			挥砍时切开弧线内的一切
-			'''
+		Tooltip: 挥砍时放出一道宽弧
 	}
 	ScavengerMageWeaponEX: {
 		DisplayName: 清道夫电火花棒 MK-II
-		Tooltip:
-			'''
-			从清道夫残骸里拆出来的——粗糙，但能用
-			消耗魔力
-			'''
+		Tooltip: ""
 	}
 	ScavengerRangerWeaponEX: {
 		DisplayName: 清道夫废料手枪 MK-II
-		Tooltip:
-			'''
-			从清道夫残骸里拆出来的——粗糙，但能用
-			消耗子弹
-			'''
+		Tooltip: ""
 	}
 	ScavengerSummonerWeaponEX: {
 		DisplayName: 清道夫无人机信标 MK-II
-		Tooltip:
-			'''
-			从清道夫残骸里拆出来的——粗糙，但能用
-			召唤一个仆从
-			'''
+		Tooltip: 召唤一台回收无人机
 	}
 	ScavengerGreatblade: {
 		DisplayName: 清道夫大刀
-		Tooltip:
-			'''
-			清道夫自己的宽刃，从残骸里拔出来时还烫手
-			又慢又重——每一挥都甩出一排月牙刀光，飞得比看上去更远
-			'''
+		Tooltip: 挥砍时甩出一扇新月刃
 	}
 	SteelDischarger: {
 		DisplayName: 精钢放电器
-		Tooltip:
-			'''
-			精钢拳头外缠着从残骸上拆下来的电弧线圈
-			按住蓄力，松手放出一道链状闪电，顺着附近的敌人一路跳过去
-			消耗魔力
-			'''
+		Tooltip: 按住蓄力，松开后放出连锁闪电
 	}
 	PollutionCannon: {
 		DisplayName: 污染炮
-		Tooltip:
-			'''
-			把整块凝胶直接压出去的废土压力鼓，弹道又重又慢
-			每一发落地都炸开一小片污染云，站在里面的东西会一直烂下去
-			'''
+		Tooltip: 炮弹爆开后留下一片污染云
 	}
 	SteelBow: {
 		DisplayName: 精钢弓
-		Tooltip:
-			'''
-			精钢弓臂，用的是从废墟里捡来的缆绳
-			普通箭射出去会变成邪箭，还会自己朝最近的活物偏过去
-			'''
+		Tooltip: 木箭会变为咒箭并追踪敌人
 	}
 	ArchivistWarriorWeapon: {
 		DisplayName: 归档者骨刃
-		Tooltip:
-			'''
-			归档的骨白与冷蓝光——守望者审计日志的具现
-			挥砍时切开弧线内的一切
-			'''
+		Tooltip: 挥砍时放出一道宽弧
 	}
 	ArchivistMageWeapon: {
 		DisplayName: 归档者索引法典
-		Tooltip:
-			'''
-			归档的骨白与冷蓝光——守望者审计日志的具现
-			消耗魔力
-			'''
+		Tooltip: ""
 	}
 	ArchivistRangerWeapon: {
 		DisplayName: 归档者骨制散射枪
-		Tooltip:
-			'''
-			归档的骨白与冷蓝光——守望者审计日志的具现
-			消耗子弹
-			'''
+		Tooltip: ""
 	}
 	ArchivistSummonerWeapon: {
 		DisplayName: 归档者使魔法杖
-		Tooltip:
-			'''
-			归档的骨白与冷蓝光——守望者审计日志的具现
-			召唤一个仆从
-			'''
+		Tooltip: 召唤一个使魔
 	}
 	ArchivistWarriorWeaponEX: {
 		DisplayName: 归档者骨刃 MK-II
-		Tooltip:
-			'''
-			归档的骨白与冷蓝光——守望者审计日志的具现
-			挥砍时切开弧线内的一切
-			'''
+		Tooltip: 挥砍时放出一道宽弧
 	}
 	ArchivistMageWeaponEX: {
 		DisplayName: 归档者索引法典 MK-II
-		Tooltip:
-			'''
-			归档的骨白与冷蓝光——守望者审计日志的具现
-			消耗魔力
-			'''
+		Tooltip: ""
 	}
 	ArchivistRangerWeaponEX: {
 		DisplayName: 归档者骨制散射枪 MK-II
-		Tooltip:
-			'''
-			归档的骨白与冷蓝光——守望者审计日志的具现
-			消耗子弹
-			'''
+		Tooltip: ""
 	}
 	ArchivistSummonerWeaponEX: {
 		DisplayName: 归档者使魔法杖 MK-II
-		Tooltip:
-			'''
-			归档的骨白与冷蓝光——守望者审计日志的具现
-			召唤一个仆从
-			'''
+		Tooltip: 召唤一个使魔
 	}
 	AshHeartWarriorWeapon: {
 		DisplayName: 灰烬之心大剑
-		Tooltip:
-			'''
-			以灰烬之心的余烬锻成——它还在阴燃
-			挥砍时切开弧线内的一切
-			'''
+		Tooltip: 挥砍时放出一道宽弧
 	}
 	AshHeartMageWeapon: {
 		DisplayName: 灰烬之心核心法杖
-		Tooltip:
-			'''
-			以灰烬之心的余烬锻成——它还在阴燃
-			消耗魔力
-			'''
+		Tooltip: ""
 	}
 	AshHeartRangerWeapon: {
 		DisplayName: 灰烬之心余烬步枪
-		Tooltip:
-			'''
-			以灰烬之心的余烬锻成——它还在阴燃
-			消耗子弹
-			'''
+		Tooltip: ""
 	}
 	AshHeartSummonerWeapon: {
 		DisplayName: 灰烬之心燃烬法杖
-		Tooltip:
-			'''
-			以灰烬之心的余烬锻成——它还在阴燃
-			召唤一个仆从
-			'''
+		Tooltip: 召唤一个余烬仆从
 	}
 	AshHeartWarriorWeaponEx: {
 		DisplayName: 灰烬之心大剑 MK-II
-		Tooltip:
-			'''
-			以灰烬之心的余烬锻成——它还在阴燃
-			挥砍时切开弧线内的一切
-			'''
+		Tooltip: 挥砍时放出一道宽弧
 	}
 	AshHeartMageWeaponEx: {
 		DisplayName: 灰烬之心核心法杖 MK-II
-		Tooltip:
-			'''
-			以灰烬之心的余烬锻成——它还在阴燃
-			消耗魔力
-			'''
+		Tooltip: ""
 	}
 	AshHeartRangerWeaponEx: {
 		DisplayName: 灰烬之心余烬步枪 MK-II
-		Tooltip:
-			'''
-			以灰烬之心的余烬锻成——它还在阴燃
-			消耗子弹
-			'''
+		Tooltip: ""
 	}
 	AshHeartSummonerWeaponEx: {
 		DisplayName: 灰烬之心燃烬法杖 MK-II
-		Tooltip:
-			'''
-			以灰烬之心的余烬锻成——它还在阴燃
-			召唤一个仆从
-			'''
+		Tooltip: 召唤一个余烬仆从
 	}
 	FireplaceWarriorWeapon: {
 		DisplayName: 壁炉守卫大剑
-		Tooltip:
-			'''
-			壁炉级合金。旧世界防线的最后一环
-			挥砍时切开弧线内的一切
-			'''
+		Tooltip: 挥砍时放出一道宽弧
 	}
 	FireplaceMageWeapon: {
 		DisplayName: 壁炉守卫权杖
-		Tooltip:
-			'''
-			壁炉级合金。旧世界防线的最后一环
-			消耗魔力
-			'''
+		Tooltip: ""
 	}
 	FireplaceRangerWeapon: {
 		DisplayName: 壁炉守卫步枪
-		Tooltip:
-			'''
-			壁炉级合金。旧世界防线的最后一环
-			消耗子弹
-			'''
+		Tooltip: ""
 	}
 	FireplaceSummonerWeapon: {
 		DisplayName: 壁炉守卫信标
-		Tooltip:
-			'''
-			壁炉级合金。旧世界防线的最后一环
-			召唤一个仆从
-			'''
+		Tooltip: 召唤一座炉火哨兵
 	}
 	FireplaceWarriorWeaponEx: {
 		DisplayName: 壁炉守卫大剑 MK-II
-		Tooltip:
-			'''
-			壁炉级合金。旧世界防线的最后一环
-			挥砍时切开弧线内的一切
-			'''
+		Tooltip: 挥砍时放出一道宽弧
 	}
 	FireplaceMageWeaponEx: {
 		DisplayName: 壁炉守卫权杖 MK-II
-		Tooltip:
-			'''
-			壁炉级合金。旧世界防线的最后一环
-			消耗魔力
-			'''
+		Tooltip: ""
 	}
 	FireplaceRangerWeaponEx: {
 		DisplayName: 壁炉守卫步枪 MK-II
-		Tooltip:
-			'''
-			壁炉级合金。旧世界防线的最后一环
-			消耗子弹
-			'''
+		Tooltip: ""
 	}
 	FireplaceSummonerWeaponEx: {
 		DisplayName: 壁炉守卫信标 MK-II
-		Tooltip:
-			'''
-			壁炉级合金。旧世界防线的最后一环
-			召唤一个仆从
-			'''
+		Tooltip: 召唤一座炉火哨兵
 	}
 	ArchivistBag: {
 		DisplayName: 归档者掉落袋
@@ -536,7 +363,7 @@ Items: {
 	}
 	Chip: {
 		DisplayName: 芯片
-		Tooltip: 从废土机械里拆下来的冲压晶片。智械人拿这个换东西。
+		Tooltip: “智械人拿这个换东西”
 	}
 	DawnSeal: {
 		DisplayName: 黎明封印
@@ -548,558 +375,803 @@ Items: {
 	}
 	ScavengerWarriorCharm: {
 		DisplayName: 清道夫的战士饰品
-		Tooltip: 近战伤害和挥砍速度，从清扫单元上拆下来的。
+		Tooltip:
+			'''
+			增加6%近战伤害
+			增加4%近战速度
+			'''
 	}
 	ScavengerMageCharm: {
 		DisplayName: 清道夫的法师饰品
-		Tooltip: 多一点魔力，施法也更省。
+		Tooltip:
+			'''
+			最大魔力值增加20
+			减少6%魔力消耗
+			'''
 	}
 	ScavengerRangerCharm: {
 		DisplayName: 清道夫的射手饰品
-		Tooltip: 远程伤害，并且有几率不消耗弹药。
+		Tooltip:
+			'''
+			增加6%远程伤害
+			10%几率不消耗弹药
+			'''
 	}
 	ScavengerSummonerCharm: {
 		DisplayName: 清道夫的召唤饰品
-		Tooltip: 额外一个仆从栏位。
+		Tooltip: 最大仆从数增加1
 	}
 	ArchivistWarriorCharm: {
 		DisplayName: 归档者的战士饰品
-		Tooltip: 近战伤害和暴击，已经编过目。
+		Tooltip:
+			'''
+			增加8%近战伤害
+			增加4%近战暴击率
+			'''
 	}
 	ArchivistMageCharm: {
 		DisplayName: 归档者的法师饰品
-		Tooltip: 魔法伤害，法术更省魔力。
+		Tooltip:
+			'''
+			增加8%魔法伤害
+			减少8%魔力消耗
+			'''
 	}
 	ArchivistRangerCharm: {
 		DisplayName: 归档者的射手饰品
-		Tooltip: 远程伤害，眼也更准。
+		Tooltip:
+			'''
+			增加8%远程伤害
+			增加5%远程暴击率
+			'''
 	}
 	ArchivistSummonerCharm: {
 		DisplayName: 归档者的召唤饰品
-		Tooltip: 召唤伤害，归档之后又送了回来。
+		Tooltip: 增加12%召唤伤害
 	}
 	AshHeartWarriorCharm: {
 		DisplayName: 灰烬之心的战士饰品
-		Tooltip: 近战伤害。身体一边烧，一边慢慢长好。
+		Tooltip:
+			'''
+			增加10%近战伤害
+			提高生命再生
+			'''
 	}
 	AshHeartMageCharm: {
 		DisplayName: 灰烬之心的法师饰品
-		Tooltip: 魔法伤害，魔力恢复更快。
+		Tooltip:
+			'''
+			增加10%魔法伤害
+			提高魔力再生
+			'''
 	}
 	AshHeartRangerCharm: {
 		DisplayName: 灰烬之心的射手饰品
-		Tooltip: 远程伤害，弹药有时会留在枪里。
+		Tooltip:
+			'''
+			增加10%远程伤害
+			15%几率不消耗弹药
+			'''
 	}
 	AshHeartSummonerCharm: {
 		DisplayName: 灰烬之心的召唤饰品
-		Tooltip: 召唤伤害，再加一个仆从栏位。
+		Tooltip:
+			'''
+			增加12%召唤伤害
+			最大仆从数增加1
+			'''
 	}
 	FireplaceWarriorCharm: {
 		DisplayName: 壁炉守卫的战士饰品
-		Tooltip: 来自最后一把锁的近战伤害和挥砍速度。
+		Tooltip:
+			'''
+			增加12%近战伤害
+			增加8%近战速度
+			'''
 	}
 	FireplaceMageCharm: {
 		DisplayName: 壁炉守卫的法师饰品
-		Tooltip: 魔法伤害，法术消耗明显更低。
+		Tooltip:
+			'''
+			增加12%魔法伤害
+			减少12%魔力消耗
+			'''
 	}
 	FireplaceRangerCharm: {
 		DisplayName: 壁炉守卫的射手饰品
-		Tooltip: 远程伤害和暴击。
+		Tooltip:
+			'''
+			增加12%远程伤害
+			增加8%远程暴击率
+			'''
 	}
 	FireplaceSummonerCharm: {
 		DisplayName: 壁炉守卫的召唤饰品
-		Tooltip: 召唤伤害，再加一个仆从栏位。
+		Tooltip:
+			'''
+			增加14%召唤伤害
+			最大仆从数增加1
+			'''
 	}
 	ScavengerCWarrior: {
 		DisplayName: 废料砍刀
-		Tooltip: 爬虫到死还攥着它。挥出去会甩出一片废料。
+		Tooltip: 挥砍时甩出一块废料
 	}
 	ScavengerCMage: {
 		DisplayName: 废料火花
-		Tooltip: 一截还在放电的线圈。
+		Tooltip: 发射带电废料
 	}
 	ScavengerCRanger: {
 		DisplayName: 废料手枪
-		Tooltip: 难看，很响，弹道倒是直的。
+		Tooltip: ""
 	}
 	ScavengerCSummoner: {
 		DisplayName: 废料无人机杖
-		Tooltip: 召一台小小的回收无人机。它不负责维修。
+		Tooltip: 召唤一台回收无人机
 	}
 	ArchivistCWarrior: {
 		DisplayName: 索引刃
-		Tooltip: 从蛾翅上撕下来的一小段骨白弧光。
+		Tooltip: 挥砍时放出一道短弧
 	}
 	ArchivistCMage: {
 		DisplayName: 散页
-		Tooltip: 会弹开、还会把打中的东西弄糊涂的纸页。
+		Tooltip: 弹跳的纸页会迷惑命中的敌人
 	}
 	ArchivistCRanger: {
 		DisplayName: 骨片枪
-		Tooltip: 发射细细的档案碎片。
+		Tooltip: 发射细小的归档碎片
 	}
 	ArchivistCSummoner: {
 		DisplayName: 使魔残杖
-		Tooltip: 一根裂开的杖，还记得一只使魔。
+		Tooltip: 召唤一个使魔
 	}
 	AshHeartCWarrior: {
 		DisplayName: 余烬刃
-		Tooltip: 潜猎者的一根肋骨，还是烫的，被当成了剑。
+		Tooltip: ""
 	}
 	AshHeartCMage: {
 		DisplayName: 心炭
-		Tooltip: 扔出一颗下坠的炭，砸中就烧。
+		Tooltip: 投出落地后燃烧的煤块
 	}
 	AshHeartCRanger: {
 		DisplayName: 灰弹
-		Tooltip: 用余烬代替了子弹该有的礼貌。
+		Tooltip: ""
 	}
 	AshHeartCSummoner: {
 		DisplayName: 余烬残壳杖
-		Tooltip: 召一簇曾经属于那颗心的余烬。
+		Tooltip: 召唤一簇余烬
 	}
 	FireplaceCWarrior: {
 		DisplayName: 炉心刃
-		Tooltip: 冷金属，刃口是炉火。炉卫掉的。
+		Tooltip: ""
 	}
 	FireplaceCMage: {
 		DisplayName: 冷灯
-		Tooltip: 用壁炉的备用零件打出的一发缓慢亮弹。
+		Tooltip: 发射缓慢的亮弹
 	}
 	FireplaceCRanger: {
 		DisplayName: 钉枪
-		Tooltip: 发射守卫用来钉住重置装置的钉子。
+		Tooltip: ""
 	}
 	FireplaceCSummoner: {
 		DisplayName: 哨焰
-		Tooltip: 召一只还认得壁炉的浮游哨。
+		Tooltip: 召唤一座悬浮哨兵
 	}
 	RustedGear: {
 		DisplayName: 锈蚀齿轮
-		Tooltip: 拆下来的传动部件，还带着油泥。早期装备、枪械与机关的通用零件
+		Tooltip: ""
 	}
 	ScrapReaperBlade: {
 		DisplayName: 废料收割者之刃
-		Tooltip2: 命中后在你身上挂一层废料护盾
-		Tooltip: 甩出一块废料，它会朝你的目标偏过去
+		Tooltip2: 命中后获得一层废料护盾
+		Tooltip: 甩出一块会转向目标的废料
 	}
 	RustCleaver: {
 		DisplayName: 锈蚀砍刀
-		Tooltip: 每次挥砍都甩出一枚旋转的废料碎片
+		Tooltip: 挥砍时甩出旋转废料
 	}
 	ScrapYoyo: {
 		DisplayName: 废料溜溜球
-		Tooltip: 把它甩进怪堆，让锋利的边缘自己干活
+		Tooltip: ""
 	}
 	RustCleaverEX: {
 		DisplayName: 锈蚀砍刀 MK-II
-		Tooltip: 碎片带火，能贯穿三个目标
+		Tooltip: 甩出可穿透3个敌人的燃烧废料
 	}
 	RustBoltWand: {
 		DisplayName: 锈蚀电光棒
-		Tooltip: 便宜的火花，对付便宜的怪物
+		Tooltip: ""
 	}
 	RustAcidTome: {
 		DisplayName: 锈蚀酸液法典
-		Tooltip: 三道酸弧，溅到谁就给谁上毒
+		Tooltip: 发射3道毒液弧
 	}
 	RustBoltWandEX: {
 		DisplayName: 锈蚀电光棒 MK-II
-		Tooltip: 会追踪的火花，可贯穿三个目标
+		Tooltip: 发射可穿透3次的追踪电火花
 	}
 	ScrapShotgun: {
 		DisplayName: 废料霰弹枪
-		Tooltip: 一次四颗弹丸，散得远了就打不准
+		Tooltip: 一次打出4发散弹
 	}
 	RustNailgun: {
 		DisplayName: 锈蚀钉枪
-		Tooltip: 钉子笔直飞行，一次能串起两个敌人
+		Tooltip: 钉子可穿透2个敌人
 	}
 	ScrapShotgunEX: {
 		DisplayName: 废料霰弹枪 MK-II
-		Tooltip: 五颗弹丸，还会在墙上弹跳一次
+		Tooltip: 一次打出5发，碰墙反弹1次
 	}
 	RustDroneStaff: {
 		DisplayName: 锈蚀无人机法杖
-		Tooltip: 这架无人机不射击，而是直接用机身撞向敌人
+		Tooltip: 召唤会撞击敌人的无人机
 	}
 	RustSpitterStaff: {
 		DisplayName: 锈蚀吐酸法杖
-		Tooltip: 朝最近的敌人吐出一团酸液
+		Tooltip: 召唤会喷酸的生物
 	}
 	RustSpitterStaffEX: {
 		DisplayName: 锈蚀吐酸法杖 MK-II
-		Tooltip: 每轮两团酸液，而且能贯穿
+		Tooltip: 召唤会喷出2发穿透酸液的生物
 	}
 	ScrapGreatsword: {
 		DisplayName: 废料巨剑
-		Tooltip: 又慢又重，会沿地面拖出一道冲击波
+		Tooltip: 挥砍时沿地面推出冲击波
 	}
 	RebarBoomerang: {
 		DisplayName: 钢筋回旋镖
-		Tooltip: 它会飞回来 —— 去程和回程都撞得到东西
+		Tooltip: 去程和回程都会造成伤害
 	}
 	ScrapNovaStaff: {
 		DisplayName: 废料新星法杖
-		Tooltip: 命中时炸成四块追踪碎片
+		Tooltip: 命中后爆成4枚追踪碎片
 	}
 	ScrapNovaStaffEX: {
 		DisplayName: 废料新星法杖 MK-II
-		Tooltip: 炸成六块碎片，挨个追杀幸存者
+		Tooltip: 命中后爆成6枚追踪碎片
 	}
 	ScrapRailgun: {
 		DisplayName: 废料磁轨炮
-		Tooltip: 一发弹丸，六个敌人，不留情面
+		Tooltip: 可穿透6个敌人
 	}
 	ScrapRailgunEX: {
 		DisplayName: 废料磁轨炮 MK-II
-		Tooltip: 单发弹丸可贯穿八个敌人
+		Tooltip: 可穿透8个敌人
 	}
 	ScrapWardenStaff: {
 		DisplayName: 废料典狱官法杖
-		Tooltip: 一具会走路的壁垒，替你砸击并炮轰敌人
+		Tooltip: 召唤会撞击并开炮的守卫
 	}
 	ScavengerGraceHood: {
 		DisplayName: 清道夫之惠兜帽
-		Tooltip: 远程伤害 +5%
+		Tooltip: 增加5%远程伤害
 	}
 	ScavengerGraceJacket: {
 		DisplayName: 清道夫之惠外套
-		SetBonus: 免疫摔落伤害；生命低于 35% 时移动速度 +22% 且挖掘更快
-		Tooltip: 伤害 +4%、移动速度 +6%
+		SetBonus:
+			'''
+			免疫坠落伤害
+			生命值低于35%时，移动速度和挖掘速度增加22%
+			'''
+		Tooltip:
+			'''
+			增加4%伤害
+			增加6%移动速度
+			'''
 	}
 	ScavengerGraceBoots: {
 		DisplayName: 清道夫之惠长靴
-		Tooltip: 攻击速度 +4%、移动速度 +6%
+		Tooltip:
+			'''
+			增加4%攻击速度
+			增加6%移动速度
+			'''
 	}
 	AshHeartMask: {
 		DisplayName: 灰烬之心面具
-		Tooltip: 近战与远程伤害 +7%
+		Tooltip: 增加7%近战和远程伤害
 	}
 	AshHeartPlate: {
 		DisplayName: 灰烬之心胸甲
-		SetBonus: 命中时再获得 18% 几率点燃目标，近战速度 +8%，且你在燃烧时持续回复生命
-		Tooltip: 伤害 +6%，命中时有 10% 几率点燃目标
+		SetBonus:
+			'''
+			18%几率使敌人着火
+			增加8%近战速度
+			自身着火时提高生命再生
+			'''
+		Tooltip:
+			'''
+			增加6%伤害
+			10%几率使敌人着火
+			'''
 	}
 	AshHeartGreaves: {
 		DisplayName: 灰烬之心护腿
-		Tooltip: 伤害 +4%、移动速度 +5%
+		Tooltip:
+			'''
+			增加4%伤害
+			增加5%移动速度
+			'''
 	}
 	HearthGuardVisor: {
 		DisplayName: 壁炉守卫面罩
-		Tooltip: 伤害减免 3%，免疫寒冷
+		Tooltip:
+			'''
+			减少3%所受伤害
+			免疫寒冷
+			'''
 	}
 	HearthGuardCuirass: {
 		DisplayName: 壁炉守卫胸甲
-		SetBonus: 防御 +4、伤害减免再 +5%，受到攻击时喷出一圈冷焰
-		Tooltip: 伤害减免 4%，免疫击退
+		SetBonus:
+			'''
+			防御力增加4
+			减少5%所受伤害
+			受伤时放出一圈冷火
+			'''
+		Tooltip:
+			'''
+			减少4%所受伤害
+			免疫击退
+			'''
 	}
 	HearthGuardGreaves: {
 		DisplayName: 壁炉守卫护腿
-		Tooltip: 伤害减免 3%，移动略慢
+		Tooltip:
+			'''
+			减少3%所受伤害
+			略微降低移动速度
+			'''
 	}
 	ScavengerHarness: {
 		DisplayName: 清道夫挽具
-		Tooltip: 免疫击退与摔落伤害，移动速度 +10%
+		Tooltip:
+			'''
+			增加10%移动速度
+			免疫击退和坠落伤害
+			'''
 	}
 	FilteredRebreather: {
 		DisplayName: 滤芯呼吸器
-		Tooltip: 防御 +2。污染与有害气体对你的伤害降低 65%
+		Tooltip:
+			'''
+			防御力增加2
+			污染和有害气体伤害减少65%
+			'''
 	}
 	WastelandCompass: {
 		DisplayName: 废土罗盘
-		Tooltip: 幸运 +0.4，有 15% 几率不消耗弹药，敌人也更不容易注意到你
+		Tooltip:
+			'''
+			幸运增加0.4
+			15%几率不消耗弹药
+			敌人不太会以你为目标
+			'''
 	}
 	AbyssBreather: {
 		DisplayName: 深渊呼吸器
-		Tooltip: 呼吸上限 +200，可以在水中游泳，并驱散潮湿减益
+		Tooltip:
+			'''
+			呼吸时间增加200
+			可以游泳
+			免疫潮湿
+			'''
 	}
 	CinderstepBoots: {
 		DisplayName: 烬步长靴
-		Tooltip: 按住下方向键配合左右方向键可冲刺。冲刺瞬间无敌，并拖出一串余烬
+		Tooltip:
+			'''
+			可冲刺
+			连按方向键两次
+			冲刺期间短暂无敌
+			'''
 	}
 	EmberglassLens: {
 		DisplayName: 烬玻璃透镜
-		Tooltip: 远程伤害 +8%、远程暴击率 +5%，25% 几率点燃目标
+		Tooltip:
+			'''
+			增加8%远程伤害
+			增加5%远程暴击率
+			25%几率使敌人着火
+			'''
 	}
 	ConsecratedCore: {
 		DisplayName: 祝圣核心
-		Tooltip: 召唤伤害 +12%、仆从栏位 +1，鞭子加长 20%，仆从击退更强
+		Tooltip:
+			'''
+			增加12%召唤伤害
+			最大仆从数增加1
+			鞭子范围增加20%
+			'''
 	}
 	AshEchoCharm: {
 		DisplayName: 灰烬回响护符
-		Tooltip: 近战伤害 +9%、近战速度 +8%，20% 几率点燃目标
+		Tooltip:
+			'''
+			增加9%近战伤害
+			增加8%近战速度
+			20%几率使敌人着火
+			'''
 	}
 	HearthBeacon: {
 		DisplayName: 壁炉信标
-		Tooltip: 生命自然恢复 +3，红心会从更远处飞向你
+		Tooltip:
+			'''
+			提高生命再生
+			增加红心拾取范围
+			'''
 	}
 	HearthAegis: {
 		DisplayName: 壁炉神盾
-		Tooltip: 防御 +5、免疫击退，受到的伤害降低 14%，直到护盾破碎。护盾 8 秒后自行修复
+		Tooltip:
+			'''
+			防御力增加5
+			免疫击退
+			护盾存在时减少14%所受伤害
+			'''
 	}
 	HearthMirror: {
 		DisplayName: 壁炉之镜
-		Tooltip: 防御 +3。你受伤时，35% 的伤害会化作余烬碎片掷回最近的敌人
+		Tooltip:
+			'''
+			防御力增加3
+			受伤时将35%伤害以余烬碎片反射给最近的敌人
+			'''
 	}
 	MorrowFragment: {
 		DisplayName: 明日碎片
-		Tooltip: 伤害 +5%。每 45 秒一次，本该杀死你的那一击会被直接取消
+		Tooltip:
+			'''
+			增加5%伤害
+			每45秒可避免一次致死伤害
+			'''
 	}
 	Coke: {
 		DisplayName: 焦炭
-		Tooltip: 用烧剩的残渣压成的燃料块。耐烧，火也旺
+		Tooltip: ""
 	}
 	CircuitBoard: {
 		DisplayName: 旧世界电路板
-		Tooltip: 铜线还没完全烂掉。能承载旧世界的指令与精密装置
+		Tooltip: ""
 	}
 	Coolant: {
 		DisplayName: 冷却液罐
-		Tooltip: 还剩半罐，还是冷的。壁炉的机器靠它运转
+		Tooltip: ""
 	}
 	AshCrystal: {
 		DisplayName: 灰烬结晶
-		Tooltip: 污染浓到极处，灰烬便长成了晶体。是灰烬之心时期装备与药剂的原料
+		Tooltip: ""
 	}
 	SalvagedSteelBundle: {
 		DisplayName: 精钢捆
-		Tooltip: 把精钢碎块捆上了钢筋。比碎块好携带，比钢锭好加工
+		Tooltip: ""
 	}
 	GasFilterPotion: {
 		DisplayName: 滤芯
-		Tooltip: 12 分钟内完全免疫有害气体与污染
+		Tooltip: 免疫有害气体和污染
 	}
 	MinersSolution: {
 		DisplayName: 掘进溶液
-		Tooltip: 加快挖掘、建造与砌墙速度，并让你的触及距离延长一格
+		Tooltip:
+			'''
+			提高挖掘、建造和放置速度
+			物块操作范围增加1格
+			'''
 	}
 	ColdSpotlight: {
 		DisplayName: 冷光探照灯
-		Tooltip: 夜视、危险感知与探宝视野。现在你能看清是什么要来杀你了
+		Tooltip:
+			'''
+			显示敌人、机关和宝藏的位置
+			提高视野
+			'''
 	}
 	NaniteSalve: {
 		DisplayName: 纳米药膏
-		Tooltip: 缓慢修复你的伤势，并大幅加快生命自然恢复
+		Tooltip: 提高生命再生
 	}
 	BeastWhistle: {
 		DisplayName: 兽哨回响
-		Tooltip: 召唤伤害提升，鞭子更快也更长。仆从数量是另一瓶药的事
+		Tooltip:
+			'''
+			增加召唤伤害
+			提高鞭子速度和范围
+			'''
 	}
 	AshenRation: {
 		DisplayName: 灰烬口粮
-		Tooltip: 压制的废土口粮。管饱，还能让手上的一切都打得更重一点
+		Tooltip:
+			'''
+			小幅提升所有属性
+			增加5%伤害
+			'''
 	}
 	ScrapNail: {
 		DisplayName: 废料钉
-		Tooltip: 把废铁剪成钉子，用旧底火发射。最便宜的弹药，没有之一
+		Tooltip: ""
 	}
 	ColdlightRound: {
 		DisplayName: 冷光弹
-		Tooltip: 弹头里裹着一枚冷却液胶囊。会发光，可贯穿一个目标并留下冻伤
+		Tooltip:
+			'''
+			可穿透1个敌人
+			造成冻伤
+			'''
 	}
 	EmberShell: {
 		DisplayName: 余烬霰弹
-		Tooltip: 弹壳里塞满焦炭粉。打得重，可贯穿两个目标并点燃它们
+		Tooltip:
+			'''
+			可穿透2个敌人
+			使敌人着火
+			'''
 	}
 	TornPage: {
 		DisplayName: 残页
-		Tooltip: 归档者身上掉下的一页散装索引。飞得毫无章法，可贯穿四个目标，属于魔法弹药
+		Tooltip: 可穿透4个敌人
 	}
 	ScavengerBeacon: {
 		DisplayName: 狩猎信标
-		Tooltip: 重新点亮清道夫的清扫程序，把它叫到你身边。可重复使用，同一时间只允许一只
+		Tooltip: 召唤清道夫
 	}
 	AuditRequest: {
 		DisplayName: 审计申请表
-		Tooltip: 一份填好的申请，要求重新审计某台原型机的记忆。归档者从不拒绝文书
+		Tooltip: 召唤归档者
 	}
 	EmberFuse: {
 		DisplayName: 余烬引信
-		Tooltip: 顶端还在阴燃的引信。把它埋进灰烬里，灰烬之心就会醒来
+		Tooltip: 召唤灰烬之心
 	}
 	WastelandMap: {
 		DisplayName: 废土地图残片
-		Tooltip: 一幅只画了一半的地图，页边还留着可用的部分。展开后每次指向的地方都不一样
+		Tooltip: 揭示一处随机地点
 	}
 	ScrapCache: {
 		DisplayName: 废料储藏箱
-		Tooltip: 从废土里挖出来的密封箱子。里面总有点能用的东西
+		Tooltip: 右键点击打开
 	}
 	GasMask: {
 		DisplayName: 防毒面具
-		Tooltip: 滤掉壁炉不断排出的废气。在壁炉里戴着它，有害气体便不会侵蚀你
+		Tooltip: 免疫有害气体
 	}
 	SalvagedSteelSaber: {
 		DisplayName: 精钢锋刃
-		Tooltip: 重新开刃的砍刀。每次挥砍甩出一枚精钢碎片，可贯穿四个敌人，并让它们持续流血
+		Tooltip:
+			'''
+			甩出可穿透4次的钢片
+			造成流血
+			'''
 	}
 	ArchivistVerdictBlade: {
 		DisplayName: 归档者裁决刃
-		Tooltip: 挥出的裁决波可贯穿六个敌人、削去它们的护甲，还会溅出碎片追杀剩下的目标
+		Tooltip:
+			'''
+			放出可穿透6次的剑气
+			再分裂成追踪碎片
+			'''
 	}
 	SalvagedSteelScattergun: {
 		DisplayName: 精钢散射枪
-		Tooltip: 一次六颗更密集的弹丸，每颗都能先穿透两个敌人再减速
+		Tooltip: 一次打出6发，每发可穿透2次
 	}
 	AshHeartFlechette: {
 		DisplayName: 灰烬之心火铳
-		Tooltip: 三枚高速箭弹，每枚贯穿三个敌人，并让伤口一直燃烧
+		Tooltip:
+			'''
+			一次打出3发飞镖，每发可穿透3次
+			使敌人着火
+			'''
 	}
 	SalvagedSteelArcWand: {
 		DisplayName: 精钢弧光法杖
-		Tooltip: 一次扇形打出三道弧光，被碰到的目标都会带上电流
+		Tooltip: 发射3道电弧，造成带电
 	}
 	HearthGuardFrostCodex: {
 		DisplayName: 壁炉守卫霜语法典
-		Tooltip: 五枚冷焰霜矛自行寻找目标，每枚贯穿三个敌人，并在伤口上留下霜冻
+		Tooltip:
+			'''
+			发射5支追踪冰枪，每支可穿透3次
+			造成冻伤
+			'''
 	}
 	ReinforcedFilterMask: {
 		DisplayName: 强化滤芯面罩
-		Tooltip: 可更换的滤芯组。隔绝壁炉排出的有害气体，污染伤害再降低 45%，防御 +3，并免疫中毒
+		Tooltip:
+			'''
+			防御力增加3
+			免疫有害气体和中毒
+			污染伤害减少45%
+			'''
 	}
 	AshHeartPurifierMask: {
 		DisplayName: 灰烬之心净界面罩
-		Tooltip: 会自我净化的灰烬之心滤网。隔绝壁炉排出的有害气体，污染伤害再降低 70%，防御 +5，免疫中毒与毒液，并缓慢回复生命
+		Tooltip:
+			'''
+			防御力增加5
+			免疫有害气体、中毒和毒液
+			污染伤害减少70%
+			提高生命再生
+			'''
 	}
 	AshAlloyWarriorHelm: {
 		DisplayName: 灰烬合金战士头盔
-		Tooltip: 近战伤害 +8%
+		Tooltip: 增加8%近战伤害
 	}
 	AshAlloyWarriorPlate: {
 		DisplayName: 灰烬合金战士胸甲
-		Tooltip: 近战伤害 +8%
-		SetBonus: 套装：近战伤害与近战速度 +12%，命中时有 15% 几率点燃目标，污染对你的伤害再降低 15%
+		Tooltip: 增加8%近战伤害
+		SetBonus:
+			'''
+			增加12%近战伤害和近战速度
+			15%几率使敌人着火
+			污染伤害减少15%
+			'''
 	}
 	AshAlloyWarriorGreaves: {
 		DisplayName: 灰烬合金战士护腿
-		Tooltip: 近战速度 +8%
+		Tooltip: 增加8%近战速度
 	}
 	HearthAlloyWarriorHelm: {
 		DisplayName: 壁炉合金战士头盔
-		Tooltip: 近战伤害 +9%，伤害减免 3%
+		Tooltip:
+			'''
+			增加9%近战伤害
+			减少3%所受伤害
+			'''
 	}
 	HearthAlloyWarriorPlate: {
 		DisplayName: 壁炉合金战士胸甲
-		Tooltip: 近战伤害 +9%，免疫击退
-		SetBonus: 套装：近战伤害与近战速度 +15%，伤害减免 +6%，并免疫击退
+		Tooltip:
+			'''
+			增加9%近战伤害
+			免疫击退
+			'''
+		SetBonus:
+			'''
+			增加15%近战伤害和近战速度
+			减少6%所受伤害
+			免疫击退
+			'''
 	}
 	HearthAlloyWarriorGreaves: {
 		DisplayName: 壁炉合金战士护腿
-		Tooltip: 近战速度 +9%，伤害减免 3%
+		Tooltip:
+			'''
+			增加9%近战速度
+			减少3%所受伤害
+			'''
 	}
 	RustedGearWhistle: {
 		DisplayName: 锈蚀齿轮哨
-		Tooltip: 吹响后召来一只锈蚀齿轮哨兵，主动撞向最近的敌人。只占一个仆从位，没有别的花样
+		Tooltip: 召唤一座锈蚀齿轮哨兵
 	}
 	SalvagedSteelGearWhistle: {
 		DisplayName: 精钢齿轮哨
-		Tooltip: 一次召来成对的两只——一只冲上去撞，一只悬在后面吐钢钉，命中后伤口持续流血
+		Tooltip: 召唤一对精钢齿轮哨兵
 	}
 	AshHeartGearWhistle: {
 		DisplayName: 灰烬之心齿灵哨
-		Tooltip: 召来两只绕着主人转的灰烬齿灵，碰到什么就点燃什么，还会投出会追踪的余烬弹。同时在你身上罩一层齿轮护盾：防御 +5、免疫击退、伤害减免 8%
+		Tooltip:
+			'''
+			召唤两座灰烬之心齿轮
+			防御力增加5，减少8%所受伤害，免疫击退
+			'''
 	}
 	ScavengerChip: {
 		DisplayName: 拾荒者芯片
-		Tooltip: 召唤伤害 +8%，被丢下的物品和红心会从更远处飞向你
+		Tooltip:
+			'''
+			增加8%召唤伤害
+			增加物品和红心拾取范围
+			'''
 	}
 	ReinforcedScavengerChip: {
 		DisplayName: 强化拾荒者芯片
-		Tooltip: 召唤伤害 +12%，金币和魔力星也会飞向你，受到的伤害降低 5%
+		Tooltip:
+			'''
+			增加12%召唤伤害
+			减少5%所受伤害
+			增加钱币和魔力星拾取范围
+			'''
 	}
 	WastelandOverlordCore: {
 		DisplayName: 废土主宰核心
-		Tooltip: 召唤伤害 +15%，仆从栏位 +1，受到的伤害降低 8%，幸运也更高一点
+		Tooltip:
+			'''
+			增加15%召唤伤害
+			最大仆从数增加1
+			减少8%所受伤害
+			提高幸运
+			'''
 	}
 	ScavengerTrophy: {
 		DisplayName: 清道夫奖杯
-		Tooltip: 执行单元的头骨，里面的齿轮还在空转
+		Tooltip: ""
 	}
 	ArchivistTrophy: {
 		DisplayName: 归档者奖杯
-		Tooltip: 审计单元的面具，这回终于归档了
+		Tooltip: ""
 	}
 	AshHeartTrophy: {
 		DisplayName: 灰烬之心奖杯
-		Tooltip: 一块再也点不着任何东西的余烬
+		Tooltip: ""
 	}
 	FireplaceGuardianTrophy: {
 		DisplayName: 壁炉守卫奖杯
-		Tooltip: 壁炉最后一道门，被整个撬了下来
+		Tooltip: ""
 	}
 	ScrapReaperTrophy: {
 		DisplayName: 锈爪齿轮奖杯
-		Tooltip: 锈爪攥着那只一直没松开的齿轮
+		Tooltip: ""
 	}
 	ScavengerBanner: {
 		DisplayName: 清道夫旗帜
-		Tooltip: 用清道夫的装甲片和废料缝出来的旗帜
+		Tooltip: ""
 	}
 	ArchivistBanner: {
 		DisplayName: 归档者旗帜
-		Tooltip: 印着审计单元索引印记的旗帜
+		Tooltip: ""
 	}
 	AshHeartBanner: {
 		DisplayName: 灰烬之心旗帜
-		Tooltip: 还带着一点灰味的旗帜
+		Tooltip: ""
 	}
 	FireplaceGuardianBanner: {
 		DisplayName: 壁炉守卫旗帜
-		Tooltip: 壁炉最后一名守卫的旗号
+		Tooltip: ""
 	}
 	SignalCleaver: {
 		DisplayName: 锈颚砍刀
-		Tooltip: 热边的废铁板。挥出去会甩出一片烧着的碎片
+		Tooltip: 甩出燃烧的废料
 	}
 	SignalCodex: {
 		DisplayName: 提灯法典
-		Tooltip: 打出一颗会拐向敌人的冷青灯火
+		Tooltip: 放出追踪的灯火
 	}
 	SignalNailgun: {
 		DisplayName: 线圈钉枪
-		Tooltip: 发射铁钉，钉上去时迸一截短电弧
+		Tooltip: 命中时迸出电弧
 	}
 	SignalEmberFan: {
 		DisplayName: 余烬扇
-		Tooltip: 一次甩出三片烧着的扇叶
+		Tooltip: 一次甩出3把燃烧的刃
 	}
 	SignalWispStaff: {
 		DisplayName: 信号灯芯杖
-		Tooltip: 召出一盏会自己找人的小灯
+		Tooltip: 召唤一盏狩猎提灯
 	}
 	SignalRigHelm: {
 		DisplayName: 信号甲头盔
-		Tooltip: 锈铁兜帽，眼前一道青缝
+		Tooltip: ""
 	}
 	SignalRigPlate: {
 		DisplayName: 信号甲胸甲
-		Tooltip: 焊上去的废铁，胸口一条冷电缆
-		SetBonus: 甲壳在响。走得稍快一点，身边跟着一颗光点
+		Tooltip: ""
+		SetBonus: 增加6%移动速度
 	}
 	SignalRigGreaves: {
 		DisplayName: 信号甲护腿
-		Tooltip: 胫甲上的青纹还留着电
+		Tooltip: 增加4%移动速度
 	}
 	RiftCleaver: {
 		DisplayName: 星隙弯刃
-		Tooltip: 裂开的刃。挥出去会撕开一道随后坍缩的裂缝
+		Tooltip: 挥砍时撕开一道会坍缩的裂隙
 	}
 	OrbitScepter: {
 		DisplayName: 轨环权杖
-		Tooltip: 打出一颗星，星会折成一道裂隙
+		Tooltip: 投出一颗会折成裂隙的星核
 	}
 	StarstringBow: {
 		DisplayName: 星弦弓
-		Tooltip: 箭会在落点撕开裂缝
+		Tooltip: 木箭落地处裂开一道隙
 	}
 	GapChakram: {
 		DisplayName: 缺环轮
-		Tooltip: 缺了一角的环，飞到尽头才坍缩
+		Tooltip: 飞行结束时坍缩
 	}
 	VoidSeed: {
 		DisplayName: 虚空种
-		Tooltip: 召出一颗会撕开小裂缝的种子
+		Tooltip: 召唤会撕开小裂隙的种子
 	}
 }
 Projectiles: {

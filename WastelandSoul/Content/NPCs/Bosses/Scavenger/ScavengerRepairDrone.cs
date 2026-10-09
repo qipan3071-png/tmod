@@ -17,6 +17,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 		// 现在 15 点 / 45 帧（3 架 ≈ 60 HP/秒）——仍然必须优先清无人机，但清得动。
 		private const int HealInterval = 45;
 		private const int HealAmount = 15;
+		private const int HealAmountMaster = 10;
 		private const float HoverRadius = 120f;
 
 		public override void SetStaticDefaults()
@@ -81,7 +82,8 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 				if (NPC.ai[2] >= HealInterval) {
 					NPC.ai[2] = 0f;
 
-					int heal = Math.Min(HealAmount, boss.lifeMax - boss.life);
+					int healCap = Main.masterMode ? HealAmountMaster : HealAmount;
+					int heal = Math.Min(healCap, boss.lifeMax - boss.life);
 
 					if (heal > 0) {
 						boss.life += heal;

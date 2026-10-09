@@ -13,8 +13,9 @@ namespace WastelandSoul.Content.Projectiles
 	/// </summary>
 	public class PollutionHoming : ModProjectile
 	{
-		/// <summary>追踪速度（像素/tick）。比玩家走速略慢，跑位就能拉开。</summary>
+		/// <summary>追踪速度（像素/tick）。大师再慢一档。</summary>
 		private const float HomingSpeed = 5.4f;
+		private const float HomingSpeedMaster = 4.0f;
 
 		public override void SetDefaults()
 		{
@@ -26,16 +27,17 @@ namespace WastelandSoul.Content.Projectiles
 			Projectile.penetrate = 1;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
-			Projectile.timeLeft = 480;
+			Projectile.timeLeft = Main.masterMode ? 300 : 480;
 			Projectile.alpha = 30;
 		}
 
 		public override void AI()
 		{
 			Player target = FindTarget(Projectile.Center);
+			float homingSpeed = Main.masterMode ? HomingSpeedMaster : HomingSpeed;
 
 			if (target != null) {
-				Vector2 desired = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitX) * HomingSpeed;
+				Vector2 desired = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitX) * homingSpeed;
 				// 转向很慢：给出躲避空间
 				Projectile.velocity = Vector2.Lerp(Projectile.velocity, desired, 0.05f);
 			}
