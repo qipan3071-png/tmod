@@ -65,6 +65,10 @@ NPCs: {
 	GearSwarm.DisplayName: Gear Swarm
 	CinderMender.DisplayName: Cinder Mender
 	ScrapReaper.DisplayName: Scrap Reaper
+	RelayBeetle.DisplayName: Placeholder (post-Scavenger, day)
+	NightGnawer.DisplayName: Placeholder (post-Scavenger, night)
+	LedgerHawk.DisplayName: Placeholder (post-Archivist, surface)
+	CinderLurker.DisplayName: Placeholder (post-Ash Heart, cave)
 }
 
 Items: {

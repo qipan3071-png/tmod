@@ -59,6 +59,10 @@ NPCs: {
 	GearSwarm.DisplayName: 齿轮蜂群
 	CinderMender.DisplayName: 余烬修补者
 	ScrapReaper.DisplayName: 废料收割者
+	RelayBeetle.DisplayName: 占位·清道夫后白天
+	NightGnawer.DisplayName: 占位·清道夫后夜晚
+	LedgerHawk.DisplayName: 占位·归档者后地表
+	CinderLurker.DisplayName: 占位·灰烬之心后洞穴
 }
 Items: {
 	SoulFragmentScavenger: {
