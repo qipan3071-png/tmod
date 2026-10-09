@@ -24,7 +24,8 @@ param(
     [int]$WaitForGame    = 0,
     [switch]$SkipBuild,
     [switch]$SkipLoadTest,
-    [switch]$SkipInstall
+    [switch]$SkipInstall,
+    [switch]$ReviewPack
 )
 
 $ErrorActionPreference = 'Continue'
@@ -429,6 +430,15 @@ if (Test-Path $strayMain) {
 Step '6. re-sync localisation after the load test'
 RunChecker "$PSScriptRoot\sync_cn_translation.py" 'sync_cn_translation (post-load)'
 RunChecker "$PSScriptRoot\check_cn_parity.py"     'check_cn_parity (post-load)'
+
+# ---------------------------------------------------------------- 7. review pack
+# Optional: refresh E:\开发\测评包 (the two .tmod + the human-written readme with
+# fresh sizes/hashes) and re-zip it. Off by default - use -ReviewPack when the
+# build is meant to go out for play-testing.
+if ($ReviewPack) {
+    Step '7. review pack (测评包 + zip)'
+    RunChecker "$PSScriptRoot\make_review_pack.py" 'make_review_pack' @('--src-dir', (Join-Path $SaveDir 'Mods'))
+}
 
 # ---------------------------------------------------------------- summary
 Write-Host ""
