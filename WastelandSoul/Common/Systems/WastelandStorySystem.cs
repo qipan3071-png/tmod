@@ -81,6 +81,9 @@ namespace WastelandSoul.Common.Systems
 
 			/// <summary>交付第 N 枚灵魂碎片，后跟 <c>byte bossIndex</c> / <c>byte source</c>。</summary>
 			public const byte DeliverFragment = 5;
+
+			/// <summary>使用清道夫信号传感器（无负载；落点由服务端按发起玩家计算）。</summary>
+			public const byte ScavengerSummon = 6;
 		}
 
 		/// <summary>
@@ -500,6 +503,16 @@ namespace WastelandSoul.Common.Systems
 				writer.WriteByte((byte)bossIndex);
 				writer.WriteByte((byte)source);
 			});
+		}
+
+		/// <summary>客户端请求「在本人附近召唤清道夫」（服务端 <see cref="Content.NPCs.Bosses.Scavenger.Scavenger.TrySummonNear"/>）。</summary>
+		public static void RequestScavengerSummon()
+		{
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				return;
+			}
+
+			WastelandNet.SendRequest(PacketKindStoryRequest, StoryRequest.ScavengerSummon, null);
 		}
 
 		/// <summary>

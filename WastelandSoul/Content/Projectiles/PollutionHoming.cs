@@ -32,7 +32,7 @@ namespace WastelandSoul.Content.Projectiles
 
 		public override void AI()
 		{
-			Player target = FindTarget();
+			Player target = FindTarget(Projectile.Center);
 
 			if (target != null) {
 				Vector2 desired = (target.Center - Projectile.Center).SafeNormalize(Vector2.UnitX) * HomingSpeed;
@@ -50,7 +50,7 @@ namespace WastelandSoul.Content.Projectiles
 			}
 		}
 
-		private static Player FindTarget()
+		private static Player FindTarget(Vector2 from)
 		{
 			Player best = null;
 			float bestDistance = float.MaxValue;
@@ -62,7 +62,7 @@ namespace WastelandSoul.Content.Projectiles
 					continue;
 				}
 
-				float distance = Vector2.Distance(player.Center, Main.player[i].Center);
+				float distance = Vector2.DistanceSquared(from, player.Center);
 
 				if (distance < bestDistance) {
 					bestDistance = distance;

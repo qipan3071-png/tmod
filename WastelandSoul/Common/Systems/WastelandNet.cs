@@ -60,7 +60,7 @@ namespace WastelandSoul.Common.Systems
 	///                          （12 个剧情标志 + GatePlaced/Gate2Placed/fireplaceSeen；
 	///                            endingChoice + GateX/GateY + GateX2/GateY2）
 	/// 2 = FireplaceTravel    ：kind(1) + inner(1) [+ 各 inner 自己的负载，见 FireplaceTravelNet]
-	/// 3 = StoryRequest       ：kind(1) + action(1) [+ 负载：1/3 无；2 = int32；4 = float×2；5 = byte×2]
+	/// 3 = StoryRequest       ：kind(1) + action(1) [+ 负载：1/3/6 无；2 = int32；4 = float×2；5 = byte×2]
 	/// 4 = PlayerProgress     ：kind(1) + bool×4 + int32
 	/// 5 = FragmentDelivered  ：kind(1) + byte + byte + bool
 	/// </code>
@@ -226,7 +226,8 @@ namespace WastelandSoul.Common.Systems
 		/// <item>action 2 = 选结局：int32；</item>
 		/// <item>action 3 = fireplaceSeen：无负载；</item>
 		/// <item>action 4 = 召唤智械人：float x + float y；</item>
-		/// <item>action 5 = 交付碎片：byte bossIndex + byte source。</item>
+		/// <item>action 5 = 交付碎片：byte bossIndex + byte source；</item>
+		/// <item>action 6 = 清道夫信号传感器：无负载。</item>
 		/// </list>
 		/// </summary>
 		private static void ReceiveRequest(NetReader reader, int whoAmI)
@@ -283,6 +284,10 @@ namespace WastelandSoul.Common.Systems
 						WastelandMemorySystem.HandleDeliveryRequest(player, bossIndex, source);
 					}
 
+					return;
+
+				case WastelandStorySystem.StoryRequest.ScavengerSummon:
+					Content.NPCs.Bosses.Scavenger.Scavenger.TrySummonNear(player);
 					return;
 
 				default:

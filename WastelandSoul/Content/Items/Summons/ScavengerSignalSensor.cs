@@ -1,9 +1,8 @@
-using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using WastelandSoul.Common.Systems;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.NPCs.Bosses.Scavenger;
 
@@ -57,30 +56,12 @@ namespace WastelandSoul.Content.Items.Summons
 			}
 
 			if (Main.netMode == NetmodeID.MultiplayerClient) {
-				// 联机同步方案待定（见文档「联机暂时搁置」）
+				WastelandStorySystem.RequestScavengerSummon();
 				return true;
 			}
 
-			SpawnNear(player);
+			Scavenger.TrySummonNear(player);
 			return true;
-		}
-
-		private static void SpawnNear(Player player)
-		{
-			float side = Main.rand.NextBool() ? 1f : -1f;
-			Vector2 position = player.Center + new Vector2(side * Main.rand.NextFloat(520f, 760f), -380f);
-
-			int index = NPC.NewNPC(new EntitySource_SpawnNPC(), (int)position.X, (int)position.Y, ModContent.NPCType<Scavenger>());
-
-			if (index >= 0 && index < Main.maxNPCs) {
-				Main.npc[index].netUpdate = true;
-			}
-
-			if (Main.dedServ) {
-				return;
-			}
-
-			Main.NewText(Language.GetTextValue("Mods.WastelandSoul.Messages.ScavengerSummoned"), 226, 90, 70);
 		}
 
 		public override void AddRecipes()
