@@ -73,10 +73,8 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override void AI()
 		{
-			// localAI[0]：扑击的方向（0 表示不扑）
-			// localAI[1]：扑击剩余时间
-			// localAI[2]：被卡住的连续计时（>26 就换方向）
-			// localAI[3]：左右搜索方向
+			// ai[0]：扑击的方向（0 表示不扑）｜ai[1]：扑击剩余时间
+			// ai[2]：卡住计时｜ai[3]：左右搜索方向（**联机同步**，勿用 localAI）
 			if (!WildlifeAI.FindClosestPlayer(NPC, 760f, out Player target)) {
 				NPC.velocity.X *= 0.94f;
 				NPC.velocity.Y = Math.Min(NPC.velocity.Y + 0.3f, 6f);
@@ -84,27 +82,27 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 				return;
 			}
 
-			if (NPC.localAI[3] == 0f) {
-				NPC.localAI[3] = 1f;
+			if (NPC.ai[3] == 0f) {
+				NPC.ai[3] = 1f;
 			}
 
 			Vector2 toTarget = target.Center - NPC.Center;
 			float distance = toTarget.Length();
-			float dir = Math.Abs(toTarget.X) < 6f ? NPC.localAI[3] : Math.Sign(toTarget.X);
+			float dir = Math.Abs(toTarget.X) < 6f ? NPC.ai[3] : Math.Sign(toTarget.X);
 			NPC.spriteDirection = Math.Sign(dir) == 0 ? NPC.spriteDirection : Math.Sign(dir);
 
 			// ---------- 扑击 ----------
-			if (NPC.localAI[1] > 0f) {
-				NPC.localAI[1] -= 1f;
-				NPC.velocity = Vector2.Lerp(NPC.velocity, new Vector2(NPC.localAI[0] * 5.6f, -2.6f), 0.16f);
+			if (NPC.ai[1] > 0f) {
+				NPC.ai[1] -= 1f;
+				NPC.velocity = Vector2.Lerp(NPC.velocity, new Vector2(NPC.ai[0] * 5.6f, -2.6f), 0.16f);
 				WildlifeAI.AdvanceFrame(NPC, 4);
 				return;
 			}
 
-			if (WildlifeAI.IsGrounded(NPC) && distance < 130f && NPC.localAI[1] <= 0f
+			if (WildlifeAI.IsGrounded(NPC) && distance < 130f && NPC.ai[1] <= 0f
 				&& WastelandRandom.Roll(NPC.whoAmI, (int)Main.GameUpdateCount, 40, 0, 40) == 0) {
-				NPC.localAI[0] = Math.Sign(toTarget.X);
-				NPC.localAI[1] = 22f;
+				NPC.ai[0] = Math.Sign(toTarget.X);
+				NPC.ai[1] = 22f;
 				NPC.netUpdate = true;
 
 				if (!Main.dedServ) {
@@ -135,16 +133,16 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 			// ---------- 卡住检测：几乎没位移就换搜索方向，再给一下蹬腿 ----------
 			if (NPC.velocity.Length() < 0.22f) {
-				NPC.localAI[2] += 1f;
+				NPC.ai[2] += 1f;
 
-				if (NPC.localAI[2] > 26f) {
-					NPC.localAI[3] = -NPC.localAI[3];
+				if (NPC.ai[2] > 26f) {
+					NPC.ai[3] = -NPC.ai[3];
 					NPC.velocity.Y = -3.4f;
-					NPC.localAI[2] = 0f;
+					NPC.ai[2] = 0f;
 				}
 			}
 			else {
-				NPC.localAI[2] = 0f;
+				NPC.ai[2] = 0f;
 			}
 
 			WildlifeAI.AdvanceFrame(NPC, Math.Abs(NPC.velocity.Y) > 1.2f ? 4 : 8);
@@ -216,14 +214,13 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override void FindFrame(int frameHeight)
 		{
-			WildlifeAI.AdvanceFrame(NPC, NPC.localAI[0] == 1f ? 3 : 6);
+			WildlifeAI.AdvanceFrame(NPC, NPC.ai[0] == 1f ? 3 : 6);
 		}
 
 		public override void AI()
 		{
-			// localAI[0]：0 = 游荡，1 = 抢脸俯冲
-			// localAI[1]：状态计时
-			// localAI[2] / localAI[3]：游荡目标点
+			// ai[0]：0 = 游荡，1 = 抢脸俯冲｜ai[1]：状态计时
+			// ai[2] / ai[3]：游荡目标点（**联机同步**）
 			if (!WildlifeAI.FindClosestPlayer(NPC, 700f, out Player target)) {
 				NPC.velocity *= 0.96f;
 				WildlifeAI.AdvanceFrame(NPC, 8);
@@ -233,18 +230,18 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			Vector2 toTarget = target.Center - NPC.Center;
 			float distance = toTarget.Length();
 
-			switch ((int)NPC.localAI[0]) {
+			switch ((int)NPC.ai[0]) {
 				case 0:
-					NPC.localAI[1] += 1f;
+					NPC.ai[1] += 1f;
 
 					// 每 20~40 帧换一个游荡目标（乱飞的关键）
-					if (NPC.localAI[1] > 22f || NPC.localAI[2] == 0f) {
-						NPC.localAI[1] = 0f;
-						NPC.localAI[2] = target.Center.X + WastelandRandom.Roll(NPC.whoAmI, (int)NPC.localAI[1], 0, -320, 321);
-						NPC.localAI[3] = target.Center.Y + WastelandRandom.Roll(NPC.whoAmI, (int)NPC.localAI[1], 1, -240, 121);
+					if (NPC.ai[1] > 22f || NPC.ai[2] == 0f) {
+						NPC.ai[1] = 0f;
+						NPC.ai[2] = target.Center.X + WastelandRandom.Roll(NPC.whoAmI, (int)NPC.ai[1], 0, -320, 321);
+						NPC.ai[3] = target.Center.Y + WastelandRandom.Roll(NPC.whoAmI, (int)NPC.ai[1], 1, -240, 121);
 					}
 
-					Vector2 wanderTarget = new Vector2(NPC.localAI[2], NPC.localAI[3]);
+					Vector2 wanderTarget = new Vector2(NPC.ai[2], NPC.ai[3]);
 					Vector2 steer = wanderTarget - NPC.Center;
 
 					if (steer.LengthSquared() > 1f) {
@@ -255,9 +252,9 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 						steer + WastelandRandom.RollVector2Circular(NPC.whoAmI, (int)Main.GameUpdateCount, 52, 1.1f, 1.1f), 0.07f);
 
 					if (distance < 260f && Math.Abs(toTarget.Y) < 200f
-						&& WastelandRandom.Roll(NPC.whoAmI, (int)NPC.localAI[0], 50, 0, 50) == 0) {
-						NPC.localAI[0] = 1f;
-						NPC.localAI[1] = 0f;
+						&& WastelandRandom.Roll(NPC.whoAmI, (int)NPC.ai[0], 50, 0, 50) == 0) {
+						NPC.ai[0] = 1f;
+						NPC.ai[1] = 0f;
 						NPC.velocity = Vector2.Normalize(toTarget) * SwoopSpeed;
 						NPC.netUpdate = true;
 
@@ -270,15 +267,15 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 				default:
 					// 抢脸：一路直线，撞到实体方块就散开
-					NPC.localAI[1] += 1f;
+					NPC.ai[1] += 1f;
 
 					bool bumped = WildlifeAI.CheckDirection(NPC, Math.Sign(NPC.velocity.X))
 						|| Collision.SolidCollision(NPC.position + new Vector2(0f, NPC.velocity.Y > 0f ? 8f : -8f), NPC.width, 4);
 
-					if (bumped || NPC.localAI[1] > 46f || distance > 620f) {
-						NPC.localAI[0] = 0f;
-						NPC.localAI[1] = 0f;
-						NPC.localAI[2] = 0f;
+					if (bumped || NPC.ai[1] > 46f || distance > 620f) {
+						NPC.ai[0] = 0f;
+						NPC.ai[1] = 0f;
+						NPC.ai[2] = 0f;
 						NPC.velocity *= -0.35f;
 						NPC.netUpdate = true;
 
@@ -292,7 +289,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 			NPC.spriteDirection = NPC.velocity.X > 0.05f ? 1 : (NPC.velocity.X < -0.05f ? -1 : NPC.spriteDirection);
 			NPC.rotation = MathHelper.Clamp(NPC.velocity.Y * 0.05f, -0.5f, 0.5f);
-			WildlifeAI.AdvanceFrame(NPC, NPC.localAI[0] == 1f ? 3 : 6);
+			WildlifeAI.AdvanceFrame(NPC, NPC.ai[0] == 1f ? 3 : 6);
 		}
 
 		public override void ModifyNPCLoot(NPCLoot npcLoot)

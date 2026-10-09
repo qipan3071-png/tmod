@@ -84,11 +84,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			float dir = NPC.DirectionTo(target.Center).X;
 			bool grounded = WildlifeAI.IsGrounded(NPC);
 
-			if (grounded && NPC.localAI[0] == 0f) {
-				NPC.localAI[1] += 1f;
+			if (grounded && NPC.ai[0] == 0f) {
+				NPC.ai[1] += 1f;
 
 				// 落地瞬间留一洼污染
-				if (NPC.localAI[1] == 1f && !Main.dedServ && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(3)) {
+				if (NPC.ai[1] == 1f && !Main.dedServ && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(3)) {
 					Projectile.NewProjectile(
 						NPC.GetSource_FromAI(),
 						NPC.Bottom - new Vector2(24f, 4f),
@@ -101,21 +101,21 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 				NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, dir * 1.4f, 0.06f);
 
-				if (NPC.localAI[1] > 34f) {
-					NPC.localAI[0] = 1f;
-					NPC.localAI[1] = 0f;
+				if (NPC.ai[1] > 34f) {
+					NPC.ai[0] = 1f;
+					NPC.ai[1] = 0f;
 				}
 			}
-			else if (NPC.localAI[0] == 1f) {
+			else if (NPC.ai[0] == 1f) {
 				// 蓄跳：压低一拍再弹
-				NPC.localAI[1] += 1f;
+				NPC.ai[1] += 1f;
 				NPC.velocity.X *= 0.86f;
 
-				if (NPC.localAI[1] >= 16f) {
+				if (NPC.ai[1] >= 16f) {
 					float jumpDir = Math.Abs(dir) < 0.05f ? NPC.spriteDirection : dir;
 					NPC.velocity = new Vector2(Math.Sign(jumpDir) * HopSpeed, -HopUp);
-					NPC.localAI[0] = 0f;
-					NPC.localAI[1] = 0f;
+					NPC.ai[0] = 0f;
+					NPC.ai[1] = 0f;
 					NPC.netUpdate = true;
 
 					if (!Main.dedServ) {
@@ -222,7 +222,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 		public override void AI()
 		{
-			// localAI[0]：生产冷却
+			// ai[0]：生产冷却（**联机同步**）
 			if (!WildlifeAI.FindClosestPlayer(NPC, 900f, out Player target)) {
 				NPC.velocity *= 0.95f;
 				WildlifeAI.AdvanceFrame(NPC, 9);
@@ -242,14 +242,14 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			NPC.spriteDirection = NPC.velocity.X > 0.05f ? 1 : (NPC.velocity.X < -0.05f ? -1 : NPC.spriteDirection);
 
 			// 生产齿轮群
-			NPC.localAI[0] += 1f;
+			NPC.ai[0] += 1f;
 
-			if (NPC.localAI[0] < SpawnCooldown) {
+			if (NPC.ai[0] < SpawnCooldown) {
 				WildlifeAI.AdvanceFrame(NPC, 9);
 				return;
 			}
 
-			NPC.localAI[0] = 0f;
+			NPC.ai[0] = 0f;
 
 			if (Main.dedServ || Main.netMode == NetmodeID.MultiplayerClient) {
 				return;
@@ -350,7 +350,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 		{
 			// ai[0]：母体的 NPC 索引
 			// ai[1]：环绕相位
-			// localAI[0]：相位推进速度
+			// ai[2]：相位推进｜ai[3]：母体死亡后的散架计时（**联机同步**）
 			NPC owner = null;
 			int ownerIndex = (int)NPC.ai[0];
 
@@ -365,9 +365,9 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 			// 母体死了就自己散架（上面的 OnKill 也会清，这里是兜底）
 			if (owner == null) {
-				NPC.localAI[1] += 1f;
+				NPC.ai[3] += 1f;
 
-				if (NPC.localAI[1] > 60f) {
+				if (NPC.ai[3] > 60f) {
 					NPC.life = 0;
 					NPC.active = false;
 					NPC.netUpdate = true;
@@ -376,8 +376,8 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 				return;
 			}
 
-			float phase = NPC.ai[1] + NPC.localAI[0] * 0.035f;
-			NPC.localAI[0] += 1f;
+			float phase = NPC.ai[1] + NPC.ai[2] * 0.035f;
+			NPC.ai[2] += 1f;
 
 			// 环绕半径带一点正弦抖动，轨迹不是完美圆
 			float radius = 88f + (float)Math.Sin(phase * 2.3f) * 26f;
@@ -461,7 +461,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 		}
 
 		/// <summary>护盾是否开着（localAI[2] > 0）。</summary>
-		private bool Shielded => NPC.localAI[2] > 0f;
+		private bool Shielded => NPC.ai[2] > 0f;
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
@@ -506,16 +506,16 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			NPC.spriteDirection = side > 0f ? -1 : 1;
 
 			// ---------- 治疗 ----------
-			NPC.localAI[0] += 1f;
+			NPC.ai[0] += 1f;
 
-			if (NPC.localAI[0] >= HealInterval) {
-				NPC.localAI[0] = 0f;
+			if (NPC.ai[0] >= HealInterval) {
+				NPC.ai[0] = 0f;
 				HealNearbyAllies();
 			}
 
 			// ---------- 护盾 ----------
 			if (Shielded) {
-				NPC.localAI[2] -= 1f;
+				NPC.ai[2] -= 1f;
 				// 护盾期间受到的伤害减半：takenDamageMultiplier 是原版自带的乘算减免
 				NPC.takenDamageMultiplier = 0.5f;
 
@@ -527,20 +527,20 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 					dust.color = new Color(160, 210, 255);
 				}
 
-				if (NPC.localAI[2] <= 0f) {
-					NPC.localAI[2] = 0f;
-					NPC.localAI[1] = 0f;
+				if (NPC.ai[2] <= 0f) {
+					NPC.ai[2] = 0f;
+					NPC.ai[1] = 0f;
 					NPC.takenDamageMultiplier = 1f;
 					NPC.netUpdate = true;
 				}
 			}
 			else {
 				NPC.takenDamageMultiplier = 1f;
-				NPC.localAI[1] += 1f;
+				NPC.ai[1] += 1f;
 
-				if (NPC.localAI[1] >= ShieldCooldown) {
-					NPC.localAI[1] = 0f;
-					NPC.localAI[2] = ShieldDuration;
+				if (NPC.ai[1] >= ShieldCooldown) {
+					NPC.ai[1] = 0f;
+					NPC.ai[2] = ShieldDuration;
 					NPC.takenDamageMultiplier = 0.5f;
 					NPC.netUpdate = true;
 
@@ -689,10 +689,10 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			// 帧 0 = 待机，帧 1 = 核心过载（蓄力），帧 2 = 攻击
 			int wanted;
 
-			if ((int)NPC.localAI[0] == 4f) {
+			if ((int)NPC.ai[0] == 4f) {
 				wanted = 1;
 			}
-			else if ((int)NPC.localAI[0] >= 1f) {
+			else if ((int)NPC.ai[0] >= 1f) {
 				wanted = 2;
 			}
 			else {
@@ -718,7 +718,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 			float speed = PhaseTwo ? PhaseTwoSpeed : PhaseOneSpeed;
 			bool grounded = WildlifeAI.IsGrounded(NPC);
 
-			switch ((int)NPC.localAI[0]) {
+			switch ((int)NPC.ai[0]) {
 				case 0:
 					// 推进：压上去近战
 					float wanted = Math.Abs(NPC.Center.X - target.Center.X) < 60f ? 0f : dir;
@@ -730,28 +730,28 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 					}
 
 					// 过载演出只播一次
-					if (PhaseTwo && NPC.localAI[3] == 0f) {
-						NPC.localAI[3] = 1f;
-						NPC.localAI[0] = 4f;
-						NPC.localAI[1] = 0f;
+					if (PhaseTwo && NPC.ai[3] == 0f) {
+						NPC.ai[3] = 1f;
+						NPC.ai[0] = 4f;
+						NPC.ai[1] = 0f;
 						NPC.velocity.X = 0f;
 						NPC.netUpdate = true;
 						break;
 					}
 
-					NPC.localAI[2] += 1f;
+					NPC.ai[2] += 1f;
 
-					if (NPC.localAI[2] >= (PhaseTwo ? PhaseTwoCooldown : PhaseOneCooldown) && grounded) {
-						NPC.localAI[2] = 0f;
+					if (NPC.ai[2] >= (PhaseTwo ? PhaseTwoCooldown : PhaseOneCooldown) && grounded) {
+						NPC.ai[2] = 0f;
 
-						if (PhaseTwo && WastelandRandom.Roll(NPC.whoAmI, (int)NPC.localAI[2], 3, 0, 3) == 0) {
-							NPC.localAI[0] = 3f;
+						if (PhaseTwo && WastelandRandom.Roll(NPC.whoAmI, (int)NPC.ai[2], 3, 0, 3) == 0) {
+							NPC.ai[0] = 3f;
 						}
 						else {
-							NPC.localAI[0] = 1f;
+							NPC.ai[0] = 1f;
 						}
 
-						NPC.localAI[1] = 0f;
+						NPC.ai[1] = 0f;
 						NPC.velocity.X *= 0.3f;
 						NPC.netUpdate = true;
 					}
@@ -760,20 +760,20 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 				case 1:
 					// ---------- 散射前摇 ----------
-					NPC.localAI[1] += 1f;
+					NPC.ai[1] += 1f;
 					NPC.velocity.X *= 0.85f;
 
-					if (!Main.dedServ && NPC.localAI[1] % 4f == 0f) {
+					if (!Main.dedServ && NPC.ai[1] % 4f == 0f) {
 						Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(6f, 6f), 12, 12, DustID.Torch);
 						dust.velocity *= 0.4f;
 						dust.noGravity = true;
 						dust.scale = 1.2f;
 					}
 
-					if (NPC.localAI[1] >= BarrageWindup) {
+					if (NPC.ai[1] >= BarrageWindup) {
 						FireBarrage(target);
-						NPC.localAI[0] = 2f;
-						NPC.localAI[1] = 0f;
+						NPC.ai[0] = 2f;
+						NPC.ai[1] = 0f;
 						NPC.netUpdate = true;
 					}
 
@@ -781,23 +781,23 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 				case 2:
 					// ---------- 散射后硬直（给玩家窗口） ----------
-					NPC.localAI[1] += 1f;
+					NPC.ai[1] += 1f;
 					NPC.velocity.X *= 0.92f;
 
-					if (NPC.localAI[1] >= 34f) {
-						NPC.localAI[0] = 0f;
-						NPC.localAI[1] = 0f;
+					if (NPC.ai[1] >= 34f) {
+						NPC.ai[0] = 0f;
+						NPC.ai[1] = 0f;
 					}
 
 					break;
 
 				case 3:
 					// ---------- 冲击波前摇 ----------
-					NPC.localAI[1] += 1f;
+					NPC.ai[1] += 1f;
 					NPC.velocity.X *= 0.8f;
 
 					if (!Main.dedServ) {
-						float radius = 20f + NPC.localAI[1] * 1.1f;
+						float radius = 20f + NPC.ai[1] * 1.1f;
 
 						for (int i = 0; i < 3; i++) {
 							float angle = Main.rand.NextFloat(MathHelper.TwoPi); // sync-ok: visual only
@@ -809,11 +809,11 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 						}
 					}
 
-					if (NPC.localAI[1] >= ShockwaveWindup) {
+					if (NPC.ai[1] >= ShockwaveWindup) {
 						FireShockwave();
 						SpawnGearMinions();
-						NPC.localAI[0] = 2f;
-						NPC.localAI[1] = 0f;
+						NPC.ai[0] = 2f;
+						NPC.ai[1] = 0f;
 						NPC.netUpdate = true;
 					}
 
@@ -821,7 +821,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 				case 4:
 					// ---------- 过载演出：卸掉一批废料、核心变亮 ----------
-					NPC.localAI[1] += 1f;
+					NPC.ai[1] += 1f;
 					NPC.velocity.X *= 0.9f;
 
 					if (!Main.dedServ) {
@@ -836,13 +836,13 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 						Lighting.AddLight(NPC.Center, 0.5f, 0.24f, 0.1f);
 					}
 
-					if (NPC.localAI[1] == 40f && !Main.dedServ) {
+					if (NPC.ai[1] == 40f && !Main.dedServ) {
 						SoundEngine.PlaySound(SoundID.Roar with { Pitch = -0.2f, Volume = 0.7f }, NPC.Center);
 					}
 
-					if (NPC.localAI[1] >= 62f) {
-						NPC.localAI[0] = 0f;
-						NPC.localAI[1] = 0f;
+					if (NPC.ai[1] >= 62f) {
+						NPC.ai[0] = 0f;
+						NPC.ai[1] = 0f;
 						NPC.netUpdate = true;
 					}
 
@@ -850,12 +850,12 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 				default:
 					// ---------- 召唤齿轮群（只在二阶段） ----------
-					NPC.localAI[1] += 1f;
+					NPC.ai[1] += 1f;
 					NPC.velocity.X *= 0.9f;
 
-					if (NPC.localAI[1] >= 40f) {
-						NPC.localAI[0] = 0f;
-						NPC.localAI[1] = 0f;
+					if (NPC.ai[1] >= 40f) {
+						NPC.ai[0] = 0f;
+						NPC.ai[1] = 0f;
 					}
 
 					break;
