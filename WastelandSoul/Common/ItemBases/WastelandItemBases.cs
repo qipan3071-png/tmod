@@ -211,6 +211,19 @@ namespace WastelandSoul.Common.ItemBases
 				Item.shootSpeed = ShootSpeed;
 			}
 		}
+
+		public override void ModifyTooltips(List<TooltipLine> tooltips)
+		{
+			if (Class != DamageClass.Summon || Item.buffType <= 0) {
+				return;
+			}
+
+			for (int i = tooltips.Count - 1; i >= 0; i--) {
+				if (tooltips[i].Name == "BuffTime") {
+					tooltips.RemoveAt(i);
+				}
+			}
+		}
 	}
 
 	/// <summary>饰品基类：默认只有 1 个饰品槽、不消耗，子类重写 UpdateAccessory 给效果。</summary>

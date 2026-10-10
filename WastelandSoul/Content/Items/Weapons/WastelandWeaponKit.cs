@@ -46,7 +46,12 @@ namespace WastelandSoul.Content.Items.Weapons
 			item.UseSound = SoundID.Item11;
 		}
 
-		/// <summary>召唤师：举起召唤杖，把仆从增益挂到玩家身上。</summary>
+		/// <summary>
+		/// 召唤师：举起召唤杖，把仆从增益挂到玩家身上。
+		/// <para/>
+		/// <c>buffTime</c> 只是「用出来那一帧」的初值；真正无限靠各仆从 Buff 的
+		/// <c>Update</c> 每帧续到 18000。不要写成 3600，物品介绍会多出「1 分钟」。
+		/// </summary>
 		public static void Summon(Item item, int buffType, int mana)
 		{
 			item.useStyle = ItemUseStyleID.Swing;
@@ -55,7 +60,7 @@ namespace WastelandSoul.Content.Items.Weapons
 			item.autoReuse = true;
 			item.mana = mana;
 			item.buffType = buffType;
-			item.buffTime = 3600;
+			item.buffTime = 2;
 			item.UseSound = SoundID.Item44;
 		}
 	}
