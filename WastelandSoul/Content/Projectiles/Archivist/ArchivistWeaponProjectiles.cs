@@ -69,12 +69,6 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(1, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation += 0.12f * Projectile.direction;
 
 			if (Main.rand.NextBool(4)) { // sync-ok: visual only

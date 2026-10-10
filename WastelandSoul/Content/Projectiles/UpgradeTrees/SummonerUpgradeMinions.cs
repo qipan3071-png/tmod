@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Effects;
 using WastelandSoul.Common.Players;
 
 namespace WastelandSoul.Content.Projectiles.UpgradeTrees
@@ -79,12 +78,6 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(1, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Player owner = Main.player[Projectile.owner];
 
 			// 主人没了 / 专属 Buff 掉了 → 自己退场（这是仆从「不秒消」的关键）
@@ -223,12 +216,6 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(1, Projectile.Center, Projectile.velocity);
-				}
-			}
 			base.AI();
 
 			if (Main.rand.NextBool(7)) { // sync-ok: visual only
@@ -297,12 +284,6 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(1, Projectile.Center, Projectile.velocity);
-				}
-			}
 			base.AI();
 
 			if (Main.rand.NextBool(7)) { // sync-ok: visual only
@@ -376,12 +357,6 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(1, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
 			if (Main.rand.NextBool(4)) { // sync-ok: visual only
@@ -467,12 +442,6 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(1, Projectile.Center, Projectile.velocity);
-				}
-			}
 			base.AI();
 
 			// 基类 AI 末尾会按速度重设 rotation，所以自转放在它后面覆盖
@@ -540,12 +509,6 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(1, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation += 0.3f * Projectile.direction;
 
 			NPC target = GearTreeAim.NearestEnemy(Projectile.Center, 460f);

@@ -127,12 +127,6 @@ namespace WastelandSoul.Content.Projectiles.Wildlife
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			// ---------- 轻微追踪 ----------
 			int closest = -1;
 			float best = HomingRange;

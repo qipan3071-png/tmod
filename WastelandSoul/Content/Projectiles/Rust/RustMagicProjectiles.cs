@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Effects;
 
 namespace WastelandSoul.Content.Projectiles.Rust
 {
@@ -32,12 +31,6 @@ namespace WastelandSoul.Content.Projectiles.Rust
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
 			if (Main.rand.NextBool(3)) { // sync-ok: visual only
@@ -68,12 +61,6 @@ namespace WastelandSoul.Content.Projectiles.Rust
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
 			// 轻微追踪：转向很慢，只是「不容易打空」，不是制导导弹
@@ -140,12 +127,6 @@ namespace WastelandSoul.Content.Projectiles.Rust
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			// 出生第一帧按 ai[0] 做一次扇形微调（同一套弹幕复用 3 次）
 			if (Projectile.ai[1] == 0f) {
 				Projectile.ai[1] = 1f;

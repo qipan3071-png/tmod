@@ -80,8 +80,7 @@ namespace WastelandSoul.Content.Projectiles.Signal
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if (!Main.dedServ) {
-				WastelandFxSystem.Flakes(Projectile.Center, 4, new Color(214, 226, 236));
-				WastelandFxSystem.Flash(Projectile.Center, new Color(170, 220, 255), 0.7f);
+				WastelandFxSystem.Spark(Projectile.Center, Main.rand.NextVector2Circular(1.6f, 1.6f), new Color(90, 170, 220), 0.55f, 10, 0f);
 			}
 		}
 

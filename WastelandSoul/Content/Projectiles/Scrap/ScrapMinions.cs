@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Effects;
 using WastelandSoul.Content.Projectiles.Rust;
 
 namespace WastelandSoul.Content.Projectiles.Scrap
@@ -40,12 +39,6 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			base.AI();
 
 			if (Main.rand.NextBool(6)) { // sync-ok: visual only
@@ -97,12 +90,6 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
 			if (Main.rand.NextBool(3)) { // sync-ok: visual only

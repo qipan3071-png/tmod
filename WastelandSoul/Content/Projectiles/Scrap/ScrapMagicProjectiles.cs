@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Effects;
 using WastelandSoul.Common.Systems;
 
 namespace WastelandSoul.Content.Projectiles.Scrap
@@ -42,12 +41,6 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation += 0.12f * Projectile.direction;
 
 			if (Main.rand.NextBool(2)) { // sync-ok: visual only
@@ -108,12 +101,6 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			base.AI();
 
 			if (Main.rand.NextBool(3)) { // sync-ok: visual only
@@ -144,12 +131,6 @@ namespace WastelandSoul.Content.Projectiles.Scrap
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation += 0.36f * Projectile.direction;
 
 			NPC target = FindTarget(220f);

@@ -72,12 +72,6 @@ namespace WastelandSoul.Content.Projectiles.AshHeart
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(2, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation += 0.1f * Projectile.direction;
 			Projectile.velocity.Y += 0.08f;
 
