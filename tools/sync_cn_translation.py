@@ -189,7 +189,7 @@ TRANSLATIONS = {
     "ScavengerGreatblade.DisplayName": "清道夫大刀",
     "ScavengerGreatblade.Tooltip": "挥砍时甩出一扇新月刃",
     "SteelDischarger.DisplayName": "精钢放电器",
-    "SteelDischarger.Tooltip": "按住蓄力，松开后放出连锁闪电",
+    "SteelDischarger.Tooltip": "向光标处释放闪电\n并会额外劈向附近的敌人",
     "PollutionCannon.DisplayName": "污染炮",
     "PollutionCannon.Tooltip": "炮弹爆开后留下一片污染云",
     "SteelBow.DisplayName": "精钢弓",

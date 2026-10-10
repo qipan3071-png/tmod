@@ -300,7 +300,11 @@ Items: {
 
 	SteelDischarger: {
 		DisplayName: Steel Discharger
-		Tooltip: Hold to charge, release to chain lightning
+		Tooltip:
+			'''
+			Fires lightning at the cursor
+			Extra arcs strike nearby enemies
+			'''
 	}
 
 	PollutionCannon: {

@@ -255,7 +255,11 @@ Items: {
 	}
 	SteelDischarger: {
 		DisplayName: 精钢放电器
-		Tooltip: 按住蓄力，松开后放出连锁闪电
+		Tooltip:
+			'''
+			向光标处释放闪电
+			并会额外劈向附近的敌人
+			'''
 	}
 	PollutionCannon: {
 		DisplayName: 污染炮

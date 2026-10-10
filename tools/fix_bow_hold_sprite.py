@@ -79,14 +79,19 @@ def main():
     parser.add_argument("--preview", action="store_true")
     parser.add_argument("--install", action="store_true")
     parser.add_argument("--no-flip", action="store_true", help="only re-center grip")
+    parser.add_argument("--only", action="append", default=[], help="basename filter, e.g. StarstringBow.png")
     args = parser.parse_args()
     if not args.preview and not args.install:
         parser.error("use --preview or --install")
 
     os.makedirs(PREVIEW, exist_ok=True)
     flip = not args.no_flip
+    only = {name.lower() for name in args.only}
 
     for rel in BOWS:
+        name = os.path.basename(rel)
+        if only and name.lower() not in only:
+            continue
         path = os.path.join(ROOT, rel)
         name = os.path.basename(path)
         before = Image.open(path).convert("RGBA")

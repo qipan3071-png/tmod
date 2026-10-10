@@ -18,6 +18,12 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 	/// </summary>
 	public class SteelDischargerHoldout : ModProjectile
 	{
+		/// <summary>批次 62 起放电器改为电弧涌动点按，蓄力体不再生成。</summary>
+		public override bool IsLoadingEnabled(Mod mod)
+		{
+			return false;
+		}
+
 		/// <summary>蓄满所需帧数。</summary>
 		private const int FullCharge = 90;
 

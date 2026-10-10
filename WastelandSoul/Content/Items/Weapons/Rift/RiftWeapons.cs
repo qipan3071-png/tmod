@@ -112,6 +112,8 @@ namespace WastelandSoul.Content.Items.Weapons.Rift
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
+			Item.width = 49;
+			Item.height = 52;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
 			Item.autoReuse = true;
