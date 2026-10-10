@@ -88,7 +88,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 				NPC.ai[1] += 1f;
 
 				// 落地瞬间留一洼污染
-				if (NPC.ai[1] == 1f && !Main.dedServ && Main.netMode != NetmodeID.MultiplayerClient && Main.rand.NextBool(3)) {
+				if (NPC.ai[1] == 1f && WastelandNet.IsAuthoritativeSide && Main.rand.NextBool(3)) { // sync-ok: authoritative side only
 					Projectile.NewProjectile(
 						NPC.GetSource_FromAI(),
 						NPC.Bottom - new Vector2(24f, 4f),
@@ -251,7 +251,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 
 			NPC.ai[0] = 0f;
 
-			if (Main.dedServ || Main.netMode == NetmodeID.MultiplayerClient) {
+			if (!WastelandNet.IsAuthoritativeSide) {
 				return;
 			}
 
@@ -877,7 +877,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 		/// <summary>三连 / 五连废料散射（朝玩家带一个小扇形）。</summary>
 		private void FireBarrage(Player target)
 		{
-			if (Main.dedServ || Main.netMode == NetmodeID.MultiplayerClient) {
+			if (!WastelandNet.IsAuthoritativeSide) {
 				return;
 			}
 
@@ -907,7 +907,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 		/// <summary>环身 14 发冲击波弹幕。</summary>
 		private void FireShockwave()
 		{
-			if (Main.dedServ || Main.netMode == NetmodeID.MultiplayerClient) {
+			if (!WastelandNet.IsAuthoritativeSide) {
 				return;
 			}
 
@@ -936,7 +936,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 		/// <summary>二阶段叫一批齿轮群帮忙（上限 3 只）。</summary>
 		private void SpawnGearMinions()
 		{
-			if (Main.dedServ || Main.netMode == NetmodeID.MultiplayerClient) {
+			if (!WastelandNet.IsAuthoritativeSide) {
 				return;
 			}
 

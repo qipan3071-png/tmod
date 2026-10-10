@@ -96,7 +96,7 @@ namespace WastelandSoul.Common.Systems
 		/// 客户端**一格都不写**，只发 <see cref="PacketKindStoryRequest"/> 请求包。
 		/// 所有 <c>Mark*</c> / <c>Restore*</c> 入口都以这个判断开头。
 		/// </summary>
-		public static bool IsAuthoritativeSide => Main.netMode != NetmodeID.MultiplayerClient;
+		public static bool IsAuthoritativeSide => WastelandNet.IsAuthoritativeSide;
 
 		public static bool scavengerDefeated;
 		public static bool archivistDefeated;

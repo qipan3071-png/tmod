@@ -840,7 +840,7 @@ namespace WastelandSoul.Content.NPCs.Wildlife
 					NPC.velocity.Y = MathHelper.Lerp(NPC.velocity.Y, -0.6f, 0.1f);
 
 					if (NPC.ai[1] == 22f) {
-						if (!Main.dedServ && Main.netMode != NetmodeID.MultiplayerClient) {
+						if (WastelandNet.IsAuthoritativeSide) {
 							Vector2 shootDirection = Vector2.Normalize(target.Center - NPC.Center) * 7.2f;
 							Projectile.NewProjectile(
 								NPC.GetSource_FromAI(),

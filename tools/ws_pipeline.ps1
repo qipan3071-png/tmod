@@ -439,6 +439,9 @@ RunChecker "$PSScriptRoot\check_sync_rand.py" 'check_sync_rand'
 Step '6.6 check_npc_localai_sync (REPORT ONLY)'
 RunChecker "$PSScriptRoot\check_npc_localai_sync.py" 'check_npc_localai_sync'
 
+Step '6.7 check_spawn_authority (dedicated-server spawn gates)'
+RunChecker "$PSScriptRoot\check_spawn_authority.py" 'check_spawn_authority'
+
 # ---------------------------------------------------------------- 7. review pack
 # Optional: refresh the review package folder (two .tmod + the human-written readme
 # with fresh sizes/hashes) and re-zip it. Off by default - use -ReviewPack when the

@@ -23,8 +23,10 @@ namespace WastelandSoul.Common.Players
 	/// <item>**防具套装状态**（<c>scavengerSet</c> 等）——由防具的 <c>UpdateArmorSet</c> 每帧置位，
 	/// 套装散掉自然失效，不需要自己比对三个装备栏；</item>
 	/// <item>**饰品状态**（<c>*Equipped</c>）——由饰品的 <c>UpdateAccessory</c> 每帧置位；</item>
-	/// <item>**有冷却的能力**（炉卫护盾、明日之匣、废土指针）——计时器放在 <see cref="PostUpdate"/> 里递减，
-	/// 需要跨存档保留的写进 <see cref="SaveData"/>。</item>
+		/// <item>**有冷却的能力**（炉卫护盾、明日之匣、废土指针）——计时器放在 <see cref="PostUpdate"/> 里递减，
+		/// 需要跨存档保留的写进 <see cref="SaveData"/>。
+		/// 联机：<c>ModifyHurt</c> 在权威侧和主人客户端都会跑，冷却靠同一记伤害对齐；
+		/// 中途进服的旁观者可能看到过期的护盾/匣子状态，不另开包（避免再碰进度协议字节账）。</item>
 	/// </list>
 	/// </summary>
 	public class WastelandGearPlayer : ModPlayer

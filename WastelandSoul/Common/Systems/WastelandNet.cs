@@ -74,6 +74,14 @@ namespace WastelandSoul.Common.Systems
 		/// </summary>
 		public static bool DebugLogPackets;
 
+		/// <summary>
+		/// 本机是不是「权威那一侧」（单机、Host、专用服都算；纯客户端不算）。
+		/// NPC / 敌对弹幕的生成只在这一侧跑，再用原版通道同步给客户端。
+		/// <para/>不要写成 <c>!Main.dedServ &amp;&amp; netMode != MultiplayerClient</c>：
+		/// 那会把<strong>专用服</strong>一起挡掉，Host &amp; Play 看起来正常、进 -server 就不出弹。
+		/// </summary>
+		public static bool IsAuthoritativeSide => Main.netMode != NetmodeID.MultiplayerClient;
+
 		/// <summary>本模组的 <c>Mod</c> 实例（惰性取，别在静态字段初始化里碰 <c>ModLoader</c>）。</summary>
 		private static Mod Self => ModContent.GetInstance<global::WastelandSoul.WastelandSoul>();
 

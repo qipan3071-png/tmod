@@ -87,7 +87,7 @@ namespace WastelandSoul.Content.Projectiles.Rift
 
 		public override void OnKill(int timeLeft)
 		{
-			if (Main.dedServ) {
+			if (Projectile.owner != Main.myPlayer) {
 				return;
 			}
 
@@ -221,7 +221,7 @@ namespace WastelandSoul.Content.Projectiles.Rift
 
 		public override void OnKill(int timeLeft)
 		{
-			if (Main.dedServ) {
+			if (Projectile.owner != Main.myPlayer) {
 				return;
 			}
 
