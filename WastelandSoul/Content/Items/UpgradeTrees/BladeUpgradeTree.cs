@@ -5,6 +5,7 @@ using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons;
 using WastelandSoul.Content.Items.Weapons.Rust;
+using WastelandSoul.Content.Projectiles.Melee;
 using WastelandSoul.Content.Projectiles.UpgradeTrees;
 
 namespace WastelandSoul.Content.Items.UpgradeTrees
@@ -41,7 +42,7 @@ namespace WastelandSoul.Content.Items.UpgradeTrees
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Melee(Item);
+			WastelandWeaponKit.Melee(Item, WastelandSwingStyle.Combo);
 			Item.width = 40;
 			Item.height = 40;
 			Item.scale = 1.10f;

@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Weapons;
+using WastelandSoul.Content.Projectiles.Melee;
 
 namespace WastelandSoul.Content.Items.Weapons.CLine
 {
@@ -32,13 +33,15 @@ namespace WastelandSoul.Content.Items.Weapons.CLine
 
 		protected abstract int SummonBuff { get; }
 
+		protected virtual WastelandSwingStyle SwingStyle => WastelandSwingStyle.Chop;
+
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
 
 			switch (Kind) {
 				case CLineKind.Melee:
-					WastelandWeaponKit.Melee(Item);
+					WastelandWeaponKit.Melee(Item, SwingStyle);
 					break;
 				case CLineKind.Magic:
 					WastelandWeaponKit.Magic(Item, Mana);
@@ -114,6 +117,7 @@ namespace WastelandSoul.Content.Items.Weapons.CLine
 
 	public class ArchivistCWarrior : CLineWeapon
 	{
+		protected override WastelandSwingStyle SwingStyle => WastelandSwingStyle.Combo;
 		protected override CLineKind Kind => CLineKind.Melee;
 		protected override int Mana => 0;
 		protected override int SummonBuff => 0;
@@ -162,6 +166,7 @@ namespace WastelandSoul.Content.Items.Weapons.CLine
 
 	public class AshHeartCWarrior : CLineWeapon
 	{
+		protected override WastelandSwingStyle SwingStyle => WastelandSwingStyle.Smash;
 		protected override CLineKind Kind => CLineKind.Melee;
 		protected override int Mana => 0;
 		protected override int SummonBuff => 0;
@@ -210,6 +215,7 @@ namespace WastelandSoul.Content.Items.Weapons.CLine
 
 	public class FireplaceCWarrior : CLineWeapon
 	{
+		protected override WastelandSwingStyle SwingStyle => WastelandSwingStyle.Sweep;
 		protected override CLineKind Kind => CLineKind.Melee;
 		protected override int Mana => 0;
 		protected override int SummonBuff => 0;

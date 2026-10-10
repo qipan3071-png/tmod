@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons;
+using WastelandSoul.Content.Projectiles.Melee;
 
 namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 {
@@ -26,7 +27,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Melee(Item);
+			WastelandWeaponKit.Melee(Item, WastelandSwingStyle.Sweep);
 		}
 
 		// B 线为专属掉落：**不写任何 AddRecipes()**，只能从壁炉守卫的掉落袋开出。

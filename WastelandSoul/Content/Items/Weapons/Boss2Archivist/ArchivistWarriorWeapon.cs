@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons;
+using WastelandSoul.Content.Projectiles.Melee;
 
 namespace WastelandSoul.Content.Items.Weapons.Boss2Archivist
 {
@@ -27,7 +28,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss2Archivist
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Melee(Item);
+			WastelandWeaponKit.Melee(Item, WastelandSwingStyle.Combo);
 		}
 
 		public override void AddRecipes()

@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Buffs;
 using WastelandSoul.Content.Items.Materials;
+using WastelandSoul.Content.Projectiles.Melee;
 using WastelandSoul.Content.Projectiles.Rift;
 
 namespace WastelandSoul.Content.Items.Weapons.Rift
@@ -43,7 +44,7 @@ namespace WastelandSoul.Content.Items.Weapons.Rift
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Melee(Item);
+			WastelandWeaponKit.Melee(Item, WastelandSwingStyle.Smash);
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

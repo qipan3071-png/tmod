@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Weapons;
+using WastelandSoul.Content.Projectiles.Melee;
 using WastelandSoul.Content.Projectiles.Scavenger;
 
 namespace WastelandSoul.Content.Items.Weapons.Boss1Scavenger.ScavengerDrops
@@ -34,9 +35,8 @@ namespace WastelandSoul.Content.Items.Weapons.Boss1Scavenger.ScavengerDrops
 			Item.useAnimation = 26;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.autoReuse = true;
-			Item.noMelee = false;
-			Item.noUseGraphic = false;
 			Item.UseSound = SoundID.Item1;
+			WastelandWeaponKit.EnableSwing(Item, WastelandSwingStyle.Sweep);
 			Item.shoot = ProjectileID.SwordBeam;
 			Item.shootSpeed = 12f;
 			Item.crit = 5;                 // 初始暴击 5%
