@@ -219,11 +219,11 @@ Items: {
 	}
 	ScavengerWarriorWeapon: {
 		DisplayName: 清道夫废料砍刀
-		Tooltip: 挥砍时放出一道宽弧
+		Tooltip: 命中后点燃敌人
 	}
 	ScavengerMageWeapon: {
 		DisplayName: 清道夫电火花棒
-		Tooltip: ""
+		Tooltip: 命中后点燃，消散时裂成两团火花
 	}
 	ScavengerRangerWeapon: {
 		DisplayName: 清道夫废料手枪
@@ -235,7 +235,7 @@ Items: {
 	}
 	ScavengerWarriorWeaponEX: {
 		DisplayName: 清道夫废料砍刀 MK-II
-		Tooltip: 挥砍时放出一道宽弧
+		Tooltip: 挥砍时扇出三片废料
 	}
 	ScavengerMageWeaponEX: {
 		DisplayName: 清道夫电火花棒 MK-II
@@ -299,11 +299,11 @@ Items: {
 	}
 	ArchivistWarriorWeapon: {
 		DisplayName: 归档者骨刃
-		Tooltip: 挥砍时放出一道宽弧
+		Tooltip: 命中后造成困惑
 	}
 	ArchivistMageWeapon: {
 		DisplayName: 归档者索引法典
-		Tooltip: ""
+		Tooltip: 弹墙两次并造成困惑
 	}
 	ArchivistRangerWeapon: {
 		DisplayName: 归档者骨制散射枪
@@ -315,7 +315,7 @@ Items: {
 	}
 	ArchivistWarriorWeaponEX: {
 		DisplayName: 归档者骨刃 MK-II
-		Tooltip: 挥砍时放出一道宽弧
+		Tooltip: 命中后造成困惑
 	}
 	ArchivistMageWeaponEX: {
 		DisplayName: 归档者索引法典 MK-II
@@ -331,11 +331,11 @@ Items: {
 	}
 	AshHeartWarriorWeapon: {
 		DisplayName: 灰烬之心大剑
-		Tooltip: 挥砍时放出一道宽弧
+		Tooltip: 命中后烈焰灼烧
 	}
 	AshHeartMageWeapon: {
 		DisplayName: 灰烬之心核心法杖
-		Tooltip: ""
+		Tooltip: 命中后点燃
 	}
 	AshHeartRangerWeapon: {
 		DisplayName: 灰烬之心余烬步枪
@@ -347,7 +347,7 @@ Items: {
 	}
 	AshHeartWarriorWeaponEx: {
 		DisplayName: 灰烬之心大剑 MK-II
-		Tooltip: 挥砍时放出一道宽弧
+		Tooltip: 挥砍时扇出三道余烬
 	}
 	AshHeartMageWeaponEx: {
 		DisplayName: 灰烬之心核心法杖 MK-II
@@ -363,11 +363,11 @@ Items: {
 	}
 	FireplaceWarriorWeapon: {
 		DisplayName: 壁炉守卫大剑
-		Tooltip: 挥砍时放出一道宽弧
+		Tooltip: 命中后霜火灼烧
 	}
 	FireplaceMageWeapon: {
 		DisplayName: 壁炉守卫权杖
-		Tooltip: ""
+		Tooltip: 命中后造成缓慢
 	}
 	FireplaceRangerWeapon: {
 		DisplayName: 壁炉守卫步枪
@@ -379,7 +379,7 @@ Items: {
 	}
 	FireplaceWarriorWeaponEx: {
 		DisplayName: 壁炉守卫大剑 MK-II
-		Tooltip: 挥砍时放出一道宽弧
+		Tooltip: 命中后霜火灼烧
 	}
 	FireplaceMageWeaponEx: {
 		DisplayName: 壁炉守卫权杖 MK-II

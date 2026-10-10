@@ -30,6 +30,11 @@ namespace WastelandSoul.Content.Items.Weapons.Boss3AshHeart
 			WastelandWeaponKit.Melee(Item);
 		}
 
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			WastelandShoot.HitBuff(target, BuffID.OnFire3, 180);
+		}
+
 		public override void AddRecipes()
 		{
 			CreateRecipe()

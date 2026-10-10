@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Effects;
 
 namespace WastelandSoul.Content.Projectiles.Archivist
 {
@@ -113,12 +112,6 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(1, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.velocity.Y *= 0.995f;   // 几乎不下坠
 

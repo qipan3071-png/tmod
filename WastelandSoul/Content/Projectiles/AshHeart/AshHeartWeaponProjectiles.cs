@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Effects;
 
 namespace WastelandSoul.Content.Projectiles.AshHeart
 {
@@ -31,12 +30,6 @@ namespace WastelandSoul.Content.Projectiles.AshHeart
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(2, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.velocity *= 0.975f;
 			Projectile.alpha = (int)MathHelper.Lerp(0f, 190f, 1f - Projectile.timeLeft / 60f);
@@ -111,12 +104,6 @@ namespace WastelandSoul.Content.Projectiles.AshHeart
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(2, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
 			if (Main.rand.NextBool(2)) { // sync-ok: visual only

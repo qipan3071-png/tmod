@@ -33,13 +33,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss2Archivist
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			for (int i = 0; i < 4; i++) {
-				Vector2 spread = velocity.RotatedByRandom(MathHelper.ToRadians(15f));
-				spread *= Main.rand.NextFloat(0.9f, 1.1f);
-				Projectile.NewProjectile(source, position, spread, type, damage, knockback, player.whoAmI);
-			}
-
-			return false;
+			return WastelandShoot.EvenFan(source, position, velocity, type, damage, knockback, player.whoAmI, 4, 0.42f);
 		}
 
 		public override void AddRecipes()

@@ -30,6 +30,11 @@ namespace WastelandSoul.Content.Items.Weapons.Boss1Scavenger
 			WastelandWeaponKit.Melee(Item);
 		}
 
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			WastelandShoot.HitBuff(target, BuffID.OnFire, 120);
+		}
+
 		public override void AddRecipes()
 		{
 			// 分支 1：ScavengerScrap / IronBar / Gel / Wood

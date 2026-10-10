@@ -29,6 +29,11 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 			WastelandWeaponKit.Melee(Item);
 		}
 
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			WastelandShoot.HitBuff(target, BuffID.Frostburn, 240);
+		}
+
 		// B 线为专属掉落：**不写任何 AddRecipes()**，只能从壁炉守卫的掉落袋开出。
 	}
 }

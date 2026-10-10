@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Effects;
 
 namespace WastelandSoul.Content.Projectiles.Scavenger
 {
@@ -29,12 +28,6 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation += 0.35f * Projectile.direction;
 			Projectile.velocity *= 0.985f;
 
@@ -75,8 +68,33 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			// 残渣灼烧：先用原版着火代替，等专属减益做好再换
 			target.AddBuff(BuffID.OnFire, 120);
+		}
+
+		public override void OnKill(int timeLeft)
+		{
+			if (timeLeft > 0 || Projectile.owner != Main.myPlayer || Projectile.ai[1] != 0f) {
+				return;
+			}
+
+			for (int i = 0; i < 2; i++) {
+				Vector2 split = Projectile.velocity.RotatedBy(0.4f * (i == 0 ? -1f : 1f)) * 0.7f;
+				int index = Projectile.NewProjectile(
+					Projectile.GetSource_Death(),
+					Projectile.Center,
+					split,
+					Type,
+					Projectile.damage / 2,
+					Projectile.knockBack,
+					Projectile.owner,
+					0f,
+					1f);
+
+				if (index >= 0 && index < Main.maxProjectiles) {
+					Main.projectile[index].timeLeft = 36;
+					Main.projectile[index].penetrate = 1;
+				}
+			}
 		}
 	}
 
@@ -100,12 +118,6 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(0, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
 			if (Main.rand.NextBool(3)) { // sync-ok: visual only

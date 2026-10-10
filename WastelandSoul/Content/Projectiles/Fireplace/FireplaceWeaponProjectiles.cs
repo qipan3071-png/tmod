@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Effects;
 
 namespace WastelandSoul.Content.Projectiles.Fireplace
 {
@@ -31,12 +30,6 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(3, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.velocity *= 0.97f;
 			Projectile.alpha = (int)MathHelper.Lerp(0f, 200f, 1f - Projectile.timeLeft / 70f);
@@ -101,12 +94,6 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(3, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 
 			if (Main.rand.NextBool(3)) { // sync-ok: visual only

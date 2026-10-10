@@ -29,6 +29,11 @@ namespace WastelandSoul.Content.Items.Weapons.Boss2Archivist
 			WastelandWeaponKit.Melee(Item);
 		}
 
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			WastelandShoot.HitBuff(target, BuffID.Confused, 180);
+		}
+
 		// B 线为专属掉落：**不写任何 AddRecipes()**，只能从归档者的掉落袋开出。
 	}
 }

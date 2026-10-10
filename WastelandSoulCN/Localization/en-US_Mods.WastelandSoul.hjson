@@ -255,12 +255,12 @@ Items: {
 
 	ScavengerWarriorWeapon: {
 		DisplayName: Scavenger Scrap Cleaver
-		Tooltip: Creates a wide cutting arc
+		Tooltip: Ignites enemies on hit
 	}
 
 	ScavengerMageWeapon: {
 		DisplayName: Scavenger Spark Rod
-		Tooltip: ""
+		Tooltip: Ignites enemies; splits on fade
 	}
 
 	ScavengerRangerWeapon: {
@@ -275,7 +275,7 @@ Items: {
 
 	ScavengerWarriorWeaponEX: {
 		DisplayName: Scavenger Scrap Cleaver MK-II
-		Tooltip: Creates a wide cutting arc
+		Tooltip: Throws three scrap shards
 	}
 
 	ScavengerMageWeaponEX: {
@@ -351,12 +351,12 @@ Items: {
 
 	ArchivistWarriorWeapon: {
 		DisplayName: Archivist Boneblade
-		Tooltip: Creates a wide cutting arc
+		Tooltip: Confuses enemies on hit
 	}
 
 	ArchivistMageWeapon: {
 		DisplayName: Archivist Index Tome
-		Tooltip: ""
+		Tooltip: Bounces twice and confuses
 	}
 
 	ArchivistRangerWeapon: {
@@ -371,7 +371,7 @@ Items: {
 
 	ArchivistWarriorWeaponEX: {
 		DisplayName: Archivist Boneblade MK-II
-		Tooltip: Creates a wide cutting arc
+		Tooltip: Confuses enemies on hit
 	}
 
 	ArchivistMageWeaponEX: {
@@ -391,12 +391,12 @@ Items: {
 
 	AshHeartWarriorWeapon: {
 		DisplayName: Ash Heart Greatblade
-		Tooltip: Creates a wide cutting arc
+		Tooltip: Ignites enemies on hit
 	}
 
 	AshHeartMageWeapon: {
 		DisplayName: Ash Heart Core Staff
-		Tooltip: ""
+		Tooltip: Ignites enemies on hit
 	}
 
 	AshHeartRangerWeapon: {
@@ -411,7 +411,7 @@ Items: {
 
 	AshHeartWarriorWeaponEx: {
 		DisplayName: Ash Heart Greatblade MK-II
-		Tooltip: Creates a wide cutting arc
+		Tooltip: Throws three ember waves
 	}
 
 	AshHeartMageWeaponEx: {
@@ -431,12 +431,12 @@ Items: {
 
 	FireplaceWarriorWeapon: {
 		DisplayName: Fireplace Guardian Greatblade
-		Tooltip: Creates a wide cutting arc
+		Tooltip: Frostburns enemies on hit
 	}
 
 	FireplaceMageWeapon: {
 		DisplayName: Fireplace Guardian Scepter
-		Tooltip: ""
+		Tooltip: Slows enemies on hit
 	}
 
 	FireplaceRangerWeapon: {
@@ -451,7 +451,7 @@ Items: {
 
 	FireplaceWarriorWeaponEx: {
 		DisplayName: Fireplace Guardian Greatblade MK-II
-		Tooltip: Creates a wide cutting arc
+		Tooltip: Frostburns enemies on hit
 	}
 
 	FireplaceMageWeaponEx: {
