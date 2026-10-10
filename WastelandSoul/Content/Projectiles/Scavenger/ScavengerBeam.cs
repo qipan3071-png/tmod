@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using WastelandSoul.Content.Items.Weapons;
 
 namespace WastelandSoul.Content.Projectiles.Scavenger
 {
@@ -23,22 +24,9 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 
 		public static bool ShootFan(IEntitySource source, Vector2 position, Vector2 velocity, int damage, float knockback, int owner)
 		{
-			for (int i = 0; i < FanCount; i++) {
-				float spread = MathHelper.ToRadians(5f * (i - (FanCount - 1) * 0.5f));
-				Projectile.NewProjectile(
-					source,
-					position,
-					velocity.RotatedBy(spread),
-					ProjectileID.SwordBeam,
-					damage,
-					knockback,
-					owner,
-					0f,
-					0f,
-					Mark);
-			}
-
-			return false;
+			return WastelandShoot.EvenFan(
+				source, position, velocity, ProjectileID.SwordBeam, damage, knockback, owner,
+				FanCount, MathHelper.ToRadians(20f), 0f, 0f, Mark);
 		}
 
 		public override void SetStaticDefaults()

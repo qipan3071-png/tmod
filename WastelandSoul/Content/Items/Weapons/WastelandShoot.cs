@@ -25,13 +25,14 @@ namespace WastelandSoul.Content.Items.Weapons
 		}
 
 		/// <summary>
-		/// 均匀扇形。吞掉原版那一发（必须 <c>return</c> 本方法的返回值）。
+		/// 均匀扇形（新月刃那套：自己 <c>NewProjectile</c> 再吞掉原版那一发）。
+		/// 只给灰烬之心及以后用；清道夫 / 归档者不要接。
 		/// </summary>
 		public static bool EvenFan(IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage,
-			float knockback, int owner, int count, float totalSpread)
+			float knockback, int owner, int count, float totalSpread, float ai0 = 0f, float ai1 = 0f, float ai2 = 0f)
 		{
 			if (count <= 1) {
-				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, owner);
+				Projectile.NewProjectile(source, position, velocity, type, damage, knockback, owner, ai0, ai1, ai2);
 				return false;
 			}
 
@@ -40,7 +41,7 @@ namespace WastelandSoul.Content.Items.Weapons
 
 			for (int i = 0; i < count; i++) {
 				Vector2 shot = velocity.RotatedBy(start + step * i);
-				Projectile.NewProjectile(source, position, shot, type, damage, knockback, owner);
+				Projectile.NewProjectile(source, position, shot, type, damage, knockback, owner, ai0, ai1, ai2);
 			}
 
 			return false;

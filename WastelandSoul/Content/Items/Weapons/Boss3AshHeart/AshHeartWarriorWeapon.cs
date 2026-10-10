@@ -1,4 +1,6 @@
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
@@ -33,6 +35,11 @@ namespace WastelandSoul.Content.Items.Weapons.Boss3AshHeart
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			WastelandShoot.HitBuff(target, BuffID.OnFire3, 180);
+		}
+
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+			return WastelandShoot.EvenFan(source, position, velocity, type, (int)(damage * 0.55f), knockback, player.whoAmI, 3, 0.4f);
 		}
 
 		public override void AddRecipes()

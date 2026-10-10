@@ -231,11 +231,11 @@ TRANSLATIONS = {
 
     # ---------------- Boss 3 灰烬之心武器 ----------------
     "AshHeartWarriorWeapon.DisplayName": "灰烬之心大剑",
-    "AshHeartWarriorWeapon.Tooltip": "命中后烈焰灼烧",
+    "AshHeartWarriorWeapon.Tooltip": "挥砍时扇出三道余烬。命中后烈焰灼烧",
     "AshHeartMageWeapon.DisplayName": "灰烬之心核心法杖",
-    "AshHeartMageWeapon.Tooltip": "爆开后留下余烬",
+    "AshHeartMageWeapon.Tooltip": "一次三发心核，爆开后留下余烬",
     "AshHeartRangerWeapon.DisplayName": "灰烬之心余烬步枪",
-    "AshHeartRangerWeapon.Tooltip": "",
+    "AshHeartRangerWeapon.Tooltip": "一次射出三发",
     "AshHeartSummonerWeapon.DisplayName": "灰烬之心燃烬法杖",
     "AshHeartSummonerWeapon.Tooltip": "召唤一个余烬仆从",
     "AshHeartWarriorWeaponEx.DisplayName": "灰烬之心大剑 MK-II",
@@ -261,7 +261,7 @@ TRANSLATIONS = {
     "FireplaceMageWeaponEx.DisplayName": "壁炉守卫权杖 MK-II",
     "FireplaceMageWeaponEx.Tooltip": "按住持续射出更重的冷光",
     "FireplaceRangerWeaponEx.DisplayName": "壁炉守卫步枪 MK-II",
-    "FireplaceRangerWeaponEx.Tooltip": "",
+    "FireplaceRangerWeaponEx.Tooltip": "一次射出三发",
     "FireplaceSummonerWeaponEx.DisplayName": "壁炉守卫信标 MK-II",
     "FireplaceSummonerWeaponEx.Tooltip": "召唤一座炉火哨兵",
 

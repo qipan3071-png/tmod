@@ -1,4 +1,6 @@
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
@@ -27,6 +29,11 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 		{
 			base.SetDefaults();
 			WastelandWeaponKit.Ranged(Item);
+		}
+
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+			return WastelandShoot.EvenFan(source, position, velocity, type, (int)(damage * 0.6f), knockback, player.whoAmI, 3, 0.28f);
 		}
 
 		// B 线为专属掉落：**不写任何 AddRecipes()**，只能从壁炉守卫的掉落袋开出。

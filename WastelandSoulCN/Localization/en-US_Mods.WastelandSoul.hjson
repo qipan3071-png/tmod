@@ -391,17 +391,17 @@ Items: {
 
 	AshHeartWarriorWeapon: {
 		DisplayName: Ash Heart Greatblade
-		Tooltip: Ignites enemies on hit
+		Tooltip: Swings a fan of embers. Ignites on hit
 	}
 
 	AshHeartMageWeapon: {
 		DisplayName: Ash Heart Core Staff
-		Tooltip: Bursts into lingering embers
+		Tooltip: Fires three cores that burst into lingering embers
 	}
 
 	AshHeartRangerWeapon: {
 		DisplayName: Ash Heart Ember Rifle
-		Tooltip: ""
+		Tooltip: Fires a spread of three shots
 	}
 
 	AshHeartSummonerWeapon: {
@@ -461,7 +461,7 @@ Items: {
 
 	FireplaceRangerWeaponEx: {
 		DisplayName: Fireplace Guardian Rifle MK-II
-		Tooltip: ""
+		Tooltip: Fires a spread of three shots
 	}
 
 	FireplaceSummonerWeaponEx: {
