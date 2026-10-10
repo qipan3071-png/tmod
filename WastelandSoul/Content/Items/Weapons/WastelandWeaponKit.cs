@@ -35,7 +35,7 @@ namespace WastelandSoul.Content.Items.Weapons
 			item.UseSound = SoundID.Item20;
 		}
 
-		/// <summary>射手：枪械，消耗火枪子弹。</summary>
+		/// <summary>射手：枪械，消耗火枪子弹，打出弹药自己的弹幕（流星弹等会正常转化）。</summary>
 		public static void Ranged(Item item)
 		{
 			item.useStyle = ItemUseStyleID.Shoot;
@@ -43,6 +43,7 @@ namespace WastelandSoul.Content.Items.Weapons
 			item.noUseGraphic = false;
 			item.autoReuse = true;
 			item.useAmmo = AmmoID.Bullet;
+			item.shoot = ProjectileID.Bullet;
 			item.UseSound = SoundID.Item11;
 		}
 

@@ -16,20 +16,18 @@ namespace WastelandSoul.Content.Items.Weapons.Rust
 	// ====================================================================================
 
 	/// <summary>
-	/// Scrap Shotgun（废料霰弹枪）
-	/// <para/>定位：前期近距清怪。每颗弹丸 12 伤害、一次 4 颗（全中 48），散布 14 度、使用时间 34；
-	/// 单颗伤害低于 Boomstick(19) 的弹丸，靠「弹丸多 + 消耗同一发子弹」形成贴脸爆发，远距离几乎打不满。
+	/// 废料霰弹枪。对标三发猎枪：一次打出多发真正的子弹。
 	/// </summary>
 	public class ScrapShotgun : WastelandClassWeapon
 	{
 		protected override DamageClass Class => DamageClass.Ranged;
-		protected override int Damage => 12;
-		protected override int UseTime => 34;
-		protected override float Knockback => 5f;
+		protected override int Damage => 14;
+		protected override int UseTime => 40;
+		protected override float Knockback => 5.75f;
 		protected override int Rarity => WastelandRarityTiers.Early;
-		protected override int SellPrice => Item.sellPrice(gold: 1);
-		protected override int ShootType => ModContent.ProjectileType<Content.Projectiles.Rust.ScrapPellet>();
-		protected override float ShootSpeed => 11.5f;
+		protected override int SellPrice => Item.sellPrice(gold: 2);
+		protected override int ShootType => ProjectileID.Bullet;
+		protected override float ShootSpeed => 5.35f;
 
 		/// <summary>弹丸数量。</summary>
 		protected virtual int PelletCount => 4;
@@ -43,16 +41,18 @@ namespace WastelandSoul.Content.Items.Weapons.Rust
 			WastelandWeaponKit.Ranged(Item);
 			Item.width = 44;
 			Item.height = 18;
+			Item.UseSound = SoundID.Item36;
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			// 一次散出 PelletCount 颗弹丸；弹药仍按 Item.useAmmo 正常消耗
+			int shot = ShootType == ProjectileID.Bullet ? type : ShootType;
+
 			for (int i = 0; i < PelletCount; i++) {
 				Vector2 spread = velocity.RotatedByRandom(MathHelper.ToRadians(SpreadDegrees));
 				Vector2 speed = spread * Main.rand.NextFloat(0.88f, 1.12f);
 
-				Projectile.NewProjectile(source, position, speed, ShootType, damage, knockback, player.whoAmI);
+				Projectile.NewProjectile(source, position, speed, shot, damage, knockback, player.whoAmI);
 			}
 
 			return false;
@@ -79,20 +79,18 @@ namespace WastelandSoul.Content.Items.Weapons.Rust
 	}
 
 	/// <summary>
-	/// Rust Nailgun（锈蚀射钉枪）
-	/// <para/>定位：前期持续输出。伤害 8、使用时间 7（和 Minishark 同档射速），散布 6 度、弹幕穿透 2 个敌人。
-	/// 单发很低，靠「钉子在人群里串起来」体现价值；没有击退（1.5），清小史莱姆很爽，打 Boss 只是稳定磨血。
+	/// 锈蚀射钉枪。对标迷你鲨：超快射速、打真正的子弹、半数弹药不消耗。
 	/// </summary>
 	public class RustNailgun : WastelandClassWeapon
 	{
 		protected override DamageClass Class => DamageClass.Ranged;
-		protected override int Damage => 8;
-		protected override int UseTime => 7;
-		protected override float Knockback => 1.5f;
+		protected override int Damage => 7;
+		protected override int UseTime => 8;
+		protected override float Knockback => 0f;
 		protected override int Rarity => WastelandRarityTiers.Early;
-		protected override int SellPrice => Item.sellPrice(gold: 1, silver: 20);
-		protected override int ShootType => ModContent.ProjectileType<Content.Projectiles.Rust.RustNail>();
-		protected override float ShootSpeed => 15f;
+		protected override int SellPrice => Item.sellPrice(gold: 7);
+		protected override int ShootType => ProjectileID.Bullet;
+		protected override float ShootSpeed => 7f;
 
 		public override void SetDefaults()
 		{
@@ -103,11 +101,16 @@ namespace WastelandSoul.Content.Items.Weapons.Rust
 			Item.UseSound = SoundID.Item11;
 		}
 
+		public override bool CanConsumeAmmo(Item ammo, Player player)
+		{
+			return Main.rand.NextFloat() >= 0.5f;
+		}
+
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			Vector2 spread = velocity.RotatedByRandom(MathHelper.ToRadians(6f));
 
-			Projectile.NewProjectile(source, position, spread, ShootType, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, position, spread, type, damage, knockback, player.whoAmI);
 
 			return false;
 		}
@@ -131,20 +134,18 @@ namespace WastelandSoul.Content.Items.Weapons.Rust
 	}
 
 	/// <summary>
-	/// Scrap Shotgun MK-II（废料霰弹枪 · 强化型）
-	/// <para/>定位：霰弹枪的强化版，**继承 <see cref="ScrapShotgun"/>**：弹丸 5 颗、单颗 15 伤害、
-	/// 散布收紧到 11 度、使用时间 30。弹丸换成能**弹一次墙**的强化弹（穿透 2），打墙角的敌人特别舒服。
+	/// 废料霰弹枪 MK-II。对标原版霰弹枪：5 发散弹、打真正的子弹。
 	/// </summary>
 	public class ScrapShotgunEX : ScrapShotgun
 	{
-		protected override int Damage => 15;
-		protected override int UseTime => 30;
-		protected override float Knockback => 5.5f;
-		protected override int SellPrice => Item.sellPrice(gold: 2);
-		protected override int ShootType => ModContent.ProjectileType<Content.Projectiles.Rust.ScrapPelletEX>();
-		protected override float ShootSpeed => 12.5f;
+		protected override int Damage => 18;
+		protected override int UseTime => 38;
+		protected override float Knockback => 6.5f;
+		protected override int SellPrice => Item.sellPrice(gold: 5);
+		protected override int ShootType => ProjectileID.Bullet;
+		protected override float ShootSpeed => 7f;
 		protected override int PelletCount => 5;
-		protected override float SpreadDegrees => 11f;
+		protected override float SpreadDegrees => 12f;
 
 		public override void SetDefaults()
 		{

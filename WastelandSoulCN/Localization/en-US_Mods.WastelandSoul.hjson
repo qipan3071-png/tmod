@@ -265,7 +265,7 @@ Items: {
 
 	ScavengerRangerWeapon: {
 		DisplayName: Scavenger Scrap Pistol
-		Tooltip: ""
+		Tooltip: 10% chance to fire an extra shot
 	}
 
 	ScavengerSummonerWeapon: {
@@ -317,6 +317,38 @@ Items: {
 		Tooltip: Wooden arrows become cursed and home in
 	}
 
+	SteelLash: {
+		DisplayName: Steel Lash
+		Tooltip:
+			'''
+			6 summon tag damage
+			Poisons enemies
+			'''
+	}
+
+	IndexLash: {
+		DisplayName: Index Lash
+		Tooltip: 9 summon tag damage
+	}
+
+	CinderLash: {
+		DisplayName: Cinder Lash
+		Tooltip:
+			'''
+			12 summon tag damage
+			Ignites enemies
+			'''
+	}
+
+	HearthLash: {
+		DisplayName: Hearth Lash
+		Tooltip:
+			'''
+			16 summon tag damage
+			Minion attacks may critically strike
+			'''
+	}
+
 	ArchivistWarriorWeapon: {
 		DisplayName: Archivist Boneblade
 		Tooltip: Creates a wide cutting arc
@@ -329,7 +361,7 @@ Items: {
 
 	ArchivistRangerWeapon: {
 		DisplayName: Archivist Bone Scattergun
-		Tooltip: ""
+		Tooltip: Fires a spread of bullets
 	}
 
 	ArchivistSummonerWeapon: {
@@ -731,12 +763,12 @@ Items: {
 
 	ScrapShotgun: {
 		DisplayName: Scrap Shotgun
-		Tooltip: Fires a spread of 4 pellets
+		Tooltip: Fires a spread of bullets
 	}
 
 	RustNailgun: {
 		DisplayName: Rust Nailgun
-		Tooltip: Fires nails that pierce 2 times
+		Tooltip: 50% chance to not consume ammo
 	}
 
 	ScrapShotgunEX: {
@@ -781,7 +813,7 @@ Items: {
 
 	ScrapRailgun: {
 		DisplayName: Scrap Railgun
-		Tooltip: Pierces 6 enemies
+		Tooltip: ""
 	}
 
 	ScrapRailgunEX: {
@@ -1534,6 +1566,10 @@ Projectiles: {
 	SignalRustShard.DisplayName: Signal Rust Shard
 	SignalWispMinion.DisplayName: Signal Wisp Minion
 	SignalWispShot.DisplayName: Signal Wisp Shot
+	SteelLashProj.DisplayName: Steel Lash
+	IndexLashProj.DisplayName: Index Lash
+	CinderLashProj.DisplayName: Cinder Lash
+	HearthLashProj.DisplayName: Hearth Lash
 }
 
 Tiles: {
@@ -1691,6 +1727,26 @@ Buffs: {
 	AshHeartGearBuff: {
 		DisplayName: Ash Heart Gears
 		Description: Two ash-heart gears circle you, set enemies alight, and keep a gear shield around you - 5 defense, no knockback, 8% less damage taken
+	}
+
+	CinderLashTag: {
+		DisplayName: Cinder Tag
+		Description: Minions deal extra damage to tagged enemies
+	}
+
+	HearthLashTag: {
+		DisplayName: Hearth Tag
+		Description: Minions deal extra damage and may critically strike
+	}
+
+	IndexLashTag: {
+		DisplayName: Index Tag
+		Description: Minions deal extra damage to tagged enemies
+	}
+
+	SteelLashTag: {
+		DisplayName: Steel Tag
+		Description: Minions deal extra damage to tagged enemies
 	}
 }
 

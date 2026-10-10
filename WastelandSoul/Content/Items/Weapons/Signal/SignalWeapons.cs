@@ -88,8 +88,8 @@ namespace WastelandSoul.Content.Items.Weapons.Signal
 		protected override int UseTime => 16;
 		protected override float Knockback => 2.4f;
 		protected override int Rarity => WastelandRarityTiers.Early;
-		protected override int ShootType => ModContent.ProjectileType<SignalCoilNail>();
-		protected override float ShootSpeed => 13f;
+		protected override int ShootType => ProjectileID.Bullet;
+		protected override float ShootSpeed => 8f;
 
 		public override void SetDefaults()
 		{

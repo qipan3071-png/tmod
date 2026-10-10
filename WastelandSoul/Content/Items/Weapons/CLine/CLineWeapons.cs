@@ -1,4 +1,5 @@
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Weapons;
@@ -96,7 +97,7 @@ namespace WastelandSoul.Content.Items.Weapons.CLine
 		protected override int Damage => 13;
 		protected override int UseTime => 18;
 		protected override int Rarity => WastelandRarityTiers.Early;
-		protected override int ShootType => ModContent.ProjectileType<Content.Projectiles.Scavenger.ScavengerPistolRound>();
+		protected override int ShootType => ProjectileID.Bullet;
 	}
 
 	public class ScavengerCSummoner : CLineWeapon
@@ -144,7 +145,7 @@ namespace WastelandSoul.Content.Items.Weapons.CLine
 		protected override int Damage => 24;
 		protected override int UseTime => 18;
 		protected override int Rarity => WastelandRarityTiers.EarlyLate;
-		protected override int ShootType => ModContent.ProjectileType<Content.Projectiles.Archivist.ArchivistBoneShard>();
+		protected override int ShootType => ProjectileID.Bullet;
 	}
 
 	public class ArchivistCSummoner : CLineWeapon
@@ -192,7 +193,7 @@ namespace WastelandSoul.Content.Items.Weapons.CLine
 		protected override int Damage => 52;
 		protected override int UseTime => 16;
 		protected override int Rarity => WastelandRarityTiers.MidLate;
-		protected override int ShootType => ModContent.ProjectileType<Content.Projectiles.AshHeart.AshHeartRangerProjectile>();
+		protected override int ShootType => ProjectileID.Bullet;
 	}
 
 	public class AshHeartCSummoner : CLineWeapon
@@ -240,7 +241,7 @@ namespace WastelandSoul.Content.Items.Weapons.CLine
 		protected override int Damage => 70;
 		protected override int UseTime => 14;
 		protected override int Rarity => WastelandRarityTiers.Late;
-		protected override int ShootType => ModContent.ProjectileType<Content.Projectiles.Fireplace.FireplaceRangerProjectile>();
+		protected override int ShootType => ProjectileID.Bullet;
 	}
 
 	public class FireplaceCSummoner : CLineWeapon

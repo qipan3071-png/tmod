@@ -1,33 +1,46 @@
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
+using WastelandSoul.Common.Systems;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons;
 
 namespace WastelandSoul.Content.Items.Weapons.Boss1Scavenger
 {
 	/// <summary>
-	/// Scavenger Scrap Pistol（清道夫 · A 线 · 可合成）
-	/// <para/>设计定位：弹幕设想：废料手枪，消耗火枪子弹，弹道笔直、无下坠，射速中等（21）；每次射击有 10% 概率追加一发偏移 8° 的副弹（伤害 60%，即 9）。数值 15 对齐 The Undertaker(15)，低于 Musket(24)，对手感是「可靠但不爆表」的前期枪械；用木材做枪托、凝胶密封，符合废土拼装设定。
-	/// <para/>制作站点：铁砧（前期装备站点）
+	/// 清道夫 · A 线手枪。对标原版手枪 / 夺命枪：打真正的子弹，10% 再出一发偏弹。
 	/// </summary>
 	public class ScavengerRangerWeapon : WastelandClassWeapon
 	{
 		protected override DamageClass Class => DamageClass.Ranged;
-		protected override int Damage => 15;
-		protected override int UseTime => 21;
+		protected override int Damage => 24;
+		protected override int UseTime => 16;
 		protected override float Knockback => 3.0f;
 		protected override int Rarity => WastelandRarityTiers.Early;
 
-		protected override int ShootType => ModContent.ProjectileType<Content.Projectiles.Scavenger.ScavengerPistolRound>();
+		protected override int ShootType => ProjectileID.Bullet;
 
-		protected override float ShootSpeed => 11.0f;
+		protected override float ShootSpeed => 10f;
 
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
 			WastelandWeaponKit.Ranged(Item);
+		}
+
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+
+			if (WastelandRandom.Roll(player.whoAmI, player.itemAnimation, 0, 0, 10) == 0) {
+				Vector2 extra = velocity.RotatedBy(MathHelper.ToRadians(8f));
+				Projectile.NewProjectile(source, position, extra, type, (int)(damage * 0.6f), knockback, player.whoAmI);
+			}
+
+			return false;
 		}
 
 		public override void AddRecipes()

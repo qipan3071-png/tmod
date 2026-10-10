@@ -227,7 +227,7 @@ Items: {
 	}
 	ScavengerRangerWeapon: {
 		DisplayName: 清道夫废料手枪
-		Tooltip: ""
+		Tooltip: 10% 概率追加一发偏弹
 	}
 	ScavengerSummonerWeapon: {
 		DisplayName: 清道夫无人机信标
@@ -269,6 +269,34 @@ Items: {
 		DisplayName: 精钢弓
 		Tooltip: 木箭会变为咒箭并追踪敌人
 	}
+	SteelLash: {
+		DisplayName: 精钢鞭
+		Tooltip:
+			'''
+			6 点召唤标记伤害
+			使敌人中毒
+			'''
+	}
+	IndexLash: {
+		DisplayName: 索引鞭
+		Tooltip: 9 点召唤标记伤害
+	}
+	CinderLash: {
+		DisplayName: 余烬鞭
+		Tooltip:
+			'''
+			12 点召唤标记伤害
+			点燃敌人
+			'''
+	}
+	HearthLash: {
+		DisplayName: 炉心鞭
+		Tooltip:
+			'''
+			16 点召唤标记伤害
+			仆从攻击有概率暴击
+			'''
+	}
 	ArchivistWarriorWeapon: {
 		DisplayName: 归档者骨刃
 		Tooltip: 挥砍时放出一道宽弧
@@ -279,7 +307,7 @@ Items: {
 	}
 	ArchivistRangerWeapon: {
 		DisplayName: 归档者骨制散射枪
-		Tooltip: ""
+		Tooltip: 射出一簇子弹
 	}
 	ArchivistSummonerWeapon: {
 		DisplayName: 归档者使魔法杖
@@ -612,11 +640,11 @@ Items: {
 	}
 	ScrapShotgun: {
 		DisplayName: 废料霰弹枪
-		Tooltip: 一次打出4发散弹
+		Tooltip: 射出一簇子弹
 	}
 	RustNailgun: {
 		DisplayName: 锈蚀钉枪
-		Tooltip: 钉子可穿透2个敌人
+		Tooltip: 50% 概率不消耗弹药
 	}
 	ScrapShotgunEX: {
 		DisplayName: 废料霰弹枪 MK-II
@@ -652,7 +680,7 @@ Items: {
 	}
 	ScrapRailgun: {
 		DisplayName: 废料磁轨炮
-		Tooltip: 可穿透6个敌人
+		Tooltip: ""
 	}
 	ScrapRailgunEX: {
 		DisplayName: 废料磁轨炮 MK-II
@@ -1318,6 +1346,10 @@ Projectiles: {
 	SignalRustShard.DisplayName: 信号锈蚀碎片
 	SignalWispMinion.DisplayName: 信号微光
 	SignalWispShot.DisplayName: 信号微光
+	SteelLashProj.DisplayName: 精钢鞭
+	IndexLashProj.DisplayName: 索引鞭
+	CinderLashProj.DisplayName: 余烬鞭
+	HearthLashProj.DisplayName: 炉心鞭
 }
 Tiles: {
 	ElvenFrame.MapEntry: 精灵族躯体
@@ -1446,6 +1478,22 @@ Buffs: {
 	AshHeartGearBuff: {
 		DisplayName: 灰烬之心齿灵
 		Description: 两只灰烬齿灵绕着你转圈、点燃敌人，并为你罩上齿轮护盾：防御 +5、免疫击退、伤害减免 8%
+	}
+	CinderLashTag: {
+		DisplayName: 余烬标记
+		Description: 仆从对被标记的敌人造成额外伤害
+	}
+	HearthLashTag: {
+		DisplayName: 炉心标记
+		Description: 仆从造成额外伤害，并有概率暴击
+	}
+	IndexLashTag: {
+		DisplayName: 索引标记
+		Description: 仆从对被标记的敌人造成额外伤害
+	}
+	SteelLashTag: {
+		DisplayName: 精钢标记
+		Description: 仆从对被标记的敌人造成额外伤害
 	}
 }
 Messages: {
