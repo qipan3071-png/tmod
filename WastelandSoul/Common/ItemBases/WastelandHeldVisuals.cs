@@ -21,6 +21,12 @@ namespace WastelandSoul.Common.ItemBases
 
 		public static readonly Vector2 TomeOffset = new Vector2(-6f, 2f);
 
+		/// <summary>
+		/// 枪贴图大约 44×44，原版人物只有四十来像素高，1:1 画在手里会跟人体差不多大。
+		/// 只改手持/掉落缩放，背包格仍按贴图适配。
+		/// </summary>
+		public const float GunHoldScale = 0.58f;
+
 		public static bool NameLooksLikeStaff(string typeName)
 		{
 			if (string.IsNullOrEmpty(typeName)) {
@@ -63,9 +69,50 @@ namespace WastelandSoul.Common.ItemBases
 			return GunOffset;
 		}
 
+		public static bool IsHeldGun(Item item)
+		{
+			if (item.noUseGraphic || item.useStyle != ItemUseStyleID.Shoot) {
+				return false;
+			}
+
+			if (Item.staff[item.type] || item.useAmmo == AmmoID.Arrow) {
+				return false;
+			}
+
+			string name = item.ModItem?.Name;
+
+			if (string.IsNullOrEmpty(name)) {
+				return false;
+			}
+
+			if (Contains(name, "Tome") || Contains(name, "Codex") || Contains(name, "Book")
+				|| Contains(name, "Discharger")
+				|| (Contains(name, "Archivist") && Contains(name, "Mage"))) {
+				return false;
+			}
+
+			if (item.useAmmo == AmmoID.Bullet || item.useAmmo == AmmoID.Gel) {
+				return true;
+			}
+
+			return Contains(name, "Ranger") || Contains(name, "Shotgun") || Contains(name, "Nailgun")
+				|| Contains(name, "Railgun") || Contains(name, "Cannon") || Contains(name, "Scatter")
+				|| Contains(name, "Flechette");
+		}
+
 		private static bool Contains(string haystack, string needle)
 		{
 			return haystack.IndexOf(needle, StringComparison.OrdinalIgnoreCase) >= 0;
+		}
+	}
+
+	public sealed class WastelandGunHoldScale : GlobalItem
+	{
+		public override void SetDefaults(Item item)
+		{
+			if (item.ModItem != null && WastelandHeldVisuals.IsHeldGun(item)) {
+				item.scale = WastelandHeldVisuals.GunHoldScale;
+			}
 		}
 	}
 }
