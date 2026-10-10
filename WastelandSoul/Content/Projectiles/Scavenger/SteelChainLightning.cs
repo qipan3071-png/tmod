@@ -12,7 +12,7 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 	/// 精钢放电器的瞬间电弧（一端在玩家，一端在 <c>ai[0]/ai[1]</c>）。
 	/// <para/>碰撞用线段判定，无限穿透、无伤害递减；同类型电弧共享 10 嘀嗒静态无敌帧
 	/// （对齐电弧涌动：每两道才打中同一目标一次）。命中挂「带电」4～7 秒。
-	/// 贴图复用原版 <see cref="ProjectileID.ThunderStaffShot"/>，画面走 <see cref="WastelandFxSystem.Bolt"/>，不拉白线。
+	/// 贴图复用原版 <see cref="ProjectileID.ThunderStaffShot"/>，画面只画主电弧，不分叉、不在落点加光柱。
 	/// </summary>
 	public class SteelChainLightning : ModProjectile
 	{
@@ -52,9 +52,7 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 				return;
 			}
 
-			Vector2 end = EndPoint();
-			WastelandFxSystem.Bolt(Projectile.Center, end, ArcColor);
-			WastelandFxSystem.Glow(end, ArcColor, 0.85f, 14);
+			WastelandFxSystem.Bolt(Projectile.Center, EndPoint(), ArcColor);
 		}
 
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

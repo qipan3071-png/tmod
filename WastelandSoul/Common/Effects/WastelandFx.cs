@@ -440,16 +440,6 @@ namespace WastelandSoul.Common.Effects
 			}
 
 			SpawnBolt(from, to, color, 2.15f, 11);
-
-			if (length > 90f && Main.rand.NextBool(2)) {
-				Vector2 direction = delta / length;
-				Vector2 side = new Vector2(-direction.Y, direction.X);
-				float along = Main.rand.NextFloat(0.35f, 0.72f);
-				Vector2 mid = from + delta * along;
-				float sign = Main.rand.NextBool() ? 1f : -1f;
-				Vector2 end = mid + side * (Main.rand.NextFloat(28f, 76f) * sign) + direction * Main.rand.NextFloat(-16f, 34f);
-				SpawnBolt(mid, end, color, 1.15f, 8);
-			}
 		}
 
 		private static void Spawn(byte kind, byte blend, Vector2 position, Vector2 velocity, Color color, Color fadeColor,

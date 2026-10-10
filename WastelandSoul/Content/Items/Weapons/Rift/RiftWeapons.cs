@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Effects;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Buffs;
 using WastelandSoul.Content.Items.Materials;
@@ -16,18 +15,6 @@ namespace WastelandSoul.Content.Items.Weapons.Rift
 	/// </summary>
 	public abstract class Riftarm : WastelandClassWeapon
 	{
-		public override void HoldItem(Player player)
-		{
-			if (Main.dedServ || player.whoAmI != Main.myPlayer || Main.GameUpdateCount % 14u != 0u) {
-				return;
-			}
-
-			Vector2 focus = player.MountedCenter + new Vector2(player.direction * 18f, -6f);
-			WastelandFxSystem.Motes(focus, 12f, 1, new Color(124, 86, 255));
-			// ⚠️ 这里原来是近纯白 (236,246,255) —— 按「特效红线」改成带色相的淡紫蓝
-			WastelandFxSystem.Glow(focus, new Color(196, 170, 255), 0.35f, 8);
-		}
-
 		protected void Register(int bar)
 		{
 			CreateRecipe()
