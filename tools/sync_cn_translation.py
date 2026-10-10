@@ -187,7 +187,7 @@ TRANSLATIONS = {
     "ScavengerSummonerWeaponEX.Tooltip": "召唤一台回收无人机",
     # B 线（掉落专属，没有配方）：清道夫大刀 / 精钢放电器 / 污染炮 / 精钢弓
     "ScavengerGreatblade.DisplayName": "清道夫大刀",
-    "ScavengerGreatblade.Tooltip": "挥砍时甩出一扇新月刃",
+    "ScavengerGreatblade.Tooltip": "挥砍时推出一道冲击波",
     "SteelDischarger.DisplayName": "精钢放电器",
     "SteelDischarger.Tooltip": "向光标处释放闪电\n并会额外劈向附近的敌人",
     "PollutionCannon.DisplayName": "污染炮",
@@ -249,7 +249,7 @@ TRANSLATIONS = {
 
     # ---------------- Boss 4 壁炉守卫武器 ----------------
     "FireplaceWarriorWeapon.DisplayName": "壁炉守卫大剑",
-    "FireplaceWarriorWeapon.Tooltip": "命中后霜火灼烧",
+    "FireplaceWarriorWeapon.Tooltip": "甩出一扇新月刃。命中后霜火灼烧",
     "FireplaceMageWeapon.DisplayName": "壁炉守卫权杖",
     "FireplaceMageWeapon.Tooltip": "按住持续射出冷光",
     "FireplaceRangerWeapon.DisplayName": "壁炉守卫步枪",
@@ -257,7 +257,7 @@ TRANSLATIONS = {
     "FireplaceSummonerWeapon.DisplayName": "壁炉守卫信标",
     "FireplaceSummonerWeapon.Tooltip": "召唤一座炉火哨兵",
     "FireplaceWarriorWeaponEx.DisplayName": "壁炉守卫大剑 MK-II",
-    "FireplaceWarriorWeaponEx.Tooltip": "命中后霜火灼烧",
+    "FireplaceWarriorWeaponEx.Tooltip": "甩出一扇新月刃。命中后霜火灼烧",
     "FireplaceMageWeaponEx.DisplayName": "壁炉守卫权杖 MK-II",
     "FireplaceMageWeaponEx.Tooltip": "按住持续射出更重的冷光",
     "FireplaceRangerWeaponEx.DisplayName": "壁炉守卫步枪 MK-II",

@@ -251,7 +251,7 @@ Items: {
 	}
 	ScavengerGreatblade: {
 		DisplayName: 清道夫大刀
-		Tooltip: 挥砍时甩出一扇新月刃
+		Tooltip: 挥砍时推出一道冲击波
 	}
 	SteelDischarger: {
 		DisplayName: 精钢放电器
@@ -363,7 +363,7 @@ Items: {
 	}
 	FireplaceWarriorWeapon: {
 		DisplayName: 壁炉守卫大剑
-		Tooltip: 命中后霜火灼烧
+		Tooltip: 甩出一扇新月刃。命中后霜火灼烧
 	}
 	FireplaceMageWeapon: {
 		DisplayName: 壁炉守卫权杖
@@ -379,7 +379,7 @@ Items: {
 	}
 	FireplaceWarriorWeaponEx: {
 		DisplayName: 壁炉守卫大剑 MK-II
-		Tooltip: 命中后霜火灼烧
+		Tooltip: 甩出一扇新月刃。命中后霜火灼烧
 	}
 	FireplaceMageWeaponEx: {
 		DisplayName: 壁炉守卫权杖 MK-II

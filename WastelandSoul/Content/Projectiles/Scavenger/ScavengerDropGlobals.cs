@@ -30,7 +30,7 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 	// 不会每帧发，但纯属多余，而且对刀光/炮弹还会把原版槽位的值一起推过去）。
 	// ====================================================================================
 
-	/// <summary>清道夫大刀刀光：穿透 4 段 + 一点点金属火花。</summary>
+	/// <summary>新月刃（壁炉守卫大剑甩出）：穿透 4 段 + 金属火花。</summary>
 	public class SwordBeamHook : GlobalProjectile
 	{
 		public override void AI(Projectile projectile)

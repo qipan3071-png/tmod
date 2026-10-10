@@ -295,7 +295,7 @@ Items: {
 
 	ScavengerGreatblade: {
 		DisplayName: Scavenger Greatblade
-		Tooltip: Shoots a fan of crescent edges
+		Tooltip: Launches a fading shockwave
 	}
 
 	SteelDischarger: {
@@ -431,7 +431,7 @@ Items: {
 
 	FireplaceWarriorWeapon: {
 		DisplayName: Fireplace Guardian Greatblade
-		Tooltip: Frostburns enemies on hit
+		Tooltip: Shoots a fan of crescent edges. Frostburns on hit
 	}
 
 	FireplaceMageWeapon: {
@@ -451,7 +451,7 @@ Items: {
 
 	FireplaceWarriorWeaponEx: {
 		DisplayName: Fireplace Guardian Greatblade MK-II
-		Tooltip: Frostburns enemies on hit
+		Tooltip: Shoots a fan of crescent edges. Frostburns on hit
 	}
 
 	FireplaceMageWeaponEx: {
