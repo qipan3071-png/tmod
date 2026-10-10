@@ -6,12 +6,24 @@ using Terraria.ModLoader;
 namespace WastelandSoul.Content.Items.Weapons
 {
 	/// <summary>
-	/// 武器「身份」写在官方钩子里，不另做挥砍框架。
-	/// <para/>学的是灾厄那套<b>思路</b>（每把武器一个明确契约：扇形就自己 <c>NewProjectile</c> 再 <c>return false</c>；
-	/// 真近战身份写在物品 <c>OnHitNPC</c>），实现只用 tML / 原版 API，阔剑形态仍交给 C.I.V.E。
+	/// 武器常用发射结构（对齐灾厄的写法，不搬它的文件）：
+	/// 扇形自己 <c>NewProjectile</c> 再 <c>return false</c>；按住型先刷 holdout；
+	/// 真近战身份写在物品 <c>OnHitNPC</c>。阔剑形态仍交给 C.I.V.E。
 	/// </summary>
 	public static class WastelandShoot
 	{
+		/// <summary>刷一发按住手持体。已有则不再刷。吞掉原版那一发。</summary>
+		public static bool SpawnHoldout(IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage,
+			float knockback, Player player)
+		{
+			if (player.ownedProjectileCounts[type] > 0) {
+				return false;
+			}
+
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+			return false;
+		}
+
 		/// <summary>
 		/// 均匀扇形。吞掉原版那一发（必须 <c>return</c> 本方法的返回值）。
 		/// </summary>

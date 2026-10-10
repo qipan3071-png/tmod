@@ -1,15 +1,17 @@
+using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons;
+using WastelandSoul.Content.Projectiles.Archivist;
 
 namespace WastelandSoul.Content.Items.Weapons.Boss2Archivist
 {
 	/// <summary>
 	/// Archivist Index Tome MK-II（归档者 · B 线 · 专属掉落）
-	/// <para/>设计定位：专属掉落（仅掉落袋）。『归档射线』法杖：持续读条式发射高速细光束，命中时在目标身上标记 1 层『索引』（最多 3 层），第 3 层时追加一次 20 点额外真实结算伤害。耗蓝 12，直线穿透 1 个敌人；单体持续输出是本时期法师上限，但对走位要求高。
+	/// <para/>按住读条打索引页（holdout）。不做白激光。
 	/// </summary>
 	public class ArchivistMageWeaponEX : WastelandClassWeapon
 	{
@@ -19,7 +21,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss2Archivist
 		protected override float Knockback => 2.0f;
 		protected override int Rarity => WastelandRarityTiers.EarlyLate;
 
-		protected override int ShootType => ModContent.ProjectileType<Content.Projectiles.Archivist.ArchivistIndexPageEX>();
+		protected override int ShootType => ModContent.ProjectileType<ArchivistIndexHoldout>();
 
 		protected override float ShootSpeed => 16.0f;
 
@@ -27,6 +29,17 @@ namespace WastelandSoul.Content.Items.Weapons.Boss2Archivist
 		{
 			base.SetDefaults();
 			WastelandWeaponKit.Magic(Item, 12);
+			WastelandWeaponKit.ChannelHoldout(Item);
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return player.ownedProjectileCounts[Item.shoot] <= 0;
+		}
+
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+			return WastelandShoot.SpawnHoldout(source, position, velocity, type, damage, knockback, player);
 		}
 
 		// B 线为专属掉落：**不写任何 AddRecipes()**，只能从归档者的掉落袋开出。

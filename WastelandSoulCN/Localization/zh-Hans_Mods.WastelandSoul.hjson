@@ -303,7 +303,7 @@ Items: {
 	}
 	ArchivistMageWeapon: {
 		DisplayName: 归档者索引法典
-		Tooltip: 弹墙两次并造成困惑
+		Tooltip: 弹墙两次并造成困惑。右键一次射出三页
 	}
 	ArchivistRangerWeapon: {
 		DisplayName: 归档者骨制散射枪
@@ -319,7 +319,7 @@ Items: {
 	}
 	ArchivistMageWeaponEX: {
 		DisplayName: 归档者索引法典 MK-II
-		Tooltip: ""
+		Tooltip: 按住持续射出索引页
 	}
 	ArchivistRangerWeaponEX: {
 		DisplayName: 归档者骨制散射枪 MK-II
@@ -335,7 +335,7 @@ Items: {
 	}
 	AshHeartMageWeapon: {
 		DisplayName: 灰烬之心核心法杖
-		Tooltip: 命中后点燃
+		Tooltip: 爆开后留下余烬
 	}
 	AshHeartRangerWeapon: {
 		DisplayName: 灰烬之心余烬步枪
@@ -351,7 +351,7 @@ Items: {
 	}
 	AshHeartMageWeaponEx: {
 		DisplayName: 灰烬之心核心法杖 MK-II
-		Tooltip: ""
+		Tooltip: 悬停后裂成追踪余烬
 	}
 	AshHeartRangerWeaponEx: {
 		DisplayName: 灰烬之心余烬步枪 MK-II
@@ -367,7 +367,7 @@ Items: {
 	}
 	FireplaceMageWeapon: {
 		DisplayName: 壁炉守卫权杖
-		Tooltip: 命中后造成缓慢
+		Tooltip: 按住持续射出冷光
 	}
 	FireplaceRangerWeapon: {
 		DisplayName: 壁炉守卫步枪
@@ -383,7 +383,7 @@ Items: {
 	}
 	FireplaceMageWeaponEx: {
 		DisplayName: 壁炉守卫权杖 MK-II
-		Tooltip: ""
+		Tooltip: 按住持续射出更重的冷光
 	}
 	FireplaceRangerWeaponEx: {
 		DisplayName: 壁炉守卫步枪 MK-II
@@ -1354,6 +1354,10 @@ Projectiles: {
 	IndexLashProj.DisplayName: 索引鞭
 	CinderLashProj.DisplayName: 余烬鞭
 	HearthLashProj.DisplayName: 炉心鞭
+	ArchivistIndexHoldout.DisplayName: 索引法典
+	AshHeartEmberCloud.DisplayName: 余烬云
+	AshHeartEmberShard.DisplayName: 余烬破片
+	FireplaceMageHoldout.DisplayName: 壁炉权杖
 }
 Tiles: {
 	ElvenFrame.MapEntry: 精灵族躯体

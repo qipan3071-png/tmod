@@ -39,6 +39,17 @@ namespace WastelandSoul.Content.Items.Weapons
 			item.UseSound = SoundID.Item20;
 		}
 
+		/// <summary>
+		/// 按住型法器：物品本身不画，改由 <c>WastelandHoldout</c> 贴手。
+		/// 在 <c>Magic</c> 之后调用。
+		/// </summary>
+		public static void ChannelHoldout(Item item)
+		{
+			item.channel = true;
+			item.noUseGraphic = true;
+			item.autoReuse = true;
+		}
+
 		/// <summary>射手：枪械，消耗火枪子弹，打出弹药自己的弹幕（流星弹等会正常转化）。</summary>
 		public static void Ranged(Item item)
 		{
