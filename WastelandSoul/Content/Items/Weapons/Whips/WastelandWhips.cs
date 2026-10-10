@@ -9,7 +9,8 @@ namespace WastelandSoul.Content.Items.Weapons.Whips
 {
 	/// <summary>
 	/// 打完对应 Boss 后可合成的四把鞭。手感对齐原版鞭：
-	/// 召唤伤害、不自动挥舞、命中锁定仆从目标、穿透衰减、4 秒标记。
+	/// 召唤伤害、命中锁定仆从目标、穿透衰减、4 秒标记。
+	/// 长按自动挥舞，对齐猛爪手套给近战的那套。
 	/// </summary>
 	public abstract class WastelandWhip : ModItem
 	{
@@ -34,7 +35,7 @@ namespace WastelandSoul.Content.Items.Weapons.Whips
 			Item.height = 40;
 			Item.rare = Rarity;
 			Item.value = SellCopper;
-			Item.autoReuse = false;
+			Item.autoReuse = true;
 			Item.channel = false;
 		}
 

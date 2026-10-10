@@ -920,7 +920,7 @@ TRANSLATIONS = {
     "Items.SignalWispStaff.DisplayName": "信号灯芯杖",
     "Items.SignalWispStaff.Tooltip": "召唤一盏狩猎提灯",
     "Items.StarstringBow.DisplayName": "星弦弓",
-    "Items.StarstringBow.Tooltip": "木箭落地处裂开一道隙",
+    "Items.StarstringBow.Tooltip": "将一支箭转化为三支带电矢\n矢会略作追踪并穿过物块",
     "Items.VoidSeed.DisplayName": "虚空种",
     "Items.VoidSeed.Tooltip": "召唤会撕开小裂隙的种子",
     "Projectiles.GapChakramProj.DisplayName": "裂隙环刃",
@@ -932,7 +932,7 @@ TRANSLATIONS = {
     "Projectiles.SignalWispMinion.DisplayName": "信号微光",
     "Projectiles.SignalWispShot.DisplayName": "信号微光",
     "Projectiles.StarRiftSlash.DisplayName": "星裂隙",
-    "Projectiles.StarstringShot.DisplayName": "星",
+    "Projectiles.StarstringShot.DisplayName": "带电矢",
     "Projectiles.VoidSeedMinion.DisplayName": "虚空种子",
 
 }

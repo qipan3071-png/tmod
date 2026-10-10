@@ -84,7 +84,7 @@ namespace WastelandSoul.Content.Items.Weapons.Rift
 		}
 	}
 
-	/// <summary>两弯虚空拉着一条星弦。箭钉上去才撕开。</summary>
+	/// <summary>把一支普通箭转成三支带电矢。手感参考脉冲弓，略作追踪、穿墙、只打一下。</summary>
 	public class StarstringBow : Riftarm
 	{
 		protected override DamageClass Class => DamageClass.Ranged;
@@ -105,7 +105,18 @@ namespace WastelandSoul.Content.Items.Weapons.Rift
 			Item.noMelee = true;
 			Item.autoReuse = true;
 			Item.useAmmo = AmmoID.Arrow;
-			Item.UseSound = SoundID.Item5;
+			Item.UseSound = SoundID.Item75;
+		}
+
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+			float[] spread = { -0.14f, 0f, 0.14f };
+
+			for (int i = 0; i < spread.Length; i++) {
+				Projectile.NewProjectile(source, position, velocity.RotatedBy(spread[i]), ShootType, damage, knockback, player.whoAmI);
+			}
+
+			return false;
 		}
 
 		public override void AddRecipes()

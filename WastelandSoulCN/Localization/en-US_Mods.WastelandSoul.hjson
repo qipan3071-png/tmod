@@ -1440,7 +1440,11 @@ Items: {
 
 	StarstringBow: {
 		DisplayName: Starstring Bow
-		Tooltip: Wooden arrows open a rift where they land
+		Tooltip:
+			'''
+			Converts arrows into three electric bolts
+			Bolts home slightly and pass through tiles
+			'''
 	}
 
 	GapChakram: {
@@ -1558,7 +1562,7 @@ Projectiles: {
 	GapChakramProj.DisplayName: Gap Chakram Proj
 	OrbitMote.DisplayName: Orbit Mote
 	StarRiftSlash.DisplayName: Star Rift Slash
-	StarstringShot.DisplayName: Starstring Shot
+	StarstringShot.DisplayName: Charged Bolt
 	VoidSeedMinion.DisplayName: Void Seed Minion
 	SignalCoilNail.DisplayName: Signal Coil Nail
 	SignalEmberFanProj.DisplayName: Signal Ember Fan Proj

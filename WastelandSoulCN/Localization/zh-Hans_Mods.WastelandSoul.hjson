@@ -1223,7 +1223,11 @@ Items: {
 	}
 	StarstringBow: {
 		DisplayName: 星弦弓
-		Tooltip: 木箭落地处裂开一道隙
+		Tooltip:
+			'''
+			将一支箭转化为三支带电矢
+			矢会略作追踪并穿过物块
+			'''
 	}
 	GapChakram: {
 		DisplayName: 缺环轮
@@ -1338,7 +1342,7 @@ Projectiles: {
 	GapChakramProj.DisplayName: 裂隙环刃
 	OrbitMote.DisplayName: 环绕微尘
 	StarRiftSlash.DisplayName: 星裂隙
-	StarstringShot.DisplayName: 星
+	StarstringShot.DisplayName: 带电矢
 	VoidSeedMinion.DisplayName: 虚空种子
 	SignalCoilNail.DisplayName: 信号线圈钉
 	SignalEmberFanProj.DisplayName: 信号余烬扇

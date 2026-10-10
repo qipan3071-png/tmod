@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Content.Buffs;
 using WastelandSoul.Content.Projectiles.Scavenger;
@@ -101,56 +103,96 @@ namespace WastelandSoul.Content.Projectiles.Rift
 		}
 	}
 
-	/// <summary>星弦。钉在目标上时撕开一道较小的裂缝。</summary>
+	/// <summary>
+	/// 星弦弓的带电矢。外形和飞行手感参考原版脉冲矢：不受重力、不怕水。
+	/// 锁定一名敌人追踪一次，不穿透，无视物块。
+	/// </summary>
 	public class StarstringShot : ModProjectile
 	{
+		private const float HomingRange = 640f;
+
+		public override void SetStaticDefaults()
+		{
+			TextureAssets.Projectile[Type] = TextureAssets.Projectile[ProjectileID.PulseBolt];
+		}
+
 		public override void SetDefaults()
 		{
-			Projectile.width = 12;
-			Projectile.height = 12;
+			Projectile.width = 14;
+			Projectile.height = 14;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.penetrate = 1;
-			Projectile.timeLeft = 50;
-			Projectile.tileCollide = true;
+			Projectile.timeLeft = 240;
+			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
-			Projectile.extraUpdates = 1;
+			Projectile.extraUpdates = 2;
 			Projectile.arrow = true;
 		}
 
 		public override void AI()
 		{
+			if (Projectile.ai[0] <= 0f) {
+				int who = FindTarget();
+
+				if (who >= 0) {
+					Projectile.ai[0] = who + 1;
+				}
+			}
+
+			int locked = (int)Projectile.ai[0] - 1;
+
+			if ((uint)locked < Main.maxNPCs) {
+				NPC npc = Main.npc[locked];
+
+				if (npc.active && npc.CanBeChasedBy(Projectile)) {
+					float speed = Projectile.velocity.Length();
+
+					if (speed < 1f) {
+						speed = 12f;
+					}
+
+					Vector2 desired = (npc.Center - Projectile.Center).SafeNormalize(Vector2.UnitX) * speed;
+					Projectile.velocity = Vector2.Lerp(Projectile.velocity, desired, 0.14f);
+				}
+			}
+
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: Dust only
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Electric);
+				dust.noGravity = true;
+				dust.scale = 0.7f;
+				dust.velocity *= 0.3f;
+			}
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Open();
+			target.AddBuff(BuffID.Electrified, 240);
 		}
 
-		public override void OnKill(int timeLeft)
+		private int FindTarget()
 		{
-			if (timeLeft > 0) {
-				Open();
-			}
-		}
+			int best = -1;
+			float bestDistance = HomingRange;
 
-		private void Open()
-		{
-			if (Main.dedServ || Projectile.localAI[0] > 0f) {
-				return;
+			for (int i = 0; i < Main.maxNPCs; i++) {
+				NPC npc = Main.npc[i];
+
+				if (!npc.CanBeChasedBy(Projectile)) {
+					continue;
+				}
+
+				float distance = Vector2.Distance(npc.Center, Projectile.Center);
+
+				if (distance < bestDistance) {
+					bestDistance = distance;
+					best = i;
+				}
 			}
 
-			Projectile.localAI[0] = 1f;
-			Projectile.NewProjectile(
-				Projectile.GetSource_Death(),
-				Projectile.Center,
-				Projectile.velocity * 0.15f,
-				ModContent.ProjectileType<StarRiftSlash>(),
-				(int)(Projectile.damage * 0.65f),
-				Projectile.knockBack,
-				Projectile.owner,
-				0.6f);
+			return best;
 		}
 	}
 
