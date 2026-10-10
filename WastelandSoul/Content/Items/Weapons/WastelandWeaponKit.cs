@@ -24,7 +24,11 @@ namespace WastelandSoul.Content.Items.Weapons
 			item.UseSound = SoundID.Item1;
 		}
 
-		/// <summary>法师：法杖 / 法典，朝鼠标方向施法并消耗魔力。</summary>
+		/// <summary>
+		/// 法师：法杖 / 法典，朝鼠标方向施法并消耗魔力。
+		/// 法杖的 <c>Item.staff</c> 与枪的 <c>HoldoutOffset</c> 在
+		/// <c>WastelandClassWeapon</c> 里按类名套上，这里只负责手感。
+		/// </summary>
 		public static void Magic(Item item, int mana)
 		{
 			item.useStyle = ItemUseStyleID.Shoot;

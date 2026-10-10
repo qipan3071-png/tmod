@@ -67,6 +67,7 @@
 | ChatGPT 出图 | `tools/chatgpt_art.py --prompt "..." --out art-inbox/raw/x.png`（已登录） |
 | 护甲穿身图像素画 | `tools/gen_armor_pixel_equip.py`（自带 6 倍预览，**先看图再装机**） |
 | 弓手持对齐（预览） | `tools/fix_bow_hold_sprite.py --preview`（定稿前需原版弓对照图，见交接第四节） |
+| 枪/杖/刀手持贴图 | `tools/fix_held_weapon_sprites.py --preview` / `--install`（批次 66；弓/鞭跳过） |
 | 弓原版 vs 模组并排 | `tools/compare_bow_vanilla.py`（依赖 `.tmp-vanilladump/out_bow/`，见批次 49） |
 | 3D 角色 / 装备件 | ~~已删除（批次 39）~~ —— 勿再跑 3D 工具链 |
 | 汉化 | `tools/sync_cn_translation.py` → `tools/check_cn_parity.py` |

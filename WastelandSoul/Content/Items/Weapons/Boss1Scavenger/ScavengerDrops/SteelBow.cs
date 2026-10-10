@@ -43,6 +43,11 @@ namespace WastelandSoul.Content.Items.Weapons.Boss1Scavenger.ScavengerDrops
 			Item.rare = WastelandRarityTiers.EarlyLate;   // 骷髅王之后档次
 		}
 
+		public override Vector2? HoldoutOffset()
+		{
+			return WastelandHeldVisuals.BowOffset;
+		}
+
 		/// <summary>
 		/// 这一发是不是「普通箭」——是的话转成邪箭。
 		/// <para/>只认基础箭：木箭 / 火焰箭 / 邪箭，以及**无尽箭袋**（箭袋配普通箭时也按普通箭算）。

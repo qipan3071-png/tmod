@@ -58,6 +58,11 @@ namespace WastelandSoul.Content.Items.Weapons.Boss1Scavenger.ScavengerDrops
 			Item.rare = WastelandRarityTiers.EarlyLate;
 		}
 
+		public override Vector2? HoldoutOffset()
+		{
+			return WastelandHeldVisuals.GunOffset;
+		}
+
 		public override bool CanUseItem(Player player)
 		{
 			if (player.wet && !player.lavaWet) {

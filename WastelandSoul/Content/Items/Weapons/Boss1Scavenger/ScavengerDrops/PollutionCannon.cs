@@ -41,6 +41,11 @@ namespace WastelandSoul.Content.Items.Weapons.Boss1Scavenger.ScavengerDrops
 			Item.rare = WastelandRarityTiers.EarlyLate;   // 骷髅王之后档位
 		}
 
+		public override Vector2? HoldoutOffset()
+		{
+			return WastelandHeldVisuals.GunOffset;
+		}
+
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			Vector2 muzzle = position + Vector2.Normalize(velocity) * 26f;

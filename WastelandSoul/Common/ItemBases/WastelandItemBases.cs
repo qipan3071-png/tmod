@@ -190,6 +190,24 @@ namespace WastelandSoul.Common.ItemBases
 
 		protected virtual float ShootSpeed => 9f;
 
+		/// <summary>
+		/// 法杖才打 <c>Item.staff</c>。法典、刀刃、归档者法书走枪同款握持。
+		/// </summary>
+		protected virtual bool HoldAsStaff => Class == DamageClass.Magic
+			&& WastelandHeldVisuals.NameLooksLikeStaff(GetType().Name);
+
+		public override void SetStaticDefaults()
+		{
+			if (HoldAsStaff) {
+				Item.staff[Type] = true;
+			}
+		}
+
+		public override Vector2? HoldoutOffset()
+		{
+			return WastelandHeldVisuals.ShootHoldoutOffset(Item);
+		}
+
 		public override void SetDefaults()
 		{
 			Item.width = 40;
