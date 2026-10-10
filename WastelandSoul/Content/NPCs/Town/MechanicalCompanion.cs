@@ -14,7 +14,7 @@ namespace WastelandSoul.Content.NPCs.Town
 {
 	/// <summary>
 	/// 智械人：主人公魂穿时携带的智械核心，在旧世界精灵族遗迹中获得身体。
-	/// <para/>外观：精灵（金发、长耳、亮蓝瞳），**棕色金边长袍**。定位：城镇 NPC，住在屋子里，不跟随玩家。
+	/// <para/>外观：精灵（金发、尖耳、亮蓝瞳），**棕红金边长袍**。帧表骨架是原版树妖 21 帧，外形不是树妖换色。定位：城镇 NPC，住在屋子里，不跟随玩家。
 	/// <para/>剧情作用：对话触发、任务引导、记忆恢复、真相揭示。
 	/// </summary>
 	[AutoloadHead]
@@ -29,8 +29,8 @@ namespace WastelandSoul.Content.NPCs.Town
 			//   树妖 Dryad：帧 21 / ExtraFrames 7 / AttackFrames 2
 			//   向导 Guide：帧 26 / ExtraFrames 10 / AttackFrames 5
 			//   （护士 23/9/4，机械师 23/9/4，公主 23/7/2）
-			// 本模组 2026-10-09 起改用**树妖的帧表骨架**（见 tools/gen_companion_sprite.py），
-			// 所以这三个数必须跟树妖一致；旧版写的 25/9/4 + AnimationType=Guide 三个数全错。
+			// 本模组用**树妖的帧表骨架**（21/7/2），外形由 tools/gen_companion_elf.py 按概念图重画。
+			// 旧版写的 25/9/4 + AnimationType=Guide 三个数全错，别改回去。
 			Main.npcFrameCount[Type] = 21;
 			NPCID.Sets.ExtraFramesCount[Type] = 7;
 			NPCID.Sets.AttackFrameCount[Type] = 2;
@@ -177,8 +177,8 @@ namespace WastelandSoul.Content.NPCs.Town
 		//     倒数计时 frameCounter += |velocity.X| + 1，每满 9 计数走一帧；
 		//     帧号在**身体帧**里递增，越界（<1 或 >4）回 0 —— 帧表 = 「0..13 身体 + extra + 攻击帧」，
 		//     所以实际走路循环是 **帧 2..13**，站着不动时用 **帧 0**。
-		// · 帧表就是原版 `Dryad_Default`（40×1176 = 21 帧 × 56）的**逐像素换色**，
-		//   连 alpha 都 100% 相同（tools/gen_companion_sprite.py），所以原版帧号在她身上天然对齐。
+		// · 帧表尺寸/帧序仍对齐原版 `Dryad_Default`（40×1176 = 21 帧 × 56）：
+		//   站立帧 0、走路循环帧 2..13。外形不是树妖换色（见 tools/gen_companion_elf.py）。
 		//
 		// 旧版那段重写（已删，别再加回来）做错了两件事：
 		//   1. 用 localAI 计时，每隔 2~3 分钟把帧**硬切**到 14 / 16（她以为那两帧是"低头/抬头"，
