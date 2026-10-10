@@ -10,16 +10,17 @@ namespace WastelandSoul.Common.Systems
 	/// </summary>
 	/// <remarks>
 	/// 要做：只 <see cref="Recipe.Create"/> 多一条；材料/工作台以玩家点名为准；全写在本文件。
+	/// 原版双矿/等价组（铁铅、铜锡、金银铂、魔矿猩红、三王矿等）用 <see cref="RecipeGroupID"/>，一条配方两种都能交。
 	/// 不做：改原版掉落/箱子/提炼表/生成；删或替换原版已有配方；把合成写进 Tooltip（<c>check_tooltip_no_crafting</c>）；
-	/// 没点名就猜铁/铅双矿、没点名就改工作台。
+	/// 没点名就改工作台、或把不等价的材料擅自互换。
 	/// </remarks>
 	public class VanillaExtraRecipes : ModSystem
 	{
 		public override void AddRecipes()
 		{
-			// 提炼机：原版地下小屋才刷。5 铅锭 + 20 泥沙块 @ 重型工作台。
+			// 提炼机：原版地下小屋才刷。5 铁/铅锭 + 20 泥沙块 @ 重型工作台。
 			Recipe.Create(ItemID.Extractinator)
-				.AddIngredient(ItemID.LeadBar, 5)
+				.AddRecipeGroup(RecipeGroupID.IronBar, 5)
 				.AddIngredient(ItemID.SiltBlock, 20)
 				.AddTile(TileID.HeavyWorkBench)
 				.Register();
