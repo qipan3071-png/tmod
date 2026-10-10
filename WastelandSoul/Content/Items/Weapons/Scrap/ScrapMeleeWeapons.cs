@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons;
-using WastelandSoul.Content.Projectiles.Melee;
 
 namespace WastelandSoul.Content.Items.Weapons.Scrap
 {
@@ -35,7 +34,7 @@ namespace WastelandSoul.Content.Items.Weapons.Scrap
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Melee(Item, WastelandSwingStyle.Smash);
+			WastelandWeaponKit.Melee(Item);
 			Item.width = 46;
 			Item.height = 46;
 			Item.scale = 1.3f;

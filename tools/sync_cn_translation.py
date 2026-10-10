@@ -933,7 +933,6 @@ TRANSLATIONS = {
     "Projectiles.SignalWispShot.DisplayName": "信号微光",
     "Projectiles.StarRiftSlash.DisplayName": "星裂隙",
     "Projectiles.StarstringShot.DisplayName": "带电矢",
-    "Projectiles.WastelandMeleeSwing.DisplayName": "近战挥砍",
     "Projectiles.VoidSeedMinion.DisplayName": "虚空种子",
 
 }

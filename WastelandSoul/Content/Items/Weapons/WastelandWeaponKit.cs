@@ -1,7 +1,5 @@
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using WastelandSoul.Content.Projectiles.Melee;
 
 namespace WastelandSoul.Content.Items.Weapons
 {
@@ -14,29 +12,16 @@ namespace WastelandSoul.Content.Items.Weapons
 	public static class WastelandWeaponKit
 	{
 		/// <summary>
-		/// 近战：关掉原版电风扇挥砍，改用朝光标的斩/刺/连击/重劈（自己画剑，不搬 C.I.V.E 源码）。
+		/// 近战：保持标准阔剑形态，让 C.I.V.E 接管挥砍招式。
+		/// 它只改 <c>useStyle=Swing</c>、<c>noMelee=false</c>、<c>noUseGraphic=false</c> 的宽刃。
 		/// </summary>
-		public static void Melee(Item item, WastelandSwingStyle style = WastelandSwingStyle.Chop)
+		public static void Melee(Item item)
 		{
 			item.useStyle = ItemUseStyleID.Swing;
+			item.noMelee = false;
+			item.noUseGraphic = false;
 			item.autoReuse = true;
 			item.UseSound = SoundID.Item1;
-			EnableSwing(item, style);
-		}
-
-		public static void EnableSwing(Item item, WastelandSwingStyle style)
-		{
-			item.noMelee = true;
-			item.noUseGraphic = true;
-			item.shootsEveryUse = true;
-			WastelandMeleeSwingItem extra = item.GetGlobalItem<WastelandMeleeSwingItem>();
-			extra.Enabled = true;
-			extra.Style = style;
-
-			if (item.shoot <= 0) {
-				item.shoot = ModContent.ProjectileType<WastelandMeleeSwing>();
-				item.shootSpeed = 8f;
-			}
 		}
 
 		/// <summary>

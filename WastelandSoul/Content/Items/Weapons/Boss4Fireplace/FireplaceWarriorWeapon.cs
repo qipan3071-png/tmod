@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons;
-using WastelandSoul.Content.Projectiles.Melee;
 
 namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 {
@@ -28,7 +27,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Melee(Item, WastelandSwingStyle.Sweep);
+			WastelandWeaponKit.Melee(Item);
 		}
 
 		public override void AddRecipes()

@@ -6,7 +6,6 @@ using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Buffs;
 using WastelandSoul.Content.Items.Materials;
-using WastelandSoul.Content.Projectiles.Melee;
 using WastelandSoul.Content.Projectiles.Signal;
 
 namespace WastelandSoul.Content.Items.Weapons.Signal
@@ -27,7 +26,7 @@ namespace WastelandSoul.Content.Items.Weapons.Signal
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Melee(Item, WastelandSwingStyle.Thrust);
+			WastelandWeaponKit.Melee(Item);
 		}
 
 		public override void AddRecipes()
