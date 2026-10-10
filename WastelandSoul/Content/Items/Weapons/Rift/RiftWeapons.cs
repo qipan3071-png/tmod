@@ -85,7 +85,7 @@ namespace WastelandSoul.Content.Items.Weapons.Rift
 	}
 
 	/// <summary>把一支普通箭转成三支带电矢。手感参考脉冲弓，略作追踪、穿墙、只打一下。
-	/// 贴图：弦在左侧、竖直（Shoot 朝右时弦贴着人、与站姿平行）。手持缩小。</summary>
+	/// 贴图：绕中线 Y 轴左右翻转后，弦竖直、贴着人。手持缩小。</summary>
 	public class StarstringBow : Riftarm
 	{
 		protected override DamageClass Class => DamageClass.Ranged;
