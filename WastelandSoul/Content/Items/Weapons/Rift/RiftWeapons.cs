@@ -108,6 +108,11 @@ namespace WastelandSoul.Content.Items.Weapons.Rift
 			Item.UseSound = SoundID.Item75;
 		}
 
+		public override Vector2? HoldoutOffset()
+		{
+			return WastelandHeldVisuals.BowOffset;
+		}
+
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
 			float[] spread = { -0.14f, 0f, 0.14f };

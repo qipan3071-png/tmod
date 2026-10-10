@@ -30,6 +30,9 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 		/// <summary>跟随时的漂浮高度（负值在上方）。</summary>
 		protected virtual float HoverHeight => 52f;
 
+		/// <summary>占哨兵栏而不是仆从栏。</summary>
+		protected virtual bool OccupySentrySlot => false;
+
 		public override void SetStaticDefaults()
 		{
 			Main.projFrames[Type] = 1;
@@ -43,8 +46,18 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 			Projectile.width = 26;
 			Projectile.height = 26;
 			Projectile.friendly = true;
-			Projectile.minion = true;
-			Projectile.minionSlots = 1f;
+			Projectile.DamageType = DamageClass.Summon;
+
+			if (OccupySentrySlot) {
+				Projectile.minion = false;
+				Projectile.minionSlots = 0f;
+				Projectile.sentry = true;
+			}
+			else {
+				Projectile.minion = true;
+				Projectile.minionSlots = 1f;
+			}
+
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 2;
 			Projectile.tileCollide = false;

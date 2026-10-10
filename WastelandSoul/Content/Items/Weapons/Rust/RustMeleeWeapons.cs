@@ -43,14 +43,7 @@ namespace WastelandSoul.Content.Items.Weapons.Rust
 		{
 			CreateRecipe()
 				.AddIngredient<SalvagedSteelChunk>(8)
-				.AddIngredient(ItemID.IronBar, 10)
-				.AddIngredient(ItemID.Wood, 12)
-				.AddTile(WastelandCraftingStations.EarlyAnvil)
-				.Register();
-
-			CreateRecipe()
-				.AddIngredient<SalvagedSteelChunk>(8)
-				.AddIngredient(ItemID.LeadBar, 10)
+				.AddRecipeGroup(RecipeGroupID.IronBar, 10)
 				.AddIngredient(ItemID.Wood, 12)
 				.AddTile(WastelandCraftingStations.EarlyAnvil)
 				.Register();

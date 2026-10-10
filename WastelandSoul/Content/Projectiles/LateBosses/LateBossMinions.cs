@@ -92,7 +92,7 @@ namespace WastelandSoul.Content.Projectiles.LateBosses
 		}
 	}
 
-	/// <summary>A 线 · 壁炉浮游哨（壁炉守卫）：悬停较高，每 1.5 秒射一发冷光钉弹。</summary>
+	/// <summary>A 线 · 壁炉浮游哨（壁炉守卫）：悬停较高，每 1.5 秒射一发冷光钉弹。占 1 个哨兵栏。</summary>
 	public class FireplaceSentryMinion : WastelandMinionBase
 	{
 		protected override int BuffType => ModContent.BuffType<FireplaceSentryBuff>();
@@ -100,6 +100,8 @@ namespace WastelandSoul.Content.Projectiles.LateBosses
 		protected override int ShotType => ModContent.ProjectileType<FireplaceRangerProjectile>();
 
 		protected override float HoverHeight => 70f;
+
+		protected override bool OccupySentrySlot => true;
 
 		public override void SetDefaults()
 		{
@@ -140,6 +142,8 @@ namespace WastelandSoul.Content.Projectiles.LateBosses
 		protected override float AttackInterval => 50f;
 
 		protected override float Range => 800f;
+
+		protected override bool OccupySentrySlot => true;
 
 		public override void SetDefaults()
 		{

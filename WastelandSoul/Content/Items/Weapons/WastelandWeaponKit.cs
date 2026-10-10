@@ -68,5 +68,14 @@ namespace WastelandSoul.Content.Items.Weapons
 			item.buffTime = 2;
 			item.UseSound = SoundID.Item44;
 		}
+
+		/// <summary>
+		/// 哨兵杖：仍挂专属 Buff 维持存在，但占的是哨兵栏而不是仆从栏。
+		/// </summary>
+		public static void Sentry(Item item, int buffType, int mana)
+		{
+			Summon(item, buffType, mana);
+			item.sentry = true;
+		}
 	}
 }

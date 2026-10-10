@@ -11,13 +11,14 @@ namespace WastelandSoul.Content.Items.UpgradeTrees
 	// ====================================================================================
 	// 升级衍生树（六）· 召唤师：锈蚀齿轮哨 → 精钢齿轮哨 → 灰烬之心齿灵哨
 	//
-	// 三级差异（**不是纯数值 +10%**，三级三种仆从编制）：
-	//   锈蚀齿轮哨        1 只**近战冲锋**仆从（撞击型，1 个仆从位），没有任何附加效果
-	//   精钢齿轮哨        一次召唤 **2 只**：1 只冲锋齿轮 + 1 只悬浮射击齿轮（共 2 个仆从位），
+	// 三级差异（**不是纯数值 +10%**，三级三种哨兵编制）：
+	//   锈蚀齿轮哨        1 只**近战冲锋**哨兵（撞击型，占 1 个哨兵栏），没有任何附加效果
+	//   精钢齿轮哨        一次召唤 **2 只**：1 只冲锋齿轮 + 1 只悬浮射击齿轮（共占 1 个哨兵栏），
 	//                     射击齿轮吐出的钢钉会让目标**流血 3 秒**
 	//   灰烬之心齿灵哨    一次召唤 **2 只环绕齿轮**：绕着主人转圈切割（撞到就**点燃**），
 	//                     同时每 45 帧投出一枚会**追踪**的余烬弹（点燃 + 霜冻），
 	//                     并且主人身上常驻一层**齿轮护盾**（防御 +5、免疫击退、再减伤 8%）
+	//                     （一对环绕占 1 个哨兵栏）
 	//
 	// 召唤类一律「物品 + 仆从弹幕 + 专属 Buff」三件套成对出现（见 SummonerUpgradeMinions.cs）。
 	// ⚠️ 1.4.4 的 <c>Terraria.Item</c> **没有** <c>summon</c> 这个字段（已用 Cecil 核对过元数据），
@@ -45,7 +46,7 @@ namespace WastelandSoul.Content.Items.UpgradeTrees
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Summon(Item, ModContent.BuffType<RustedGearSentryBuff>(), 10);
+			WastelandWeaponKit.Sentry(Item, ModContent.BuffType<RustedGearSentryBuff>(), 10);
 			Item.width = 36;
 			Item.height = 36;
 		}
@@ -80,7 +81,7 @@ namespace WastelandSoul.Content.Items.UpgradeTrees
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Summon(Item, ModContent.BuffType<SalvagedSteelGearBuff>(), 12);
+			WastelandWeaponKit.Sentry(Item, ModContent.BuffType<SalvagedSteelGearBuff>(), 12);
 			Item.width = 40;
 			Item.height = 40;
 		}
@@ -116,7 +117,7 @@ namespace WastelandSoul.Content.Items.UpgradeTrees
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Summon(Item, ModContent.BuffType<AshHeartGearBuff>(), 14);
+			WastelandWeaponKit.Sentry(Item, ModContent.BuffType<AshHeartGearBuff>(), 14);
 			Item.width = 44;
 			Item.height = 44;
 			Item.UseSound = SoundID.Item44;

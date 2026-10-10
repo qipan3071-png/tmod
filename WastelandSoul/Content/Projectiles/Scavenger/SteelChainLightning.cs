@@ -1,9 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using WastelandSoul.Common.Effects;
 using WastelandSoul.Common.Systems;
 
 namespace WastelandSoul.Content.Projectiles.Scavenger
@@ -12,17 +10,10 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 	/// 精钢放电器的瞬间电弧（一端在玩家，一端在 <c>ai[0]/ai[1]</c>）。
 	/// <para/>碰撞用线段判定，无限穿透、无伤害递减；同类型电弧共享 10 嘀嗒静态无敌帧
 	/// （对齐电弧涌动：每两道才打中同一目标一次）。命中挂「带电」4～7 秒。
-	/// 贴图复用原版 <see cref="ProjectileID.ThunderStaffShot"/>，画面只画主电弧，不分叉、不在落点加光柱。
+	/// 画面只用沿线电尘标出命中线段，不拉 MagicPixel 光柱、不套原版雷杖贴图。
 	/// </summary>
 	public class SteelChainLightning : ModProjectile
 	{
-		private static readonly Color ArcColor = new Color(70, 186, 228);
-
-		public override void SetStaticDefaults()
-		{
-			TextureAssets.Projectile[Type] = TextureAssets.Projectile[ProjectileID.ThunderStaffShot];
-		}
-
 		public override void SetDefaults()
 		{
 			Projectile.width = 16;
@@ -34,6 +25,7 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = 8;
 			Projectile.aiStyle = -1;
+			Projectile.hide = true;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 10;
 		}
@@ -52,7 +44,22 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 				return;
 			}
 
-			WastelandFxSystem.Bolt(Projectile.Center, EndPoint(), ArcColor);
+			Vector2 start = Projectile.Center;
+			Vector2 end = EndPoint();
+			Vector2 delta = end - start;
+			float length = delta.Length();
+
+			if (length < 4f) {
+				return;
+			}
+
+			Vector2 step = delta / length;
+
+			for (float d = 0f; d <= length; d += 18f) {
+				Dust dust = Dust.NewDustPerfect(start + step * d, DustID.Electric, Vector2.Zero, 150, default, 0.7f);
+				dust.noGravity = true;
+				dust.velocity *= 0.15f;
+			}
 		}
 
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)

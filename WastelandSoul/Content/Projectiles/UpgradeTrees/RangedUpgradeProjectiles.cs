@@ -64,19 +64,12 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 			Projectile.timeLeft = 70;
 			Projectile.tileCollide = true;
 			Projectile.ignoreWater = true;
-			Projectile.light = 0.5f;
 			Projectile.extraUpdates = 1;
 			Projectile.aiStyle = 0;
 		}
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(1, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.velocity.Y += 0.004f;
 

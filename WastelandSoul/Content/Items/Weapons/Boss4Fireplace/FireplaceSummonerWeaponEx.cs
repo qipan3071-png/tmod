@@ -24,7 +24,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Summon(Item, ModContent.BuffType<Content.Projectiles.LateBosses.FireplaceSentryBuffEX>(), 18);
+			WastelandWeaponKit.Sentry(Item, ModContent.BuffType<Content.Projectiles.LateBosses.FireplaceSentryBuffEX>(), 18);
 		}
 
 		// B 线为专属掉落：**不写任何 AddRecipes()**，只能从壁炉守卫的掉落袋开出。

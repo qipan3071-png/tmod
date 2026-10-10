@@ -38,7 +38,8 @@ def contains(name, *needles):
     return any(n.lower() in lower for n in needles)
 
 
-# ChatGPT icons that the auto-orienter consistently gets backwards.
+# Already baked into the PNG. Re-applying rotate/flip on --install is not idempotent.
+# These names still skip auto-orient (transform_diagonal).
 FORCE_ROTATE = {
     "ScavengerMageWeapon.png": 180,
     "ScavengerMageWeaponEX.png": 180,
@@ -49,6 +50,14 @@ FORCE_FLIP_X = {
     "ArchivistWarriorWeapon.png",
     "ArchivistWarriorWeaponEX.png",
     "ArchivistCWarrior.png",
+    "FireplaceWarriorWeapon.png",
+    "FireplaceWarriorWeaponEx.png",
+    "FireplaceCWarrior.png",
+    "RustCleaver.png",
+    "RustCleaverEX.png",
+    "ScavengerWarriorWeapon.png",
+    "ScavengerWarriorWeaponEX.png",
+    "ScavengerCWarrior.png",
 }
 
 
@@ -226,12 +235,7 @@ def transform_crop(im):
 
 
 def apply_force(im, fname):
-    if fname in FORCE_ROTATE:
-        im = rotate_nearest(im, FORCE_ROTATE[fname])
-        im = crop_pad(im)
-    if fname in FORCE_FLIP_X:
-        im = im.transpose(Image.FLIP_LEFT_RIGHT)
-        im = crop_pad(im)
+    # Corrections are already in the files. Listing a name only skips PCA re-orient.
     return im
 
 

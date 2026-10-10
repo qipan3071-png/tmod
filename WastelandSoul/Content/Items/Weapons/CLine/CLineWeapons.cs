@@ -62,6 +62,11 @@ namespace WastelandSoul.Content.Items.Weapons.CLine
 					break;
 			}
 		}
+
+		/// <summary>C 线只从野生动物掉，不写配方。A 线 / 锈蚀线另有合成。</summary>
+		public override void AddRecipes()
+		{
+		}
 	}
 
 	public class ScavengerCWarrior : CLineWeapon
@@ -254,5 +259,11 @@ namespace WastelandSoul.Content.Items.Weapons.CLine
 		protected override int UseTime => 24;
 		protected override int Rarity => WastelandRarityTiers.Late;
 		protected override int ShootType => ModContent.ProjectileType<Content.Projectiles.LateBosses.FireplaceSentryMinion>();
+
+		public override void SetDefaults()
+		{
+			base.SetDefaults();
+			Item.sentry = true;
+		}
 	}
 }

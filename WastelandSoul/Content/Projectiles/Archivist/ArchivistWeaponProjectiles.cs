@@ -23,18 +23,11 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 			Projectile.timeLeft = 34;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
-			Projectile.light = 0.3f;
 			Projectile.aiStyle = 0;
 		}
 
 		public override void AI()
 		{
-			if (Projectile.localAI[1] == 0f) {
-				Projectile.localAI[1] = 1f;
-				if (!Main.dedServ) {
-					WastelandFxSystem.StyleStrike(1, Projectile.Center, Projectile.velocity);
-				}
-			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.velocity *= 0.97f;
 

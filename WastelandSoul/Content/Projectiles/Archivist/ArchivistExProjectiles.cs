@@ -14,7 +14,6 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 			Projectile.height = 28;
 			Projectile.penetrate = 2;
 			Projectile.timeLeft = 50;
-			Projectile.light = 0.45f;
 		}
 	}
 

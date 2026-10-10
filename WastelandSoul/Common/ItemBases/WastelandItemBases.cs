@@ -230,6 +230,17 @@ namespace WastelandSoul.Common.ItemBases
 			}
 		}
 
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
+			if (!Item.sentry) {
+				return true;
+			}
+
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+			player.UpdateMaxTurrets();
+			return false;
+		}
+
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
 			if (Class != DamageClass.Summon || Item.buffType <= 0) {

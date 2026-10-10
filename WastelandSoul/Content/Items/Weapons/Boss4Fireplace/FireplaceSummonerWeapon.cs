@@ -25,7 +25,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
-			WastelandWeaponKit.Summon(Item, ModContent.BuffType<Content.Projectiles.LateBosses.FireplaceSentryBuff>(), 16);
+			WastelandWeaponKit.Sentry(Item, ModContent.BuffType<Content.Projectiles.LateBosses.FireplaceSentryBuff>(), 16);
 		}
 
 		public override void AddRecipes()

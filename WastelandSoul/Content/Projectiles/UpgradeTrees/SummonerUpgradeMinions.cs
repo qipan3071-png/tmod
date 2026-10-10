@@ -49,6 +49,9 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 		/// <summary>是否主动冲向目标（近战冲锋型）。</summary>
 		protected virtual bool Charger => false;
 
+		/// <summary>占哨兵栏而不是仆从栏。同伴弹幕保持 false。</summary>
+		protected virtual bool OccupySentrySlot => false;
+
 		public override void SetStaticDefaults()
 		{
 			Main.projFrames[Type] = 1;
@@ -63,8 +66,9 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 			Projectile.height = 28;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Summon;
-			Projectile.minion = true;
-			Projectile.minionSlots = 1f;
+			Projectile.minion = false;
+			Projectile.minionSlots = 0f;
+			Projectile.sentry = OccupySentrySlot;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 2;
 			Projectile.tileCollide = false;
@@ -200,12 +204,14 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 		}
 	}
 
-	/// <summary>树根仆从：近战冲锋齿轮，不射击，撞上去咬。</summary>
+	/// <summary>树根仆从：近战冲锋齿轮，不射击，撞上去咬。占 1 个哨兵栏。</summary>
 	public class RustedGearSentry : GearMinionBase
 	{
 		protected override int BuffType => ModContent.BuffType<RustedGearSentryBuff>();
 
 		protected override bool Charger => true;
+
+		protected override bool OccupySentrySlot => true;
 
 		public override void SetDefaults()
 		{
@@ -257,6 +263,8 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 		protected override int BuffType => ModContent.BuffType<SalvagedSteelGearBuff>();
 
 		protected override bool Charger => true;
+
+		protected override bool OccupySentrySlot => true;
 
 		public override void SetDefaults()
 		{
@@ -392,6 +400,8 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 
 		protected override float ShotSpeed => 8f;
 
+		protected override bool OccupySentrySlot => true;
+
 		public override void SetDefaults()
 		{
 			base.SetDefaults();
@@ -408,6 +418,10 @@ namespace WastelandSoul.Content.Projectiles.UpgradeTrees
 		/// </summary>
 		public override void OnSpawn(IEntitySource source)
 		{
+			if (Projectile.ai[1] == 1f) {
+				Projectile.sentry = false;
+			}
+
 			if (Projectile.owner != Main.myPlayer || Projectile.ai[1] == 1f) {
 				return;
 			}
