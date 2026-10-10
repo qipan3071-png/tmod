@@ -18,6 +18,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss1Scavenger.ScavengerDrops
 	/// 数值仍是清道夫档（34 伤 / 12 蓝），不是石巨人后那把 180 伤。
 	/// <para/>内部 <c>useTime = 6</c> / <c>useAnimation = 18</c>，一次按下打 3 轮。
 	/// 电弧不穿墙、不进液体；人泡在水/蜂蜜/微光里按不出来。
+	/// 物品是手套：<c>noUseGraphic</c>，不在手里再画一张。
 	/// </summary>
 	public class SteelDischarger : ModItem
 	{
@@ -48,6 +49,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss1Scavenger.ScavengerDrops
 			Item.useAnimation = 18;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
+			Item.noUseGraphic = true;
 			Item.autoReuse = true;
 			Item.channel = false;
 			Item.shoot = ModContent.ProjectileType<SteelChainLightning>();
@@ -56,11 +58,6 @@ namespace WastelandSoul.Content.Items.Weapons.Boss1Scavenger.ScavengerDrops
 			Item.UseSound = SoundID.Item122;
 			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = WastelandRarityTiers.EarlyLate;
-		}
-
-		public override Vector2? HoldoutOffset()
-		{
-			return WastelandHeldVisuals.GunOffset;
 		}
 
 		public override bool CanUseItem(Player player)

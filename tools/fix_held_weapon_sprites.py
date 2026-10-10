@@ -39,7 +39,7 @@ def contains(name, *needles):
 
 
 # Already baked into the PNG. Re-applying rotate/flip on --install is not idempotent.
-# These names still skip auto-orient (transform_diagonal).
+# Names listed here skip PCA auto-orient (transform_diagonal). Do not --install to "fix" them.
 FORCE_ROTATE = {
     "ScavengerMageWeapon.png": 180,
     "ScavengerMageWeaponEX.png": 180,
