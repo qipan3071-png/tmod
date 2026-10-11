@@ -61,11 +61,12 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 
 		public override void SetDefaults()
 		{
-			// 石巨人碰撞 140；玩家要约 1.3 倍。贴图 256×307（枪盾四足，最近邻从 ChatGPT 原图下来），
-			// 比碰撞箱大一圈，枪和盾露在盒子外。DrawOffsetY 把脚底对齐碰撞箱底。
-			NPC.width = 182;
-			NPC.height = 240;
-			DrawOffsetY = -34f;
+			// 石巨人碰撞 140；贴图 256×307（枪盾四足）。玩家 2026-10-11：大小改为当时的 0.7 倍
+			//（碰撞与绘制一起缩；枪盾仍露在盒子外）。
+			NPC.width = 127;
+			NPC.height = 168;
+			NPC.scale = 0.7f;
+			DrawOffsetY = -24f;
 			NPC.damage = ContactDamage;
 			NPC.defDamage = ContactDamage;
 			NPC.defense = 50;

@@ -112,8 +112,10 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 		public override void SetDefaults()
 		{
 			// ChatGPT 定稿：坐在悬浮杖上 292×292（最近邻）。碰撞只包身子和书，杖露在盒子外。
-			NPC.width = 132;
-			NPC.height = 168;
+			// 玩家 2026-10-11：模型改为当时大小的 0.4 倍。
+			NPC.width = 53;
+			NPC.height = 67;
+			NPC.scale = 0.4f;
 			NPC.damage = ContactDamage;
 			NPC.defDamage = ContactDamage;
 			NPC.defense = 24;              // 与机械骷髅王（24）齐平
