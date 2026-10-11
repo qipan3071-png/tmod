@@ -386,9 +386,11 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 		}
 	}
 
-	/// <summary>圆场薄雾：圈沿扬尘，人在圈外时在身边再扬一层。不是激光。</summary>
+	/// <summary>圆场薄雾：圈外整片扬尘成雾，不是一圈细点，也不是激光。</summary>
 	public class ArchivistArenaMist : ModProjectile
 	{
+		private static readonly Color FogColor = new Color(186, 196, 208);
+
 		public override void SetDefaults()
 		{
 			Projectile.width = 8;
@@ -420,25 +422,42 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 			}
 
 			Vector2 center = Projectile.Center;
-			const int Ring = 18;
+			float radius = ArchivistNpc.ArenaRadius;
 
-			for (int i = 0; i < Ring; i++) {
-				float angle = MathHelper.TwoPi * i / Ring + Main.GameUpdateCount * 0.01f;
-				Vector2 pos = center + angle.ToRotationVector2() * ArchivistNpc.ArenaRadius;
-				Dust dust = Dust.NewDustPerfect(pos, DustID.Cloud, Vector2.Zero, 180, new Color(200, 206, 216), 1.35f);
-				dust.noGravity = true;
-				dust.velocity = angle.ToRotationVector2().RotatedBy(1.1f) * 0.4f;
+			for (int i = 0; i < 32; i++) {
+				float angle = MathHelper.TwoPi * i / 32f + Main.GameUpdateCount * 0.012f;
+				float dist = radius + Main.rand.NextFloat(4f, 280f); // sync-ok: visual only
+				SpawnFog(center + angle.ToRotationVector2() * dist, angle.ToRotationVector2() * 0.35f, 1.9f);
+			}
+
+			for (int i = 0; i < 40; i++) {
+				Vector2 pos = Main.screenPosition + new Vector2(
+					Main.rand.NextFloat(Main.screenWidth), // sync-ok: visual only
+					Main.rand.NextFloat(Main.screenHeight)); // sync-ok: visual only
+
+				if (Vector2.Distance(pos, center) <= radius) {
+					continue;
+				}
+
+				SpawnFog(pos, new Vector2(0f, -0.25f), 2.2f);
 			}
 
 			Player mine = Main.LocalPlayer;
 
-			if (mine.active && !mine.dead && Vector2.Distance(mine.Center, center) > ArchivistNpc.ArenaRadius) {
-				for (int i = 0; i < 3; i++) {
-					Vector2 pos = mine.Center + Main.rand.NextVector2Circular(40f, 40f); // sync-ok: visual only
-					Dust dust = Dust.NewDustPerfect(pos, DustID.Cloud, new Vector2(0f, -0.4f), 160, new Color(198, 204, 214), 1.5f);
-					dust.noGravity = true;
+			if (mine.active && !mine.dead && Vector2.Distance(mine.Center, center) > radius) {
+				for (int i = 0; i < 14; i++) {
+					Vector2 pos = mine.Center + Main.rand.NextVector2Circular(90f, 90f); // sync-ok: visual only
+					SpawnFog(pos, new Vector2(0f, -0.35f), 2.4f);
 				}
 			}
+		}
+
+		private static void SpawnFog(Vector2 position, Vector2 velocity, float scale)
+		{
+			int type = Main.rand.NextBool(3) ? DustID.Smoke : DustID.Cloud; // sync-ok: visual only
+			Dust dust = Dust.NewDustPerfect(position, type, velocity, 150, FogColor, scale);
+			dust.noGravity = true;
+			dust.fadeIn = 0.7f;
 		}
 	}
 }
