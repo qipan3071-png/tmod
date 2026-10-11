@@ -7,7 +7,8 @@
 | 文件 | 你定的外形 | 原图像素 |
 | --- | --- | --- |
 | `AshHeart_f0.png` | 四棱水晶，碎晶，略红光 | 1254×1254 |
-| `FireplaceGuardian_f0.png` | 四足机械骑士，长枪 + 盾，盔内黑、一只红眼 | 1209×1300 |
+| `FireplaceGuardian_f0.png` | 四足机械骑士，长枪 + 盾，盔内黑、一只红眼。**已点头装进模组** | 1209×1300 |
+| `FireplaceGuardian_ingame.png` | 装机用 256×307 的 3 倍最近邻预览 | — |
 | `FireplaceGuardian_f0_twoleg.png` | 上一版双足无武器，仅对照 | 1129×1393 |
 | `Archivist_f0.png` | 坐在悬浮杖上，白兜帽、黑脸、紫金皮书 | 1233×1275 |
 

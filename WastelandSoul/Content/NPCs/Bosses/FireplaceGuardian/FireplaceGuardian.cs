@@ -53,7 +53,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 
 		public override void SetStaticDefaults()
 		{
-			Main.npcFrameCount[Type] = 6;
+			Main.npcFrameCount[Type] = 1;
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			Music = MusicLoader.GetMusicSlot(Mod, "Music/FireplaceGuardian");
@@ -61,8 +61,11 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 
 		public override void SetDefaults()
 		{
-			NPC.width = 110;
-			NPC.height = 110;
+			// 石巨人碰撞 140；玩家要约 1.3 倍。贴图 256×307（枪盾四足，最近邻从 ChatGPT 原图下来），
+			// 比碰撞箱大一圈，枪和盾露在盒子外。DrawOffsetY 把脚底对齐碰撞箱底。
+			NPC.width = 182;
+			NPC.height = 240;
+			DrawOffsetY = -34f;
 			NPC.damage = ContactDamage;
 			NPC.defDamage = ContactDamage;
 			NPC.defense = 50;
@@ -93,7 +96,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			NPC.target = context.Target.whoAmI;
 			context.Machine.Update();
 			NPC.spriteDirection = context.Target.Center.X > NPC.Center.X ? 1 : -1;
-			NPC.rotation = MathHelper.Clamp(NPC.velocity.X * 0.008f, -0.16f, 0.16f);
+			NPC.rotation = 0f;
 
 			if (!Main.dedServ) {
 				Lighting.AddLight(NPC.Center, 0.55f, 0.75f, 1.05f);
@@ -130,7 +133,10 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			}
 
 			NPC npc = context.Npc;
-			Vector2 hoverPoint = context.Target.Center + new Vector2(0f, -distance);
+			float side = context.Target.Center.X >= npc.Center.X ? -1f : 1f;
+			Vector2 hoverPoint = new Vector2(
+				context.Target.Center.X + side * distance,
+				context.Target.Bottom.Y - npc.height * 0.5f);
 			Vector2 offset = hoverPoint - npc.Center;
 			float speed = offset.Length() > 500f ? 11f : 6.5f;
 
