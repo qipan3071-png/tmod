@@ -1,0 +1,12 @@
+Use the attached image as the ONLY design. Copy this exact crescent moon blade.
+
+pixel art Terraria projectile sprite, retro 16-bit, SINGLE object, centered,
+flat pure magenta #FF00FF background, no shadow, no ground, no text, no watermark,
+no border, no frame, no character, no explosion, no laser, no glow bloom.
+
+Keep the same C-shaped ice-steel crescent, opening to the right, thick blade,
+bold dark outline, limited palette, crisp hard edges. Do not redraw as a full moon.
+Do not add a hilt. Do not use pure white.
+
+The crescent occupies about 80% of the canvas.
+Generate one high-resolution pixel-art illustration. Do not add UI, grid, or labels.

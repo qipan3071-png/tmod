@@ -13,7 +13,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 {
 	/// <summary>
 	/// Fireplace Guardian Greatblade（壁炉守卫 · A 线 · 可合成）
-	/// <para/>左键：C.I.V.E 挥砍 + 3 片新月刃。右键：火山式蓄力，身前生成巨刃，满 3 秒成型后砸下。挥砍不参与右键伤害。
+	/// <para/>左键：C.I.V.E 挥砍 + 3 片新月刃。右键不走 C.I.V.E：手持大剑变大，蓄满生命水晶音+闪白，松手砸出巨新月。
 	/// <para/>制作站点：秘银砧（血肉墙之后装备站点）
 	/// </summary>
 	public class FireplaceWarriorWeapon : WastelandClassWeapon

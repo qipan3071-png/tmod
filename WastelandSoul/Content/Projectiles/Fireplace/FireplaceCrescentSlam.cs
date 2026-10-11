@@ -12,8 +12,8 @@ using WastelandSoul.Content.Items.Weapons;
 namespace WastelandSoul.Content.Projectiles.Fireplace
 {
 	/// <summary>
-	/// 右键按住生成巨新月（火山那种蓄力：看不见挥砍、伤害来自弹幕）。
-	/// 身前从第一帧就变大；满 3 秒成型，5 秒打满后飞到目标上方砸下，大范围高伤。
+	/// 右键蓄力不走 C.I.V.E：自己画逐渐变大的手持大剑。
+	/// 蓄满播放生命水晶音效，武器闪白一下；松手打出巨新月刃砸下。
 	/// 左键仍走 C.I.V.E 挥砍 + 三片小新月刃。
 	/// </summary>
 	public static class FireplaceGreatbladeCharge
@@ -26,9 +26,15 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public const float MaxDamageRatio = 5.5f;
 
-		public const float MinScale = 0.9f;
+		public const float HoldMinScale = 1.0f;
 
-		public const float MaxScale = 3.4f;
+		public const float HoldMaxScale = 2.6f;
+
+		public const float MinScale = 1.8f;
+
+		public const float MaxScale = 3.2f;
+
+		public const int FlashTicks = 24;
 
 		public const float MinSlamRadius = 160f;
 
@@ -80,7 +86,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 				item.useTime = leftUseTime;
 				item.useAnimation = leftUseTime;
 				item.shoot = ModContent.ProjectileType<FireplaceCrescentCharge>();
-				item.UseSound = SoundID.Item28;
+				item.UseSound = null;
 				return true;
 			}
 
@@ -101,6 +107,11 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 		public static float ChargeLerp(float ticks)
 		{
 			return MathHelper.Clamp((ticks - FormTicks) / (MaxTicks - FormTicks), 0f, 1f);
+		}
+
+		public static float HoldScale(float ticks)
+		{
+			return MathHelper.Lerp(HoldMinScale, HoldMaxScale, MathHelper.Clamp(ticks / MaxTicks, 0f, 1f));
 		}
 
 		public static float GrowScale(float ticks)
@@ -124,7 +135,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 		}
 	}
 
-	/// <summary>按住时在身前生成并放大新月。不到 3 秒松手会消散，不造成伤害。</summary>
+	/// <summary>按住时自己画手里的大剑并放大。不到 3 秒松手消散；蓄满生命水晶音 + 武器闪白。</summary>
 	public class FireplaceCrescentCharge : ModProjectile
 	{
 		public override string Texture => "WastelandSoul/Content/Projectiles/Fireplace/FireplaceGiantCrescent";
@@ -180,27 +191,24 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 				owner.ChangeDir(dir);
 			}
 
-			Projectile.Center = FormPosition(owner);
-			Projectile.scale = FireplaceGreatbladeCharge.GrowScale(Projectile.ai[1]);
-			Projectile.rotation = MathHelper.PiOver2;
+			Projectile.Center = owner.MountedCenter + new Vector2(owner.direction * 10f, 6f);
+			Projectile.scale = FireplaceGreatbladeCharge.HoldScale(Projectile.ai[1]);
 			Projectile.timeLeft = 2;
 
-			if (Formed() && Projectile.localAI[0] == 0f) {
+			if (Projectile.ai[1] > FireplaceGreatbladeCharge.MaxTicks) {
+				Projectile.ai[1] = FireplaceGreatbladeCharge.MaxTicks;
+			}
+
+			if (Projectile.ai[1] >= FireplaceGreatbladeCharge.MaxTicks && Projectile.localAI[0] == 0f) {
 				Projectile.localAI[0] = 1f;
+				Projectile.localAI[1] = FireplaceGreatbladeCharge.FlashTicks;
 				if (!Main.dedServ) {
-					SoundEngine.PlaySound(SoundID.Item30, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item4, owner.Center);
 				}
 			}
 
-			if (!Main.dedServ && Main.rand.NextBool(Formed() ? 3 : 5)) { // sync-ok: visual only
-				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch);
-				dust.noGravity = true;
-				dust.velocity *= 0.3f;
-				dust.scale = Formed() ? 1.15f : 0.8f;
-			}
-
-			if (Projectile.ai[1] >= FireplaceGreatbladeCharge.MaxTicks) {
-				Projectile.Kill();
+			if (Projectile.localAI[1] > 0f) {
+				Projectile.localAI[1] -= 1f;
 			}
 		}
 
@@ -240,8 +248,9 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public override bool PreDraw(ref Color lightColor)
 		{
-			float alpha = Formed() ? 1f : MathHelper.Lerp(0.4f, 0.85f, Projectile.ai[1] / FireplaceGreatbladeCharge.FormTicks);
-			DrawCrescent(Projectile.Center, Projectile.scale, lightColor, alpha);
+			Player owner = Main.player[Projectile.owner];
+			float flash = Projectile.localAI[1] / FireplaceGreatbladeCharge.FlashTicks;
+			DrawHeldBlade(owner, Projectile.scale, lightColor, flash);
 			return false;
 		}
 
@@ -297,15 +306,58 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			return Projectile.ai[1] >= FireplaceGreatbladeCharge.FormTicks;
 		}
 
-		private static Vector2 FormPosition(Player owner)
-		{
-			return owner.MountedCenter + new Vector2(owner.direction * 56f, -36f);
-		}
-
 		private static bool IsGreatblade(Item item)
 		{
 			return item != null && (item.type == ModContent.ItemType<Content.Items.Weapons.Boss4Fireplace.FireplaceWarriorWeapon>()
 				|| item.type == ModContent.ItemType<Content.Items.Weapons.Boss4Fireplace.FireplaceWarriorWeaponEx>());
+		}
+
+		internal static void DrawHeldBlade(Player owner, float scale, Color lightColor, float flash)
+		{
+			if (owner == null || owner.HeldItem == null) {
+				return;
+			}
+
+			int itemType = owner.HeldItem.type;
+			Main.instance.LoadItem(itemType);
+			Texture2D texture = TextureAssets.Item[itemType].Value;
+			Vector2 origin = new Vector2(texture.Width * 0.22f, texture.Height * 0.78f);
+			SpriteEffects flip = SpriteEffects.None;
+			float rotation = -0.35f;
+			if (owner.direction < 0) {
+				flip = SpriteEffects.FlipHorizontally;
+				origin.X = texture.Width - origin.X;
+				rotation = 0.35f;
+			}
+
+			Vector2 hand = owner.MountedCenter + new Vector2(owner.direction * 10f, 6f);
+			Main.EntitySpriteDraw(
+				texture,
+				hand - Main.screenPosition,
+				null,
+				lightColor,
+				rotation,
+				origin,
+				scale,
+				flip,
+				0);
+
+			if (flash <= 0f) {
+				return;
+			}
+
+			// 蓄满提示：武器闪白一下，不是激光（check_no_white_fx）
+			Color shine = new Color(232, 232, 235) * flash;
+			Main.EntitySpriteDraw(
+				texture,
+				hand - Main.screenPosition,
+				null,
+				shine,
+				rotation,
+				origin,
+				scale * 1.05f,
+				flip,
+				0);
 		}
 
 		internal static void DrawCrescent(Vector2 world, float scale, Color lightColor, float alpha)

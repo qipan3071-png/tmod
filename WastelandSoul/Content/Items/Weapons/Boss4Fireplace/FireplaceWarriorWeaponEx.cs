@@ -13,7 +13,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 {
 	/// <summary>
 	/// Fireplace Guardian Greatblade MK-II（壁炉守卫 · B 线 · 专属掉落）
-	/// <para/>与 A 线同一套左键扇刃和右键身前蓄力砸落，挥砍伤害和挥速更高。
+	/// <para/>与 A 线同一套左键扇刃和右键手持放大砸落，挥砍伤害和挥速更高。
 	/// </summary>
 	public class FireplaceWarriorWeaponEx : WastelandClassWeapon
 	{
