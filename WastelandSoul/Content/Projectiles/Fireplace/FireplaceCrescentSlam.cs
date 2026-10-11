@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -7,14 +8,16 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using WastelandSoul.Common.Systems;
 using WastelandSoul.Content.Items.Weapons;
+using WastelandSoul.Content.Items.Weapons.Boss4Fireplace;
 
 namespace WastelandSoul.Content.Projectiles.Fireplace
 {
 	/// <summary>
-	/// 右键蓄力不走 C.I.V.E：自己画逐渐变大的手持大剑。
-	/// 蓄满播放生命水晶音效，武器闪白一下；松手打出巨新月刃砸下。
-	/// 左键仍走 C.I.V.E 挥砍 + 三片小新月刃。
+	/// 右键蓄力完全不走物品 UseItem / C.I.V.E。
+	/// StormySlash 白名单只认物品类型，改 useStyle 挡不住它的 MouseRight 连击斩；
+	/// 所以右键在 PreItemCheck 里吃掉 controlUseTile，自己刷蓄力弹幕。
 	/// </summary>
 	public static class FireplaceGreatbladeCharge
 	{
@@ -46,6 +49,32 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public const float LockPlayerRange = 960f;
 
+		public static bool IsGreatblade(Item item)
+		{
+			return item != null && !item.IsAir
+				&& (item.type == ModContent.ItemType<FireplaceWarriorWeapon>()
+					|| item.type == ModContent.ItemType<FireplaceWarriorWeaponEx>());
+		}
+
+		public static bool IsCharging(Player player)
+		{
+			return player != null && player.ownedProjectileCounts[ModContent.ProjectileType<FireplaceCrescentCharge>()] > 0;
+		}
+
+		public static bool WantsCharge(Player player)
+		{
+			return player != null
+				&& player.whoAmI == Main.myPlayer
+				&& Main.mouseRight
+				&& !player.mouseInterface
+				&& !Main.ingameOptionsWindow
+				&& !Main.mapFullscreen
+				&& player.active
+				&& !player.dead
+				&& !player.CCed
+				&& !player.noItems;
+		}
+
 		public static void RestoreSwing(Item item, int leftUseTime)
 		{
 			item.useStyle = ItemUseStyleID.Swing;
@@ -60,11 +89,10 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public static void Hold(Item item, Player player, int leftUseTime)
 		{
-			if (player.ownedProjectileCounts[ModContent.ProjectileType<FireplaceCrescentCharge>()] > 0) {
-				item.useStyle = ItemUseStyleID.Shoot;
-				item.channel = false;
+			if (IsCharging(player)) {
 				item.noMelee = true;
 				item.noUseGraphic = true;
+				item.channel = false;
 				player.channel = false;
 				return;
 			}
@@ -74,34 +102,67 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public static bool CanUse(Item item, Player player, int leftUseTime)
 		{
-			if (player.ownedProjectileCounts[ModContent.ProjectileType<FireplaceCrescentCharge>()] > 0) {
+			if (IsCharging(player) || WantsCharge(player)) {
 				return false;
-			}
-
-			if (player.altFunctionUse == 2) {
-				item.useStyle = ItemUseStyleID.Shoot;
-				item.channel = false;
-				item.noMelee = true;
-				item.noUseGraphic = true;
-				item.useTime = leftUseTime;
-				item.useAnimation = leftUseTime;
-				item.shoot = ModContent.ProjectileType<FireplaceCrescentCharge>();
-				item.UseSound = null;
-				return true;
 			}
 
 			RestoreSwing(item, leftUseTime);
 			return true;
 		}
 
-		public static bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		public static void EatRightClick(Player player)
 		{
-			if (player.ownedProjectileCounts[type] > 0) {
-				return false;
+			if (!IsGreatblade(player.HeldItem)) {
+				return;
 			}
 
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, -1f);
-			return false;
+			if (WantsCharge(player) || IsCharging(player)) {
+				player.controlUseTile = false;
+				player.releaseUseTile = false;
+			}
+		}
+
+		public static void TryStart(Player player)
+		{
+			if (!WantsCharge(player) || IsCharging(player) || !IsGreatblade(player.HeldItem)) {
+				return;
+			}
+
+			InterruptCive(player);
+
+			Item item = player.HeldItem;
+			Vector2 toMouse = Main.MouseWorld - player.MountedCenter;
+			if (toMouse == Vector2.Zero) {
+				toMouse = new Vector2(player.direction, 0f);
+			}
+
+			toMouse.Normalize();
+			Projectile.NewProjectile(
+				player.GetSource_ItemUse(item),
+				player.MountedCenter,
+				toMouse,
+				ModContent.ProjectileType<FireplaceCrescentCharge>(),
+				player.GetWeaponDamage(item),
+				player.GetWeaponKnockback(item),
+				player.whoAmI,
+				-1f);
+		}
+
+		public static void InterruptCive(Player player)
+		{
+			if (WastelandCiveBridge.Cive != null
+				&& WastelandCiveBridge.Cive.TryFind("CIVESword", out ModProjectile sword)) {
+				for (int i = 0; i < Main.maxProjectiles; i++) {
+					Projectile projectile = Main.projectile[i];
+					if (projectile.active && projectile.owner == player.whoAmI && projectile.type == sword.Type) {
+						projectile.Kill();
+					}
+				}
+			}
+
+			player.itemAnimation = 0;
+			player.itemTime = 0;
+			player.reuseDelay = 0;
 		}
 
 		public static float ChargeLerp(float ticks)
@@ -150,6 +211,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			Projectile.ignoreWater = true;
 			Projectile.netImportant = true;
 			Projectile.timeLeft = 2;
+			Projectile.hide = true;
 			Projectile.DamageType = DamageClass.Melee;
 		}
 
@@ -167,12 +229,13 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 		{
 			Player owner = Main.player[Projectile.owner];
 
-			if (owner == null || !owner.active || owner.dead || owner.CCed || owner.noItems || !IsGreatblade(owner.HeldItem)) {
+			if (owner == null || !owner.active || owner.dead || owner.CCed || owner.noItems || !FireplaceGreatbladeCharge.IsGreatblade(owner.HeldItem)) {
 				Projectile.Kill();
 				return;
 			}
 
-			if (Projectile.owner == Main.myPlayer && !Main.mouseRight) {
+			if (Projectile.owner == Main.myPlayer
+				&& (!Main.mouseRight || owner.mouseInterface || Main.ingameOptionsWindow || Main.mapFullscreen)) {
 				Projectile.Kill();
 				return;
 			}
@@ -306,13 +369,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			return Projectile.ai[1] >= FireplaceGreatbladeCharge.FormTicks;
 		}
 
-		private static bool IsGreatblade(Item item)
-		{
-			return item != null && (item.type == ModContent.ItemType<Content.Items.Weapons.Boss4Fireplace.FireplaceWarriorWeapon>()
-				|| item.type == ModContent.ItemType<Content.Items.Weapons.Boss4Fireplace.FireplaceWarriorWeaponEx>());
-		}
-
-		internal static void DrawHeldBlade(Player owner, float scale, Color lightColor, float flash)
+		internal static void DrawHeldBlade(Player owner, float scale, Color lightColor, float flash, List<DrawData> cache = null)
 		{
 			if (owner == null || owner.HeldItem == null) {
 				return;
@@ -331,16 +388,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			}
 
 			Vector2 hand = owner.MountedCenter + new Vector2(owner.direction * 10f, 6f);
-			Main.EntitySpriteDraw(
-				texture,
-				hand - Main.screenPosition,
-				null,
-				lightColor,
-				rotation,
-				origin,
-				scale,
-				flip,
-				0);
+			AddBlade(cache, texture, hand, lightColor, rotation, origin, scale, flip);
 
 			if (flash <= 0f) {
 				return;
@@ -348,16 +396,28 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 			// 蓄满提示：武器闪白一下，不是激光（check_no_white_fx）
 			Color shine = new Color(232, 232, 235) * flash;
-			Main.EntitySpriteDraw(
+			AddBlade(cache, texture, hand, shine, rotation, origin, scale * 1.05f, flip);
+		}
+
+		private static void AddBlade(List<DrawData> cache, Texture2D texture, Vector2 hand, Color color, float rotation, Vector2 origin, float scale, SpriteEffects flip)
+		{
+			DrawData data = new DrawData(
 				texture,
 				hand - Main.screenPosition,
 				null,
-				shine,
+				color,
 				rotation,
 				origin,
-				scale * 1.05f,
+				scale,
 				flip,
 				0);
+
+			if (cache != null) {
+				cache.Add(data);
+				return;
+			}
+
+			Main.EntitySpriteDraw(data);
 		}
 
 		internal static void DrawCrescent(Vector2 world, float scale, Color lightColor, float alpha)

@@ -38,11 +38,6 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 			WastelandShoot.HitBuff(target, BuffID.Frostburn, 240);
 		}
 
-		public override bool AltFunctionUse(Player player)
-		{
-			return true;
-		}
-
 		public override void HoldItem(Player player)
 		{
 			FireplaceGreatbladeCharge.Hold(Item, player, UseTime);
@@ -55,10 +50,6 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			if (player.altFunctionUse == 2) {
-				return FireplaceGreatbladeCharge.Shoot(player, source, position, velocity, type, damage, knockback);
-			}
-
 			return ScavengerBeam.ShootFan(source, position, velocity, damage, knockback, player.whoAmI);
 		}
 

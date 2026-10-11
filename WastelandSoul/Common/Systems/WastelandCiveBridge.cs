@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ModLoader;
+using WastelandSoul.Content.Projectiles.Fireplace;
 
 namespace WastelandSoul.Common.Systems
 {
@@ -38,6 +39,11 @@ namespace WastelandSoul.Common.Systems
 				if (!Equals(registered, true)) {
 					Mod.Logger.Warn("C.I.V.E Call RegisterModifyWeaponTex 未返回 true。");
 				}
+
+				Cive.Call(
+					"RegisterNoWeaponDisplayCondition",
+					(Func<Player, bool>)(player => FireplaceGreatbladeCharge.IsCharging(player)),
+					"WastelandSoul.FireplaceGreatbladeCharge");
 			}
 			catch (Exception exception) {
 				Mod.Logger.Warn("调用 C.I.V.E RegisterModifyWeaponTex 失败：" + exception.Message);

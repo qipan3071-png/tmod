@@ -13,7 +13,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 {
 	/// <summary>
 	/// Fireplace Guardian Greatblade（壁炉守卫 · A 线 · 可合成）
-	/// <para/>左键：C.I.V.E 挥砍 + 3 片新月刃。右键不走 C.I.V.E：手持大剑变大，蓄满生命水晶音+闪白，松手砸出巨新月。
+	/// <para/>左键：C.I.V.E 挥砍 + 3 片新月刃。右键不走 UseItem / C.I.V.E：手持大剑变大，蓄满生命水晶音+闪白，松手砸出巨新月。
 	/// <para/>制作站点：秘银砧（血肉墙之后装备站点）
 	/// </summary>
 	public class FireplaceWarriorWeapon : WastelandClassWeapon
@@ -39,11 +39,6 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 			WastelandShoot.HitBuff(target, BuffID.Frostburn, 180);
 		}
 
-		public override bool AltFunctionUse(Player player)
-		{
-			return true;
-		}
-
 		public override void HoldItem(Player player)
 		{
 			FireplaceGreatbladeCharge.Hold(Item, player, UseTime);
@@ -56,10 +51,6 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			if (player.altFunctionUse == 2) {
-				return FireplaceGreatbladeCharge.Shoot(player, source, position, velocity, type, damage, knockback);
-			}
-
 			return ScavengerBeam.ShootFan(source, position, velocity, damage, knockback, player.whoAmI);
 		}
 
