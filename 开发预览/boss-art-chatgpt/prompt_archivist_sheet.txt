@@ -1,0 +1,20 @@
+The attached image is the CANONICAL Archivist. Copy that exact character into EVERY cell:
+white pointed hood with gold crosses, black visor, purple robe with gold trim,
+hanging cream banners with gold crosses, sitting on a dark staff,
+blue gem on the LEFT, gold spike on the RIGHT, open purple-gold book.
+
+Draw ONE sprite sheet: 4 columns × 2 rows, 8 equal cells, even magenta #FF00FF gutters between cells.
+pixel art, retro 16-bit Terraria style, bold 1-pixel dark outline, flat shading.
+No text, no numbers, no extra copies outside the grid, no ground.
+
+Cells left-to-right, top-then-bottom:
+1) idle, feet together, visor fully black, NO red light
+2) idle, body bobbed UP, feet swing LEFT, no red light
+3) idle, body bobbed DOWN, feet swing RIGHT, no red light
+4) telegraph: same pose as the attached image, ONE red visor LED
+5) attack: book starting a page-flip, right page lifting, no red light
+6) attack: book mid page-flip, one page vertical, no red light
+7) attack: book fully spread, pages fanned, no red light
+8) leave this cell empty magenta
+
+Keep the same silhouette, palette, and staff in every occupied cell. Only the pose / book / visor light change.

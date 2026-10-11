@@ -2,7 +2,7 @@
 
 看这里的图，点头的再说换。
 
-- [boss-art-chatgpt](boss-art-chatgpt/)：**2026-10-11 ChatGPT 高清原图**（灰烬之心 / 壁炉守卫 / 归档者）。先看这三张。
+- [boss-art-chatgpt](boss-art-chatgpt/)：**2026-10-11 ChatGPT 高清原图**（灰烬之心 / 壁炉守卫 / 归档者）。归档者动作帧以 `Archivist_f3.png` / `Archivist_canon.png` 为定稿，出图时必须把这张图一并喂给 ChatGPT。
 - [boss-art-v1](boss-art-v1/)：更早的程序像素稿，仅对照。
 - [weapon-art-v1](weapon-art-v1/)：十把武器图标。先看 `contact_sheet.png`。
 

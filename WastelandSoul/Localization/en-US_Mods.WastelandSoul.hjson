@@ -1473,6 +1473,13 @@ Projectiles: {
 	ArchivistArchivePage.DisplayName: Archivist Archive Page
 	ArchivistBarrageSheet.DisplayName: Archivist Barrage Sheet
 	ArchivistSeal.DisplayName: Archivist Seal
+	ArchivistFireball.DisplayName: Archive Fireball
+	ArchivistMiniFireball.DisplayName: Ember Spark
+	ArchivistFirePillar.DisplayName: Archive Pillar
+	ArchivistVenomSeed.DisplayName: Pink Venom Seed
+	ArchivistBubble.DisplayName: Archive Bubble
+	ArchivistBubbleStorm.DisplayName: Bubble Rain
+	ArchivistArenaMist.DisplayName: Archive Mist
 	ScavengerPistolRound.DisplayName: Scavenger Pistol Round
 	ScavengerRifleRoundEX.DisplayName: Scavenger Rifle Round E X
 	ScavengerScrapShard.DisplayName: Scavenger Scrap Shard
@@ -1620,6 +1627,16 @@ Buffs: {
 	Pollution: {
 		DisplayName: Pollution
 		Description: The polluted air is corroding your body
+	}
+
+	ArchivistWingBurn: {
+		DisplayName: Wing Burn
+		Description: Wing flight time is cut to two thirds until the Archivist falls
+	}
+
+	ArchivistBubbleTrap: {
+		DisplayName: Archive Bubble
+		Description: You are trapped in a bubble
 	}
 
 	ArchivistFamiliarBuff: {
@@ -1779,7 +1796,8 @@ Messages: {
 	CompanionAwakened: The core settles into the body - she opens her eyes.
 	CompanionArrived: Machina {0} has arrived.
 	CompanionAlreadyHere: She is already awake.
-	ArchivistPhaseTwo: Archivist - reindexing complete. Filing protocol engaged.
+	ArchivistPhaseTwo: Archivist - the fire ledger shuts. Roots and tide take the file.
+	ArchivistLightRegen: Light Regeneration
 	ArchivistPhaseThree: Archivist - overwrite authorised. Your path has been archived.
 	ArchivistSuppression: Archivist - terminal lockdown. Nothing leaves the archive.
 	ArchivistDefeated: The audit unit comes apart into loose pages - one archived log is left behind.

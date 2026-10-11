@@ -1253,6 +1253,13 @@ Projectiles: {
 	ArchivistArchivePage.DisplayName: 档案页
 	ArchivistBarrageSheet.DisplayName: 弹幕纸页
 	ArchivistSeal.DisplayName: 归档封印
+	ArchivistFireball.DisplayName: 归档火球
+	ArchivistMiniFireball.DisplayName: 余烬火星
+	ArchivistFirePillar.DisplayName: 归档火柱
+	ArchivistVenomSeed.DisplayName: 粉毒种子
+	ArchivistBubble.DisplayName: 归档水泡
+	ArchivistBubbleStorm.DisplayName: 水泡雨
+	ArchivistArenaMist.DisplayName: 归档薄雾
 	ScavengerPistolRound.DisplayName: 废料手枪弹
 	ScavengerRifleRoundEX.DisplayName: 重步枪弹 EX
 	ScavengerScrapShard.DisplayName: 废料碎片
@@ -1395,6 +1402,14 @@ Buffs: {
 		DisplayName: 污染
 		Description: 被污染的空气正在腐蚀你的身体
 	}
+	ArchivistWingBurn: {
+		DisplayName: 翅膀灼烧
+		Description: 翅膀飞行时间上限减到三分之二，直到归档者倒下
+	}
+	ArchivistBubbleTrap: {
+		DisplayName: 归档水泡
+		Description: 你被困在水泡里
+	}
 	ArchivistFamiliarBuff: {
 		DisplayName: 档案浮空使魔
 		Description: 一只档案使魔正在为你归档
@@ -1525,7 +1540,8 @@ Messages: {
 	CompanionAwakened: 核心嵌入躯体——她睁开了眼睛。
 	CompanionArrived: 智械人{0}已到达。
 	CompanionAlreadyHere: 她已经醒了。
-	ArchivistPhaseTwo: 归档者——索引重构完成，启动归档协议。
+	ArchivistPhaseTwo: 归档者——火页合上，根系与潮水接管档案。
+	ArchivistLightRegen: 光和再生
 	ArchivistPhaseThree: 归档者——覆写已授权。你的路径已被归档。
 	ArchivistSuppression: 归档者——终盘封锁。任何东西都不许离开档案库。
 	ArchivistDefeated: 审计单元散成一地松脱的纸页——只留下一份被归档的日志。

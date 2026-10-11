@@ -4,25 +4,28 @@
 用法
 ----
 1) 首次登录（只需一次，之后登录状态留在 .chatgpt-profile 里）：
-     python tools\chatgpt_art.py --login
+     python tools/chatgpt_art.py --login
    会弹出一个 Edge 窗口打开 chatgpt.com；你在里面登录，
    脚本检测到输入框出现就打印「登录成功」并自动关闭（cookies 已落盘）。
 
 2) 出图：
-     python tools\chatgpt_art.py --prompt "..." --out "E:\开发\art-inbox\raw\sheet.png"
-   流程：打开 chatgpt.com → 把提示词打进输入框 → 回车 → 等图片出现 →
+     python tools/chatgpt_art.py --prompt "..." --out "E:/开发/art-inbox/raw/sheet.png"
+     python tools/chatgpt_art.py --image "ref.png" --prompt-file pose.txt --out out.png
+   流程：打开 chatgpt.com → 可选附上参考图 → 把提示词打进输入框 → 回车 → 等图片出现 →
    **在页面里 fetch 图片 blob 拿到原始字节**（不是屏幕截图）→ 写成本地 PNG。
    失败时退化为"对图片元素做原始分辨率截图"。
+   附图时只保存提交之后新出现的图，不会把参考图本身存下来。
 
 要点
 ----
 * 用 `channel="msedge"`（系统已装的 Edge），不额外下载 Chromium。
-* 持久化配置目录默认 `E:\开发\.chatgpt-profile`，可用 --profile 覆盖。
+* 持久化配置目录默认 `E:/开发/.chatgpt-profile`，可用 --profile 覆盖。
 * 全程 headful（有界面），因为 ChatGPT 对无头浏览器常拦验证。
 * 只做"提问 + 存图"，不点任何会改账号设置的东西。
 """
 import argparse
 import base64
+import hashlib
 import os
 import re
 import sys
@@ -45,13 +48,99 @@ def wait_composer(page, timeout_ms):
     return page.query_selector(COMPOSER)
 
 
-def save_image_from_page(page, out_path):
+def file_sha(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(65536), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def start_new_chat(page):
+    """避免套用上一次对话里已经生成的图。侧栏按钮常被挡住，改用 JS click。"""
+    clicked = page.evaluate(
+        """
+        () => {
+          const el = document.querySelector('[data-testid="create-new-chat-button"]')
+            || document.querySelector('a[href="/"]');
+          if (!el) { return false; }
+          el.click();
+          return true;
+        }
+        """
+    )
+    if clicked:
+        time.sleep(1.5)
+        wait_composer(page, 30000)
+        log("已开新对话")
+        return
+
+    page.goto(CHAT_URL, wait_until="domcontentloaded", timeout=120000)
+    wait_composer(page, 60000)
+    log("用首页重进作为新对话")
+
+
+def generation_busy(page):
+    return bool(page.evaluate(
+        """
+        () => {
+          const labels = Array.from(document.querySelectorAll("button"))
+            .map(b => ((b.getAttribute("aria-label") || "") + " " + (b.textContent || "")).toLowerCase());
+          return labels.some(t => t.includes("stop generating") || t.includes("stop streaming") || t.includes("停止"));
+        }
+        """
+    ))
+
+
+def list_large_image_urls(page):
+    return page.evaluate(
+        """
+        () => Array.from(document.querySelectorAll("img"))
+          .filter(i => (i.naturalWidth || 0) >= 300)
+          .map(i => i.currentSrc || i.src)
+        """
+    ) or []
+
+
+def attach_image(page, image_path):
+    """把本地参考图塞进 ChatGPT 输入框（隐藏的 input[type=file]）。"""
+    path = os.path.abspath(image_path)
+    if not os.path.isfile(path):
+        raise FileNotFoundError(path)
+
+    file_input = page.query_selector("input[type='file']")
+    if file_input is None:
+        for label in ("Add files and more", "添加文件", "Attach", "上传"):
+            button = page.get_by_role("button", name=re.compile(label, re.I))
+            try:
+                if button.count() > 0:
+                    button.first.click()
+                    break
+            except Exception:  # noqa: BLE001
+                pass
+        file_input = page.wait_for_selector("input[type='file']", timeout=8000, state="attached")
+
+    file_input.set_input_files(path)
+    log("已附参考图：%s" % path)
+    page.wait_for_timeout(4000)
+    try:
+        page.wait_for_function(
+            "() => [...document.querySelectorAll(\"input[type=file]\")].some(f => f.files && f.files.length > 0)",
+            timeout=12000,
+        )
+    except Exception:  # noqa: BLE001
+        log("没等到文件控件确认，仍继续提交")
+
+
+def save_image_from_page(page, out_path, ignore_urls=None, ignore_hashes=None):
     """在页面里 fetch 图片 blob，拿原始字节；成功返回 True。"""
+    ignore = set(ignore_urls or [])
     script = """
-    async () => {
+    async (ignore) => {
       const imgs = Array.from(document.querySelectorAll("img"))
         .filter(i => (i.currentSrc || i.src || "").length > 0)
-        .filter(i => (i.naturalWidth || 0) >= 300);
+        .filter(i => (i.naturalWidth || 0) >= 300)
+        .filter(i => ignore.indexOf(i.currentSrc || i.src) < 0);
       if (!imgs.length) { return null; }
       const img = imgs[imgs.length - 1];
       const url = img.currentSrc || img.src;
@@ -70,7 +159,7 @@ def save_image_from_page(page, out_path):
     """
 
     for attempt in range(1, 4):
-        result = page.evaluate(script)
+        result = page.evaluate(script, list(ignore))
 
         if not result:
             log("第 %d 次：页面里还没找到够大的图片" % attempt)
@@ -87,6 +176,15 @@ def save_image_from_page(page, out_path):
 
         with open(out_path, "wb") as handle:
             handle.write(data)
+
+        digest = hashlib.sha256(data).hexdigest()
+        if digest in (ignore_hashes or set()):
+            log("跳过：这张和参考图/旧图是同一份（%s）" % digest[:12])
+            try:
+                os.remove(out_path)
+            except OSError:
+                pass
+            return False
 
         log("已存原图：%s（%d 字节，页面报告 %dx%d）" % (out_path, len(data), result["w"], result["h"]))
         return True
@@ -115,6 +213,7 @@ def main():
     parser.add_argument("--out", help="图片保存路径")
     parser.add_argument("--profile", default=DEFAULT_PROFILE)
     parser.add_argument("--timeout", type=int, default=240, help="等图的秒数")
+    parser.add_argument("--image", help="一并上传的参考图（动作帧要贴着同一张定稿时用）")
     args = parser.parse_args()
 
     prompt = args.prompt
@@ -134,7 +233,13 @@ def main():
             args=["--disable-blink-features=AutomationControlled"],
         )
         page = context.pages[0] if context.pages else context.new_page()
-        page.goto(CHAT_URL, wait_until="domcontentloaded", timeout=120000)
+        time.sleep(1.5)
+        try:
+            page.goto(CHAT_URL, wait_until="domcontentloaded", timeout=120000)
+        except Exception as exc:  # noqa: BLE001
+            log("第一次打开失败：%s，换页再进" % exc)
+            page = context.new_page()
+            page.goto(CHAT_URL, wait_until="domcontentloaded", timeout=120000)
 
         if args.login:
             log("请在打开的窗口里登录 ChatGPT（最多等 10 分钟）…")
@@ -155,6 +260,17 @@ def main():
             context.close()
             return 3
 
+        start_new_chat(page)
+
+        if args.image:
+            attach_image(page, args.image)
+
+        ignore_urls = list_large_image_urls(page)
+        ignore_hashes = set()
+        if args.image:
+            ignore_hashes.add(file_sha(args.image))
+        log("提交前提到 %d 张大图（会跳过，不当作新出的图）" % len(ignore_urls))
+
         log("提交提示词（%d 字）…" % len(prompt))
         box = page.query_selector(COMPOSER)
         box.click()
@@ -165,11 +281,21 @@ def main():
         log("已提交，等出图（最多 %d 秒）…" % args.timeout)
         deadline = time.time() + args.timeout
         ok = False
+        first_wait = True
 
         while time.time() < deadline:
-            time.sleep(6)
+            time.sleep(12 if first_wait else 7)
+            first_wait = False
 
-            if save_image_from_page(page, args.out):
+            if generation_busy(page):
+                log("还在生成，继续等…")
+                continue
+
+            current = list_large_image_urls(page)
+            if not any(url not in ignore_urls for url in current):
+                continue
+
+            if save_image_from_page(page, args.out, ignore_urls=ignore_urls, ignore_hashes=ignore_hashes):
                 ok = True
                 break
 
