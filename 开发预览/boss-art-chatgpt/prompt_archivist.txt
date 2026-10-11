@@ -1,0 +1,15 @@
+pixel art game sprite, retro 16-bit Terraria style, single character, centered,
+flat pure magenta #FF00FF background, no shadow, no ground, no text, no watermark,
+no border, no frame, no multiple copies, no perspective, front view,
+bold 1-pixel dark outline, limited palette, flat shading, crisp hard edges, no blur.
+
+A Terraria boss sprite of the Archivist: a magician-style machine sitting on a floating staff
+(the STAFF floats; the figure sits on it, like a witch on a broom but mechanical).
+White pointed hood, mechanical body of pale ceramic plates and grey metal, NO eyes —
+a black eyepatch / visor strip covers the face where eyes would be. Holds an OPEN purple-and-gold
+leather book. Not a floating paper terminal. Not cute. Sparse details, readable silhouette.
+
+Palette: bone white #D6D2C0, white hood #F0EEE8, grey metal #787E8E, black eyepatch #141418,
+purple leather #6C3C8C, gold trim #C4A24A, cold blue index glow #6096DC only on the book pages.
+The figure occupies about 80% of the canvas. Keep it simple and readable, not busy.
+Generate one high-resolution pixel-art illustration. Do not add UI, grid, or labels.

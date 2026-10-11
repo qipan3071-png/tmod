@@ -1,0 +1,13 @@
+pixel art game sprite, retro 16-bit Terraria style, single object, centered,
+flat pure magenta #FF00FF background, no shadow, no ground, no text, no watermark,
+no border, no frame, no multiple copies, no perspective, front view,
+bold 1-pixel dark outline, limited palette, flat shading, crisp hard edges, no blur.
+
+A Terraria boss sprite of the Ash Heart: a four-sided crystal (elongated diamond / octahedron)
+with a clear vertical ridge and a horizontal cross-ridge, like a cut gem, NOT a blob of lava,
+NOT a heart shape, NOT a round orb. A few small sharp crystal shards scattered around the body
+(close, not a particle storm). Slight red inner glow only, no light beams, no pillars, no lens flare.
+
+Palette: charred black #2A1818, deep red #8C1E28, ember red #C43C3C, dull orange #C86A32, ash grey #8A7A70.
+The crystal occupies about 80% of the canvas. Keep it simple and readable, not busy.
+Generate one high-resolution pixel-art illustration. Do not add UI, grid, or labels.

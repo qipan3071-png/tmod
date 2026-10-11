@@ -148,4 +148,4 @@
 - 壁炉首次进入自动成型、子世界作用域守卫（防止主世界逻辑在子世界里破坏结构）
 - 流水线 tools/ws_pipeline.ps1：编译 + 25 项静态检查 + 反向测试 + 服务端/客户端加载自检 + SHA256 校验装机 + 本地化同步
 - 检查器示例：check_assets / check_localization / check_cn_parity / check_load_thread_safety / check_no_auto_trails / check_subworld_scope / check_fireplace_layout / check_fireplace_vault_connectivity / check_tooltip_no_crafting
-- 开发排期大前提（见 开发说明.md 开头）：避开 08:00–12:00 与 14:00–18:00 两个高峰时段
+- 开发排期大前提（见 开发说明.md 开头「〇」）：高峰是 DeepSeek 的（工作日北京 09:00–12:00、14:00–18:00），不是 Cursor 的；其它模型先核对该模型官方窗口再决定开工

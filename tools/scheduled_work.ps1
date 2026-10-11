@@ -1,18 +1,21 @@
 ﻿# ============================================================================
-#  按时开工：等到「非高峰时段」后自动跑一轮完整验收+装机
+#  按时开工：可选地等到 DeepSeek 非高峰后再跑一轮完整验收+装机
 #
-#  依据 开发说明.md 开头的「〇、开发排期大前提」：
-#    08:00-12:00 与 14:00-18:00 禁止开工；其余时段正常。
+#  高峰时段是 DeepSeek API 的计价窗口，不是 Cursor 的（见 开发说明.md「〇」）：
+#    工作日北京 09:00-12:00 与 14:00-18:00（UTC 01:00-04:00、06:00-10:00）；
+#    周末和中国法定节假日全天非高峰。旧文档的 08:00 比官网早一小时，已作废。
 #
-#  本脚本只做**确定性**的事（不写代码）：编译 + 全部静态检查 + 加载自检 + 装机 + 刷新验收报告。
-#  编写/设计类工作由会话内的我完成（会话一旦在允许时段活跃，我就自己接着干，不需要玩家催）。
+#  本脚本只做本机 tModLoader 流水线（不写代码、不消耗 DeepSeek token），
+#  因此默认不等待高峰。只有当前会话走 DeepSeek、需要避开其 2 倍价时，
+#  才加 -WaitForDeepSeekOffPeak。
 #
 #  用法：powershell -NoProfile -ExecutionPolicy Bypass -File tools\scheduled_work.ps1
 #  日志：E:\开发\.scheduled-work.log
 # ============================================================================
 param(
     [string]$LogFile = 'E:\开发\.scheduled-work.log',
-    [int]$PollSeconds = 300
+    [int]$PollSeconds = 300,
+    [switch]$WaitForDeepSeekOffPeak
 )
 
 function Write-Log($message) {
@@ -20,15 +23,25 @@ function Write-Log($message) {
     Add-Content -Path $LogFile -Value $line -Encoding UTF8
 }
 
-function Test-Peak([datetime]$time) {
+function Test-DeepSeekPeak([datetime]$time) {
+    # DeepSeek official: Mon-Fri 01:00-04:00 and 06:00-10:00 UTC = Beijing 09:00-12:00 and 14:00-18:00.
+    # Weekends are off-peak. Chinese public holidays are also off-peak; this helper only skips Sat/Sun.
+    if ($time.DayOfWeek -eq 'Saturday' -or $time.DayOfWeek -eq 'Sunday') {
+        return $false
+    }
+
     $hour = $time.Hour
-    return (($hour -ge 8 -and $hour -lt 12) -or ($hour -ge 14 -and $hour -lt 18))
+    return (($hour -ge 9 -and $hour -lt 12) -or ($hour -ge 14 -and $hour -lt 18))
 }
 
-Write-Log 'scheduled_work started; waiting for an allowed window (avoid 08-12 and 14-18).'
+if ($WaitForDeepSeekOffPeak) {
+    Write-Log 'scheduled_work started; waiting for DeepSeek off-peak (weekday Beijing 09-12 and 14-18).'
 
-while (Test-Peak (Get-Date)) {
-    Start-Sleep -Seconds $PollSeconds
+    while (Test-DeepSeekPeak (Get-Date)) {
+        Start-Sleep -Seconds $PollSeconds
+    }
+} else {
+    Write-Log 'scheduled_work started; not waiting on DeepSeek peak (local pipeline, no DeepSeek tokens).'
 }
 
 Write-Log ('window open at {0} - probing build first' -f (Get-Date -Format 'HH:mm:ss'))

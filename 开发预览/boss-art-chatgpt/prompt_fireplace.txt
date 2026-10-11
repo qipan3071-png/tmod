@@ -1,0 +1,15 @@
+pixel art game sprite, retro 16-bit Terraria style, single character, centered,
+flat pure magenta #FF00FF background, no shadow, no ground, no text, no watermark,
+no border, no frame, no multiple copies, no perspective, front view,
+bold 1-pixel dark outline, limited palette, flat shading, crisp hard edges, no blur.
+
+A Terraria boss sprite of the Fireplace Guardian: a mechanical knight standing on TWO LEGS,
+feet planted on nothing (no floor), NOT floating, NOT hovering, NOT a golem torso without legs.
+Size reads as a large knight, roughly 1.3 times Terraria Golem. Full body visible.
+Helmet visor interior is pure black, with ONE small red eye in the darkness. No second eye.
+Chest has one furnace-core plate, details kept sparse. Pale white polished alloy armor,
+brushed steel, blue-white furnace light in the core only. Two arms, two legs, grounded stance.
+
+Palette: pale alloy #D8DCE4, steel #8A929C, dark visor #101018, one red eye #C42828, furnace pale-blue #B4D2FF.
+The knight occupies about 80% of the canvas. Keep it simple and readable, not busy.
+Generate one high-resolution pixel-art illustration. Do not add UI, grid, or labels.
