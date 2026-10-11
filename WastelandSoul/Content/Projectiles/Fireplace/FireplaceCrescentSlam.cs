@@ -13,7 +13,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 {
 	/// <summary>
 	/// 右键按住生成巨新月（火山那种蓄力：看不见挥砍、伤害来自弹幕）。
-	/// 身前从第一帧就变大；满 3 秒成型，5 秒打满后飞到目标上方砸下并爆炸。
+	/// 身前从第一帧就变大；满 3 秒成型，5 秒打满后飞到目标上方砸下，大范围高伤。
 	/// 左键仍走 C.I.V.E 挥砍 + 三片小新月刃。
 	/// </summary>
 	public static class FireplaceGreatbladeCharge
@@ -22,17 +22,17 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public const int MaxTicks = 300;
 
-		public const float MinDamageRatio = 2.0f;
+		public const float MinDamageRatio = 3.0f;
 
-		public const float MaxDamageRatio = 3.6f;
+		public const float MaxDamageRatio = 5.5f;
 
 		public const float MinScale = 0.9f;
 
 		public const float MaxScale = 3.4f;
 
-		public const float MinBurstRadius = 160f;
+		public const float MinSlamRadius = 160f;
 
-		public const float MaxBurstRadius = 224f;
+		public const float MaxSlamRadius = 224f;
 
 		public const float DropHeight = 128f;
 
@@ -91,9 +91,9 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			return MathHelper.Lerp(MinDamageRatio, MaxDamageRatio, ChargeLerp(ticks));
 		}
 
-		public static float BurstRadius(float ticks)
+		public static float SlamRadius(float ticks)
 		{
-			return MathHelper.Lerp(MinBurstRadius, MaxBurstRadius, ChargeLerp(ticks));
+			return MathHelper.Lerp(MinSlamRadius, MaxSlamRadius, ChargeLerp(ticks));
 		}
 
 		public static float TicksFromLerp(float lerp)
@@ -299,7 +299,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 		}
 	}
 
-	/// <summary>成型后的巨刃：先飞到目标上方，再砸下去并爆炸。挥砍不参与这次伤害。</summary>
+	/// <summary>成型后的巨刃：飞到目标上方砸下，圆形范围高伤。没有爆炸特效。</summary>
 	public class FireplaceGiantCrescent : ModProjectile
 	{
 		public override void SetDefaults()
@@ -313,7 +313,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 16;
+			Projectile.localNPCHitCooldown = -1;
 		}
 
 		public override bool? CanDamage()
@@ -323,12 +323,20 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
 		{
-			int width = (int)(80 * Projectile.scale);
-			int height = (int)(110 * Projectile.scale);
-			hitbox.Width = width;
-			hitbox.Height = height;
-			hitbox.X = (int)Projectile.Center.X - width / 2;
-			hitbox.Y = (int)Projectile.Center.Y - height / 2;
+			int radius = (int)SlamRadius();
+			hitbox.Width = radius * 2;
+			hitbox.Height = radius * 2;
+			hitbox.X = (int)Projectile.Center.X - radius;
+			hitbox.Y = (int)Projectile.Center.Y - radius;
+		}
+
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+		{
+			float radius = SlamRadius();
+			Vector2 closest = new Vector2(
+				MathHelper.Clamp(Projectile.Center.X, targetHitbox.Left, targetHitbox.Right),
+				MathHelper.Clamp(Projectile.Center.Y, targetHitbox.Top, targetHitbox.Bottom));
+			return Vector2.DistanceSquared(Projectile.Center, closest) <= radius * radius;
 		}
 
 		public override void AI()
@@ -353,7 +361,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 					Projectile.velocity = toHover * 22f;
 				}
 			}
-			else {
+			else if (Projectile.localAI[0] < 2f) {
 				Projectile.velocity.Y += 1.6f;
 				if (Projectile.velocity.Y > 28f) {
 					Projectile.velocity.Y = 28f;
@@ -363,7 +371,12 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 				if (Projectile.Center.Y >= impact.Y) {
 					Projectile.Center = impact;
-					Projectile.Kill();
+					Projectile.velocity = Vector2.Zero;
+					Projectile.localAI[0] = 2f;
+					Projectile.timeLeft = 8;
+					if (!Main.dedServ) {
+						SoundEngine.PlaySound(SoundID.Item1, Projectile.Center);
+					}
 				}
 			}
 
@@ -373,24 +386,6 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 				dust.velocity.Y = 2.2f;
 				dust.scale = 1.15f;
 			}
-		}
-
-		public override void OnKill(int timeLeft)
-		{
-			if (Projectile.owner != Main.myPlayer) {
-				return;
-			}
-
-			float ticks = FireplaceGreatbladeCharge.TicksFromLerp(Projectile.ai[2]);
-			Projectile.NewProjectile(
-				Projectile.GetSource_Death(),
-				Projectile.Center,
-				Vector2.Zero,
-				ModContent.ProjectileType<FireplaceCrescentBurst>(),
-				Projectile.damage,
-				Projectile.knockBack,
-				Projectile.owner,
-				FireplaceGreatbladeCharge.BurstRadius(ticks));
 		}
 
 		public override bool PreDraw(ref Color lightColor)
@@ -403,76 +398,10 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 		{
 			WastelandShoot.HitBuff(target, BuffID.Frostburn, 240);
 		}
-	}
 
-	/// <summary>落地爆炸：圆形范围、每人只结算一次，挂霜火。</summary>
-	public class FireplaceCrescentBurst : ModProjectile
-	{
-		public override string Texture => "WastelandSoul/Content/Projectiles/Fireplace/FireplaceGiantCrescent";
-
-		public override void SetDefaults()
+		private float SlamRadius()
 		{
-			Projectile.width = 160;
-			Projectile.height = 160;
-			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Melee;
-			Projectile.penetrate = -1;
-			Projectile.timeLeft = 16;
-			Projectile.tileCollide = false;
-			Projectile.ignoreWater = true;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = -1;
-			Projectile.hide = true;
-		}
-
-		public override void AI()
-		{
-			if (Projectile.localAI[0] == 0f) {
-				Projectile.localAI[0] = 1f;
-				int size = (int)(Projectile.ai[0] * 2f);
-				Projectile.position = Projectile.Center - new Vector2(size * 0.5f);
-				Projectile.width = size;
-				Projectile.height = size;
-				if (!Main.dedServ) {
-					SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
-					SoundEngine.PlaySound(SoundID.Item27, Projectile.Center);
-				}
-			}
-
-			Lighting.AddLight(Projectile.Center, 0.22f, 0.40f, 0.62f);
-
-			if (Main.dedServ) {
-				return;
-			}
-
-			float radius = Projectile.ai[0];
-			int sparks = Projectile.timeLeft > 12 ? 10 : 4;
-			for (int i = 0; i < sparks; i++) {
-				Vector2 offset = Main.rand.NextVector2Circular(radius, radius * 0.55f); // sync-ok: visual only
-				Dust dust = Dust.NewDustDirect(Projectile.Center + offset, 4, 4, DustID.IceTorch);
-				dust.noGravity = true;
-				dust.velocity = offset * 0.04f;
-				dust.scale = 1.35f;
-			}
-		}
-
-		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-		{
-			float radius = Projectile.ai[0];
-			Vector2 closest = new Vector2(
-				MathHelper.Clamp(Projectile.Center.X, targetHitbox.Left, targetHitbox.Right),
-				MathHelper.Clamp(Projectile.Center.Y, targetHitbox.Top, targetHitbox.Bottom));
-			return Vector2.DistanceSquared(Projectile.Center, closest) <= radius * radius;
-		}
-
-		public override bool PreDraw(ref Color lightColor)
-		{
-			return false;
-		}
-
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			WastelandShoot.HitBuff(target, BuffID.Frostburn, 240);
+			return FireplaceGreatbladeCharge.SlamRadius(FireplaceGreatbladeCharge.TicksFromLerp(Projectile.ai[2]));
 		}
 	}
 }

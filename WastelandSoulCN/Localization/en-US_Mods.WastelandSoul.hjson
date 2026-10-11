@@ -1597,7 +1597,6 @@ Projectiles: {
 	FireplaceMageHoldout.DisplayName: Fireplace Mage Holdout
 	FireplaceCrescentCharge.DisplayName: Crescent Charge
 	FireplaceGiantCrescent.DisplayName: Colossal Crescent
-	FireplaceCrescentBurst.DisplayName: Crescent Burst
 }
 
 Tiles: {

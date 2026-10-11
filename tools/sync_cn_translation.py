@@ -225,7 +225,6 @@ TRANSLATIONS = {
     "FireplaceMageHoldout.DisplayName": "壁炉权杖",
     "FireplaceCrescentCharge.DisplayName": "蓄力新月",
     "FireplaceGiantCrescent.DisplayName": "巨新月刃",
-    "FireplaceCrescentBurst.DisplayName": "新月爆裂",
     "AshHeartEmberCloud.DisplayName": "余烬云",
     "AshHeartEmberShard.DisplayName": "余烬破片",
     "SteelChainLightning.DisplayName": "链状闪电",
