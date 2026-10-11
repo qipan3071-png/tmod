@@ -6,13 +6,14 @@ using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons;
+using WastelandSoul.Content.Projectiles.Fireplace;
 using WastelandSoul.Content.Projectiles.Scavenger;
 
 namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 {
 	/// <summary>
 	/// Fireplace Guardian Greatblade MK-II（壁炉守卫 · B 线 · 专属掉落）
-	/// <para/>与 A 线同一套新月刃（3 片、每片 60% 伤害），挥砍伤害和挥速更高。
+	/// <para/>与 A 线同一套新月刃（3 片、每片 60% 伤害）和右键蓄力砸落，挥砍伤害和挥速更高。
 	/// </summary>
 	public class FireplaceWarriorWeaponEx : WastelandClassWeapon
 	{
@@ -37,8 +38,22 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 			WastelandShoot.HitBuff(target, BuffID.Frostburn, 240);
 		}
 
+		public override bool AltFunctionUse(Player player)
+		{
+			return true;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return FireplaceGreatbladeCharge.CanUse(Item, player);
+		}
+
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
+			if (player.altFunctionUse == 2) {
+				return FireplaceGreatbladeCharge.Shoot(player, source, position, velocity, type, damage, knockback);
+			}
+
 			return ScavengerBeam.ShootFan(source, position, velocity, damage, knockback, player.whoAmI);
 		}
 

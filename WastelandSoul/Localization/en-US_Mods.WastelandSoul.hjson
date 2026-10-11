@@ -431,7 +431,12 @@ Items: {
 
 	FireplaceWarriorWeapon: {
 		DisplayName: Fireplace Guardian Greatblade
-		Tooltip: Shoots a fan of crescent edges. Frostburns on hit
+		Tooltip:
+			'''
+			Shoots a fan of crescent edges
+			Right click to charge a colossal crescent
+			Frostburns on hit
+			'''
 	}
 
 	FireplaceMageWeapon: {
@@ -451,7 +456,12 @@ Items: {
 
 	FireplaceWarriorWeaponEx: {
 		DisplayName: Fireplace Guardian Greatblade MK-II
-		Tooltip: Shoots a fan of crescent edges. Frostburns on hit
+		Tooltip:
+			'''
+			Shoots a fan of crescent edges
+			Right click to charge a colossal crescent
+			Frostburns on hit
+			'''
 	}
 
 	FireplaceMageWeaponEx: {
@@ -1585,6 +1595,9 @@ Projectiles: {
 	AshHeartEmberCloud.DisplayName: Ash Heart Ember Cloud
 	AshHeartEmberShard.DisplayName: Ash Heart Ember Shard
 	FireplaceMageHoldout.DisplayName: Fireplace Mage Holdout
+	FireplaceCrescentCharge.DisplayName: Crescent Charge
+	FireplaceGiantCrescent.DisplayName: Colossal Crescent
+	FireplaceCrescentBurst.DisplayName: Crescent Burst
 }
 
 Tiles: {

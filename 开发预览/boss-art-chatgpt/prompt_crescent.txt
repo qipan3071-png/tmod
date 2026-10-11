@@ -1,0 +1,14 @@
+pixel art game sprite, retro 16-bit Terraria style, SINGLE projectile object, centered,
+flat pure magenta #FF00FF background, no shadow, no ground, no text, no watermark,
+no border, no frame, no multiple copies, no character, no explosion, no laser, no beam, no glow bloom.
+
+A Terraria melee PROJECTILE: one giant crescent moon blade / sickle-shaped sword-beam.
+Thick C-shaped ice-steel crescent, side view, opening to the RIGHT (like a closing parenthesis ).
+Bold 1-pixel dark outline, limited palette, flat shading, crisp hard edges, no blur.
+This is a huge enchanted sword crescent, not a person, not a sword with a hilt, not a full moon disk.
+
+Palette (do NOT use pure white, no RGB channel above 210):
+frost steel #8FA8C0, ice cyan #5EA4C8, dark edge #243040, inner shade #6A8498, pale core #A0B8CC.
+
+The crescent occupies about 80% of the canvas. Keep it simple and readable.
+Generate one high-resolution pixel-art illustration. Do not add UI, grid, or labels.

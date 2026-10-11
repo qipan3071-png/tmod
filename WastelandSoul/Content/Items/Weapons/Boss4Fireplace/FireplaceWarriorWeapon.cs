@@ -6,13 +6,14 @@ using Terraria.ModLoader;
 using WastelandSoul.Common.ItemBases;
 using WastelandSoul.Content.Items.Materials;
 using WastelandSoul.Content.Items.Weapons;
+using WastelandSoul.Content.Projectiles.Fireplace;
 using WastelandSoul.Content.Projectiles.Scavenger;
 
 namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 {
 	/// <summary>
 	/// Fireplace Guardian Greatblade（壁炉守卫 · A 线 · 可合成）
-	/// <para/>远程板块与清道夫大刀对调：挥砍甩 3 片新月刃（每片 60% 伤害）。近战命中仍霜火。
+	/// <para/>远程板块与清道夫大刀对调：挥砍甩 3 片新月刃（每片 60% 伤害）。右键蓄力 3～5 秒砸落巨刃。近战命中仍霜火。
 	/// <para/>制作站点：秘银砧（血肉墙之后装备站点）
 	/// </summary>
 	public class FireplaceWarriorWeapon : WastelandClassWeapon
@@ -38,8 +39,22 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 			WastelandShoot.HitBuff(target, BuffID.Frostburn, 180);
 		}
 
+		public override bool AltFunctionUse(Player player)
+		{
+			return true;
+		}
+
+		public override bool CanUseItem(Player player)
+		{
+			return FireplaceGreatbladeCharge.CanUse(Item, player);
+		}
+
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
+			if (player.altFunctionUse == 2) {
+				return FireplaceGreatbladeCharge.Shoot(player, source, position, velocity, type, damage, knockback);
+			}
+
 			return ScavengerBeam.ShootFan(source, position, velocity, damage, knockback, player.whoAmI);
 		}
 
