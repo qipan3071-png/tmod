@@ -84,7 +84,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 		}
 	}
 
-	/// <summary>火柱：地面冒出，同时最多两根。</summary>
+	/// <summary>火墙：高 256 格，同时最多两道。</summary>
 	[VaultState(3, typeof(ArchivistContext))]
 	public class ArchivistFirePillarState : VaultState<ArchivistContext>
 	{
@@ -160,7 +160,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 		}
 	}
 
-	/// <summary>开始 10 秒冒泡，然后立刻回待机，期间还能出别的招。</summary>
+	/// <summary>开始 25 秒冒泡，然后立刻回待机，期间还能出别的招。</summary>
 	[VaultState(5, typeof(ArchivistContext))]
 	public class ArchivistBubbleStormState : VaultState<ArchivistContext>
 	{

@@ -285,7 +285,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 			return best;
 		}
 
-		/// <summary>悬浮跟随目标（stutterGated = true 时套用"卡顿"节流）。</summary>
+		/// <summary>位移对齐猪龙鱼公爵：一段冲刺穿人，再侧向回旋，不钉在头顶。</summary>
 		internal static void Hover(ScavengerContext ctx, bool stutterGated)
 		{
 			NPC npc = ctx.Npc;
@@ -294,39 +294,25 @@ namespace WastelandSoul.Content.NPCs.Bosses.Scavenger
 				return;
 			}
 
-			if (stutterGated && Main.GameUpdateCount % (uint)StutterInterval(npc) != 0u) {
-				return;   // 卡顿：这一帧不更新速度，机体"僵"在原地（用世界帧，联机同值）
+			Vector2 toPlayer = ctx.Target.Center - npc.Center;
+
+			if (toPlayer.LengthSquared() < 1f) {
+				return;
 			}
 
-			// 主动贴近玩家：
-			// 阶段一/二把悬停点压到玩家身侧（几乎贴脸），机体自己会一直往里压，
-			// 而不是挂在远处等玩家过来。阶段三稍微抬高，配合锁定射击。
-			int phase = (int)npc.ai[0];
-			Vector2 hoverPoint = phase >= 2
-				? ctx.Target.Center + new Vector2(0f, -120f)
-				: ctx.Target.Center + new Vector2(0f, -80f);
-			Vector2 direction = hoverPoint - npc.Center;
-			float distance = direction.Length();
+			toPlayer.Normalize();
+			int beat = (int)(Main.GameUpdateCount % 160u);
+			float chargeSpeed = HoverSpeedPhaseOne * 2.6f + (int)npc.ai[0] * 1.8f;
 
-			if (distance > 16f) {
-				direction = Vector2.Normalize(direction);
+			if (beat < 55) {
+				npc.velocity = Vector2.Lerp(npc.velocity, toPlayer * chargeSpeed, 0.14f);
 			}
 			else {
-				direction = Vector2.Zero;
+				Vector2 along = toPlayer.RotatedBy(1.15f);
+				npc.velocity = Vector2.Lerp(npc.velocity, along * 8.5f + toPlayer * 2.4f, 0.08f);
 			}
 
-			float speed = (int)npc.ai[0] >= 1 ? HoverSpeedPhaseTwo : HoverSpeedPhaseOne;
-
-			// 抖动 **联机安全**：这里改的是 NPC.velocity（同步字段），而服务端与客户端都会跑这段 AI ——
-			// 用 Main.rand 的话两边抖的方向不同，机体就会轻微来回跳。
-			// 种子取 whoAmI + 世界帧数（都不是随机的），三方同值。
-			Vector2 jitter = new Vector2(
-				WastelandRandom.RollFloat(npc.whoAmI, (int)Main.GameUpdateCount, 11) * 1.2f - 0.6f,
-				WastelandRandom.RollFloat(npc.whoAmI, (int)Main.GameUpdateCount, 23) * 1.2f - 0.6f);
-
-			Vector2 desiredVelocity = direction * speed + jitter;
-
-			npc.velocity = Vector2.Lerp(npc.velocity, desiredVelocity, 0.18f);
+			npc.rotation = npc.velocity.X * 0.04f;
 		}
 
 		/// <summary>压进到指定距离之内（用于让近战横扫真的能打到人）。</summary>

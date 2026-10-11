@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using WastelandSoul.Common.Systems;
@@ -14,8 +16,8 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 	{
 		public override void SetDefaults()
 		{
-			Projectile.width = 28;
-			Projectile.height = 28;
+			Projectile.width = ArchivistNpc.FireballSize;
+			Projectile.height = ArchivistNpc.FireballSize;
 			Projectile.hostile = true;
 			Projectile.friendly = false;
 			Projectile.aiStyle = -1;
@@ -35,6 +37,23 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 				dust.noGravity = true;
 				dust.scale = 1.15f;
 			}
+		}
+
+		public override bool PreDraw(ref Color lightColor)
+		{
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			float scale = Projectile.width / (float)System.Math.Max(texture.Width, 1);
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation,
+				texture.Size() * 0.5f,
+				scale,
+				SpriteEffects.None,
+				0f);
+			return false;
 		}
 
 		public override void OnKill(int timeLeft)
@@ -122,13 +141,13 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 		}
 	}
 
-	/// <summary>地表火柱：宽约 5 格，站进去持续烧。同时最多两根。</summary>
+	/// <summary>火墙：宽约 5 格、高 256 格，同时最多两道，间距 10～25 格。Boss 死了立刻消失。</summary>
 	public class ArchivistFirePillar : ModProjectile
 	{
 		public override void SetDefaults()
 		{
 			Projectile.width = ArchivistNpc.FirePillarWidth;
-			Projectile.height = 8;
+			Projectile.height = ArchivistNpc.FirePillarHeight;
 			Projectile.hostile = true;
 			Projectile.friendly = false;
 			Projectile.aiStyle = -1;
@@ -141,17 +160,46 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 
 		public override void AI()
 		{
-			float bottom = Projectile.ai[1];
-			int grown = (int)MathHelper.Clamp((ArchivistNpc.FirePillarDuration - Projectile.timeLeft) * 8f, 16f, 240f);
-			Projectile.height = grown;
-			Projectile.position.Y = bottom - Projectile.height;
+			int bossWho = (int)Projectile.ai[0];
 
-			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
+			if (bossWho < 0 || bossWho >= Main.maxNPCs || !Main.npc[bossWho].active
+				|| Main.npc[bossWho].type != ModContent.NPCType<ArchivistNpc>()) {
+				Projectile.Kill();
+				return;
+			}
+
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
 				dust.noGravity = true;
 				dust.velocity.Y = -2.2f;
 				dust.scale = 1.3f;
 			}
+		}
+
+		public override bool PreDraw(ref Color lightColor)
+		{
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Vector2 drawPos = Projectile.position - Main.screenPosition;
+			float scaleX = Projectile.width / (float)System.Math.Max(texture.Width, 1);
+			int y = 0;
+
+			while (y < Projectile.height) {
+				int slice = System.Math.Min(texture.Height, Projectile.height - y);
+				Rectangle source = new Rectangle(0, 0, texture.Width, slice);
+				Main.EntitySpriteDraw(
+					texture,
+					drawPos + new Vector2(0f, y),
+					source,
+					lightColor,
+					0f,
+					Vector2.Zero,
+					new Vector2(scaleX, 1f),
+					SpriteEffects.None,
+					0f);
+				y += texture.Height;
+			}
+
+			return false;
 		}
 
 		public override void OnHitPlayer(Player target, Player.HurtInfo info)
@@ -210,7 +258,7 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 			Projectile.friendly = false;
 			Projectile.aiStyle = -1;
 			Projectile.penetrate = -1;
-			Projectile.timeLeft = 360;
+			Projectile.timeLeft = 900;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 			Projectile.alpha = 40;
@@ -218,6 +266,17 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 
 		public override void AI()
 		{
+			int bossWho = (int)Projectile.ai[2];
+
+			if (bossWho >= 0 && bossWho < Main.maxNPCs && Main.npc[bossWho].active) {
+				float ceiling = Main.npc[bossWho].Center.Y - ArchivistNpc.BubbleCeilingTiles * 16f;
+
+				if (Projectile.ai[0] < 1f && Projectile.Center.Y <= ceiling) {
+					Projectile.Kill();
+					return;
+				}
+			}
+
 			if (Projectile.ai[0] >= 1f) {
 				int who = (int)Projectile.ai[1];
 
@@ -262,7 +321,7 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 		}
 	}
 
-	/// <summary>10 秒内从地面冒泡。自己不挡出招。</summary>
+	/// <summary>25 秒内从 Boss 下方 50 格冒泡，升到上方 50 格消失。自己不挡出招。</summary>
 	public class ArchivistBubbleStorm : ModProjectile
 	{
 		public override void SetDefaults()
@@ -311,16 +370,19 @@ namespace WastelandSoul.Content.Projectiles.Archivist
 
 			NPC npc = Main.npc[npcWho];
 			float worldX = npc.Center.X + WastelandRandom.RollFloatRange(npc.whoAmI, Projectile.timeLeft, alive, -ArchivistNpc.ArenaRadius * 0.7f, ArchivistNpc.ArenaRadius * 0.7f);
-			Vector2 ground = ArchivistNpc.FindSurface(worldX, npc.Center.Y);
+			Vector2 spawn = new Vector2(worldX, npc.Center.Y + ArchivistNpc.BubbleDropTiles * 16f);
 
 			Projectile.NewProjectile(
 				Projectile.GetSource_FromThis(),
-				ground + new Vector2(0f, -26f),
+				spawn,
 				new Vector2(0f, ArchivistNpc.BubbleRise),
 				ModContent.ProjectileType<ArchivistBubble>(),
 				Projectile.damage,
 				0.2f,
-				Main.myPlayer);
+				Main.myPlayer,
+				0f,
+				0f,
+				npc.whoAmI);
 		}
 	}
 

@@ -72,8 +72,8 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			NPC.defense = 50;
 			NPC.lifeMax = 70000;           // 月亮领主之前的天花板档（= 史莱姆皇后），低于月亮领主本体 145000
 			NPC.knockBackResist = 0f;
-			NPC.noGravity = true;
-			NPC.noTileCollide = true;
+			NPC.noGravity = false;
+			NPC.noTileCollide = false;
 			NPC.boss = true;
 			NPC.aiStyle = -1;
 			NPC.npcSlots = 20f;
@@ -127,6 +127,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			return best;
 		}
 
+		/// <summary>位移对齐石巨人：贴地走、玩家在上方就跳，不悬浮。</summary>
 		internal static void Hover(FireplaceGuardianContext context, float distance)
 		{
 			if (context.Target == null) {
@@ -134,18 +135,24 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			}
 
 			NPC npc = context.Npc;
-			float side = context.Target.Center.X >= npc.Center.X ? -1f : 1f;
-			Vector2 hoverPoint = new Vector2(
-				context.Target.Center.X + side * distance,
-				context.Target.Bottom.Y - npc.height * 0.5f);
-			Vector2 offset = hoverPoint - npc.Center;
-			float speed = offset.Length() > 500f ? 11f : 6.5f;
+			npc.noGravity = false;
+			npc.noTileCollide = false;
+			npc.rotation = 0f;
 
-			if (offset.LengthSquared() > 36f) {
-				npc.velocity = (npc.velocity * 11f + Vector2.Normalize(offset) * speed) / 12f;
+			Player target = context.Target;
+			float walk = distance > HoverDefault ? 4.2f : 3.2f;
+			float desiredX = target.Center.X > npc.Center.X ? walk : -walk;
+			npc.velocity.X = MathHelper.Lerp(npc.velocity.X, desiredX, 0.12f);
+
+			bool onGround = npc.velocity.Y == 0f
+				|| Collision.SolidCollision(npc.position + new Vector2(0f, npc.height), npc.width, 4);
+
+			if (onGround && target.Center.Y < npc.Center.Y - 48f) {
+				npc.velocity.Y = -11.5f;
 			}
-			else {
-				npc.velocity *= 0.9f;
+			else if (onGround && Math.Abs(target.Center.X - npc.Center.X) > 240f && Main.GameUpdateCount % 90u == 0u) {
+				npc.velocity.Y = -9f;
+				npc.velocity.X = Math.Sign(target.Center.X - npc.Center.X) * 6.5f;
 			}
 		}
 
@@ -155,13 +162,16 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 				return;
 			}
 
-			Vector2 direction = context.Target.Center - context.Npc.Center;
+			NPC npc = context.Npc;
+			npc.noTileCollide = true;
+			npc.noGravity = true;
+			Vector2 direction = context.Target.Center - npc.Center;
 
 			if (direction.LengthSquared() < 1f) {
 				direction = Vector2.UnitY;
 			}
 
-			context.Npc.velocity = Vector2.Normalize(direction) * SlamSpeed;
+			npc.velocity = Vector2.Normalize(direction) * SlamSpeed;
 		}
 
 		internal static void SteerSlam(FireplaceGuardianContext context)

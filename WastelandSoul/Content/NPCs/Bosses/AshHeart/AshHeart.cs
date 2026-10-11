@@ -130,6 +130,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.AshHeart
 			return best;
 		}
 
+		/// <summary>位移对齐世纪之花二阶段：穿墙追玩家，带一点摆动，不挂在头顶。</summary>
 		internal static void Hover(AshHeartContext context, float distance)
 		{
 			NPC npc = context.Npc;
@@ -138,16 +139,16 @@ namespace WastelandSoul.Content.NPCs.Bosses.AshHeart
 				return;
 			}
 
-			Vector2 hoverPoint = context.Target.Center + new Vector2(0f, -distance);
-			Vector2 offset = hoverPoint - npc.Center;
-			float speed = offset.Length() > 480f ? HoverSpeedFar : HoverSpeedNear;
+			Vector2 toPlayer = context.Target.Center - npc.Center;
 
-			if (offset.LengthSquared() > 36f) {
-				npc.velocity = (npc.velocity * 12f + Vector2.Normalize(offset) * speed) / 13f;
+			if (toPlayer.LengthSquared() < 1f) {
+				return;
 			}
-			else {
-				npc.velocity *= 0.9f;
-			}
+
+			float speed = distance > HoverDefault ? HoverSpeedFar : HoverSpeedNear * 1.35f;
+			npc.velocity = Vector2.Lerp(npc.velocity, Vector2.Normalize(toPlayer) * speed, 0.055f);
+			float wobble = Main.GameUpdateCount * 0.12f;
+			npc.velocity += new Vector2((float)Math.Cos(wobble), (float)Math.Sin(wobble * 1.3f)) * 0.45f;
 		}
 
 		/// <summary>掷下一次攻击的等待帧数。

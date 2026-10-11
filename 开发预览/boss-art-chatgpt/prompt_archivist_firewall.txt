@@ -1,0 +1,7 @@
+Magenta #FF00FF background. pixel art, retro 16-bit Terraria style, bold 1-pixel dark outline, flat shading. No text, no ground, no extra copies.
+
+Draw TWO sprites side by side with a clear magenta gap:
+
+LEFT: a large round FIREBALL, orange-red and ember yellow, about as big as a seated humanoid mage. Not a tiny spark.
+
+RIGHT: a vertical FIRE WALL / fire column, about five tiles wide, flames rising, dark scorched edges. Tall rectangular strip that could tile vertically. Orange-red, not white, not blue.

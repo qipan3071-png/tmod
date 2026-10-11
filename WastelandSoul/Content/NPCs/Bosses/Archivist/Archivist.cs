@@ -55,10 +55,15 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 		internal const float MiniFireballSpeed = 3.5f;
 		internal const int FireballDamage = 36;
 		internal const int MiniFireballDamage = 18;
+		internal const int FireballSize = 124;
 
 		internal const int FirePillarWidth = 80;
 		internal const int FirePillarMax = 2;
-		internal const int FirePillarDuration = 180;
+		internal const int FirePillarHeightTiles = 256;
+		internal const int FirePillarHeight = FirePillarHeightTiles * 16;
+		internal const int FirePillarDuration = 1500;
+		internal const int FirePillarGapMin = 10;
+		internal const int FirePillarGapMax = 26;
 		internal const int FirePillarDamage = 28;
 
 		internal const int VenomCount = 10;
@@ -66,9 +71,11 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 		internal const int VenomLife = 180;
 		internal const int VenomDamage = 24;
 
-		internal const int BubbleStormTicks = 600;
+		internal const int BubbleStormTicks = 1500;
 		internal const int BubbleMax = 20;
 		internal const float BubbleRise = -2.2f;
+		internal const int BubbleDropTiles = 50;
+		internal const int BubbleCeilingTiles = 50;
 		internal const int BubbleTrapTicks = 72;
 		internal const int BubbleDamage = 30;
 
@@ -180,7 +187,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 
 		// ==================== 运动辅助（供状态类调用） ====================
 
-		/// <summary>中距离悬浮：停在目标斜上方，靠得太近就往外挪——它要保持"能看清整个档案"的距离。</summary>
+		/// <summary>位移对齐拜月教邪教徒：停在玩家身侧、略高于胸口，不钉在头顶。过近就换边，隔一段时间瞬移一次。</summary>
 		internal static void Hover(ArchivistContext context, float distance)
 		{
 			NPC npc = context.Npc;
@@ -189,11 +196,28 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 				return;
 			}
 
-			Vector2 hoverPoint = context.Target.Center + new Vector2(0f, -distance);
-			Vector2 offset = hoverPoint - npc.Center;
+			Player target = context.Target;
+			float side = npc.Center.X >= target.Center.X ? 1f : -1f;
+			float standoff = 288f;
+
+			if (Vector2.Distance(npc.Center, target.Center) < 96f) {
+				side = target.Center.X >= npc.Center.X ? 1f : -1f;
+				standoff = 368f;
+			}
+
+			Vector2 perch = target.Center + new Vector2(side * standoff, -40f);
+
+			if (Main.GameUpdateCount % 280u == 0u) {
+				npc.Center = perch;
+				npc.velocity = Vector2.Zero;
+				npc.netUpdate = true;
+				return;
+			}
+
+			Vector2 offset = perch - npc.Center;
 			float speed = offset.Length() > 420f ? HoverSpeedFar : HoverSpeedNear;
 
-			if (offset.LengthSquared() > 36f) {
+			if (offset.LengthSquared() > 64f) {
 				npc.velocity = (npc.velocity * 10f + Vector2.Normalize(offset) * speed) / 11f;
 			}
 			else {
@@ -233,7 +257,12 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 			npc.ai[2] += 1f;
 
 			if ((int)npc.ai[0] >= 1) {
-				return cycle % 2 == 0 ? new ArchivistVenomState() : new ArchivistBubbleStormState();
+				return (cycle % 4) switch {
+					0 => new ArchivistFireballState(),
+					1 => new ArchivistFirePillarState(),
+					2 => new ArchivistVenomState(),
+					_ => new ArchivistBubbleStormState()
+				};
 			}
 
 			return cycle % 2 == 0 ? new ArchivistFireballState() : new ArchivistFirePillarState();
@@ -311,19 +340,25 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 				return;
 			}
 
-			for (int i = 0; i < want; i++) {
-				float offset = (i == 0 ? 1f : -1f) * (80f + i * 96f);
-				float worldX = context.Target.Center.X + offset;
-				Vector2 ground = FindSurface(worldX, context.Target.Center.Y);
+			NPC npc = context.Npc;
+			int gapTiles = WastelandRandom.Roll(npc.whoAmI, (int)npc.ai[2], 17, FirePillarGapMin, FirePillarGapMax);
+			float gap = gapTiles * 16f;
+			float mid = context.Target.Center.X;
+			float left = mid - gap * 0.5f;
+			float right = mid + gap * 0.5f;
+			float[] xs = want >= 2 ? new[] { left, right } : new[] { npc.Center.X >= mid ? right : left };
+
+			for (int i = 0; i < xs.Length; i++) {
+				Vector2 top = new Vector2(xs[i] - FirePillarWidth * 0.5f, context.Target.Center.Y - FirePillarHeight * 0.5f);
 				int identity = Projectile.NewProjectile(
-					context.Npc.GetSource_FromAI(),
-					ground + new Vector2(0f, -4f),
+					npc.GetSource_FromAI(),
+					top,
 					Vector2.Zero,
 					ModContent.ProjectileType<ArchivistFirePillar>(),
 					BossShotDamage.Half(FirePillarDamage),
 					0.5f,
-					Main.myPlayer);
-				Main.projectile[identity].ai[1] = ground.Y;
+					Main.myPlayer,
+					npc.whoAmI);
 				Main.projectile[identity].netUpdate = true;
 			}
 		}
@@ -428,6 +463,10 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 		{
 			context.TickBurstWindow();
 
+			if ((int)context.Npc.ai[0] < 1) {
+				return;
+			}
+
 			if (!WastelandNet.IsAuthoritativeSide || context.HealCooldown > 0) {
 				return;
 			}
@@ -516,6 +555,17 @@ namespace WastelandSoul.Content.NPCs.Bosses.Archivist
 
 		public override void OnKill()
 		{
+			int pillar = ModContent.ProjectileType<ArchivistFirePillar>();
+			int storm = ModContent.ProjectileType<ArchivistBubbleStorm>();
+
+			for (int i = 0; i < Main.maxProjectiles; i++) {
+				Projectile projectile = Main.projectile[i];
+
+				if (projectile.active && (projectile.type == pillar || projectile.type == storm)) {
+					projectile.Kill();
+				}
+			}
+
 			ArchivistContext.Release(NPC.whoAmI);
 			WastelandStorySystem.MarkArchivistDefeated();
 		}
