@@ -40,21 +40,8 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public const float LockPlayerRange = 960f;
 
-		public static bool CanUse(Item item, Player player, int leftUseTime)
+		public static void RestoreSwing(Item item, int leftUseTime)
 		{
-			if (player.altFunctionUse == 2) {
-				// Shoot + 不近战 + 不画武器：C.I.V.E 不会当成阔剑挥砍。
-				item.useStyle = ItemUseStyleID.Shoot;
-				item.channel = true;
-				item.noMelee = true;
-				item.noUseGraphic = true;
-				item.useTime = 2;
-				item.useAnimation = 2;
-				item.shoot = ModContent.ProjectileType<FireplaceCrescentCharge>();
-				item.UseSound = SoundID.Item28;
-				return player.ownedProjectileCounts[item.shoot] <= 0;
-			}
-
 			item.useStyle = ItemUseStyleID.Swing;
 			item.channel = false;
 			item.noMelee = false;
@@ -63,6 +50,41 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			item.useAnimation = leftUseTime;
 			item.shoot = ProjectileID.SwordBeam;
 			item.UseSound = SoundID.Item1;
+		}
+
+		public static void Hold(Item item, Player player, int leftUseTime)
+		{
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<FireplaceCrescentCharge>()] > 0) {
+				item.useStyle = ItemUseStyleID.Shoot;
+				item.channel = false;
+				item.noMelee = true;
+				item.noUseGraphic = true;
+				player.channel = false;
+				return;
+			}
+
+			RestoreSwing(item, leftUseTime);
+		}
+
+		public static bool CanUse(Item item, Player player, int leftUseTime)
+		{
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<FireplaceCrescentCharge>()] > 0) {
+				return false;
+			}
+
+			if (player.altFunctionUse == 2) {
+				item.useStyle = ItemUseStyleID.Shoot;
+				item.channel = false;
+				item.noMelee = true;
+				item.noUseGraphic = true;
+				item.useTime = leftUseTime;
+				item.useAnimation = leftUseTime;
+				item.shoot = ModContent.ProjectileType<FireplaceCrescentCharge>();
+				item.UseSound = SoundID.Item28;
+				return true;
+			}
+
+			RestoreSwing(item, leftUseTime);
 			return true;
 		}
 
@@ -134,7 +156,12 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 		{
 			Player owner = Main.player[Projectile.owner];
 
-			if (owner == null || !owner.active || owner.dead || owner.CCed || owner.noItems || !owner.channel || !IsGreatblade(owner.HeldItem)) {
+			if (owner == null || !owner.active || owner.dead || owner.CCed || owner.noItems || !IsGreatblade(owner.HeldItem)) {
+				Projectile.Kill();
+				return;
+			}
+
+			if (Projectile.owner == Main.myPlayer && !Main.mouseRight) {
 				Projectile.Kill();
 				return;
 			}
@@ -157,10 +184,6 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			Projectile.scale = FireplaceGreatbladeCharge.GrowScale(Projectile.ai[1]);
 			Projectile.rotation = MathHelper.PiOver2;
 			Projectile.timeLeft = 2;
-			owner.heldProj = Projectile.whoAmI;
-			owner.itemTime = 2;
-			owner.itemAnimation = 2;
-			owner.itemRotation = 0f;
 
 			if (Formed() && Projectile.localAI[0] == 0f) {
 				Projectile.localAI[0] = 1f;
@@ -183,11 +206,19 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public override void OnKill(int timeLeft)
 		{
+			Player owner = Main.player[Projectile.owner];
+			if (owner != null && owner.heldProj == Projectile.whoAmI) {
+				owner.heldProj = -1;
+			}
+
+			if (Projectile.owner == Main.myPlayer) {
+				owner.channel = false;
+			}
+
 			if (Projectile.owner != Main.myPlayer || !Formed()) {
 				return;
 			}
 
-			Player owner = Main.player[Projectile.owner];
 			NPC locked = LockedNpc();
 			Vector2 impact = locked != null ? locked.Center : Main.MouseWorld;
 			float ticks = Projectile.ai[1];

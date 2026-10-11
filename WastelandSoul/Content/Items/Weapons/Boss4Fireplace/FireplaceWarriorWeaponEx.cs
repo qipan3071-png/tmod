@@ -43,6 +43,11 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 			return true;
 		}
 
+		public override void HoldItem(Player player)
+		{
+			FireplaceGreatbladeCharge.Hold(Item, player, UseTime);
+		}
+
 		public override bool CanUseItem(Player player)
 		{
 			return FireplaceGreatbladeCharge.CanUse(Item, player, UseTime);
