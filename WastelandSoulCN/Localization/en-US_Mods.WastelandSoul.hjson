@@ -434,7 +434,7 @@ Items: {
 		Tooltip:
 			'''
 			Shoots a fan of crescent edges
-			Right click to charge a colossal crescent
+			Right click to charge and summon a colossal crescent
 			Frostburns on hit
 			'''
 	}
@@ -459,7 +459,7 @@ Items: {
 		Tooltip:
 			'''
 			Shoots a fan of crescent edges
-			Right click to charge a colossal crescent
+			Right click to charge and summon a colossal crescent
 			Frostburns on hit
 			'''
 	}

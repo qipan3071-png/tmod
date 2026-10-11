@@ -252,7 +252,7 @@ TRANSLATIONS = {
 
     # ---------------- Boss 4 壁炉守卫武器 ----------------
     "FireplaceWarriorWeapon.DisplayName": "壁炉守卫大剑",
-    "FireplaceWarriorWeapon.Tooltip": "甩出一扇新月刃\n右键蓄力砸落巨刃\n命中后霜火灼烧",
+    "FireplaceWarriorWeapon.Tooltip": "甩出一扇新月刃\n右键蓄力生成巨刃砸落\n命中后霜火灼烧",
     "FireplaceMageWeapon.DisplayName": "壁炉守卫权杖",
     "FireplaceMageWeapon.Tooltip": "按住持续射出冷光",
     "FireplaceRangerWeapon.DisplayName": "壁炉守卫步枪",
@@ -260,7 +260,7 @@ TRANSLATIONS = {
     "FireplaceSummonerWeapon.DisplayName": "壁炉守卫信标",
     "FireplaceSummonerWeapon.Tooltip": "召唤一座炉火哨兵",
     "FireplaceWarriorWeaponEx.DisplayName": "壁炉守卫大剑 MK-II",
-    "FireplaceWarriorWeaponEx.Tooltip": "甩出一扇新月刃\n右键蓄力砸落巨刃\n命中后霜火灼烧",
+    "FireplaceWarriorWeaponEx.Tooltip": "甩出一扇新月刃\n右键蓄力生成巨刃砸落\n命中后霜火灼烧",
     "FireplaceMageWeaponEx.DisplayName": "壁炉守卫权杖 MK-II",
     "FireplaceMageWeaponEx.Tooltip": "按住持续射出更重的冷光",
     "FireplaceRangerWeaponEx.DisplayName": "壁炉守卫步枪 MK-II",

@@ -12,8 +12,9 @@ using WastelandSoul.Content.Items.Weapons;
 namespace WastelandSoul.Content.Projectiles.Fireplace
 {
 	/// <summary>
-	/// 壁炉守卫大剑右键：蓄力满 3 秒才成型，5 秒打满；松开后巨刃从锁定目标上方砸下，落地范围爆炸。
-	/// 左键仍走 C.I.V.E 挥砍 + 三片新月刃。
+	/// 右键按住生成巨新月（火山那种蓄力：看不见挥砍、伤害来自弹幕）。
+	/// 身前从第一帧就变大；满 3 秒成型，5 秒打满后飞到目标上方砸下并爆炸。
+	/// 左键仍走 C.I.V.E 挥砍 + 三片小新月刃。
 	/// </summary>
 	public static class FireplaceGreatbladeCharge
 	{
@@ -25,7 +26,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public const float MaxDamageRatio = 3.6f;
 
-		public const float MinScale = 2.2f;
+		public const float MinScale = 0.9f;
 
 		public const float MaxScale = 3.4f;
 
@@ -33,19 +34,22 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public const float MaxBurstRadius = 224f;
 
-		public const float DropHeight = 352f;
+		public const float DropHeight = 128f;
 
 		public const float LockMouseRange = 720f;
 
 		public const float LockPlayerRange = 960f;
 
-		public static bool CanUse(Item item, Player player)
+		public static bool CanUse(Item item, Player player, int leftUseTime)
 		{
 			if (player.altFunctionUse == 2) {
-				item.useStyle = ItemUseStyleID.HoldUp;
+				// Shoot + 不近战 + 不画武器：C.I.V.E 不会当成阔剑挥砍。
+				item.useStyle = ItemUseStyleID.Shoot;
 				item.channel = true;
 				item.noMelee = true;
-				item.noUseGraphic = false;
+				item.noUseGraphic = true;
+				item.useTime = 2;
+				item.useAnimation = 2;
 				item.shoot = ModContent.ProjectileType<FireplaceCrescentCharge>();
 				item.UseSound = SoundID.Item28;
 				return player.ownedProjectileCounts[item.shoot] <= 0;
@@ -55,6 +59,8 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			item.channel = false;
 			item.noMelee = false;
 			item.noUseGraphic = false;
+			item.useTime = leftUseTime;
+			item.useAnimation = leftUseTime;
 			item.shoot = ProjectileID.SwordBeam;
 			item.UseSound = SoundID.Item1;
 			return true;
@@ -75,31 +81,36 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 			return MathHelper.Clamp((ticks - FormTicks) / (MaxTicks - FormTicks), 0f, 1f);
 		}
 
+		public static float GrowScale(float ticks)
+		{
+			return MathHelper.Lerp(MinScale, MaxScale, MathHelper.Clamp(ticks / MaxTicks, 0f, 1f));
+		}
+
 		public static float DamageRatio(float ticks)
 		{
 			return MathHelper.Lerp(MinDamageRatio, MaxDamageRatio, ChargeLerp(ticks));
-		}
-
-		public static float BladeScale(float ticks)
-		{
-			return MathHelper.Lerp(MinScale, MaxScale, ChargeLerp(ticks));
 		}
 
 		public static float BurstRadius(float ticks)
 		{
 			return MathHelper.Lerp(MinBurstRadius, MaxBurstRadius, ChargeLerp(ticks));
 		}
+
+		public static float TicksFromLerp(float lerp)
+		{
+			return FormTicks + MathHelper.Clamp(lerp, 0f, 1f) * (MaxTicks - FormTicks);
+		}
 	}
 
-	/// <summary>右键按住的蓄力体：不造成伤害，只锁怪、计时、在目标上方画出成型的巨刃。</summary>
+	/// <summary>按住时在身前生成并放大新月。不到 3 秒松手会消散，不造成伤害。</summary>
 	public class FireplaceCrescentCharge : ModProjectile
 	{
 		public override string Texture => "WastelandSoul/Content/Projectiles/Fireplace/FireplaceGiantCrescent";
 
 		public override void SetDefaults()
 		{
-			Projectile.width = 16;
-			Projectile.height = 16;
+			Projectile.width = 48;
+			Projectile.height = 64;
 			Projectile.friendly = true;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
@@ -123,17 +134,10 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 		{
 			Player owner = Main.player[Projectile.owner];
 
-			if (WastelandHoldout.CantUseHoldout(owner) || !IsGreatblade(owner.HeldItem)) {
+			if (owner == null || !owner.active || owner.dead || owner.CCed || owner.noItems || !owner.channel || !IsGreatblade(owner.HeldItem)) {
 				Projectile.Kill();
 				return;
 			}
-
-			Projectile.Center = owner.MountedCenter;
-			Projectile.timeLeft = 2;
-			owner.heldProj = Projectile.whoAmI;
-			owner.itemTime = 2;
-			owner.itemAnimation = 2;
-			owner.itemRotation = 0f;
 
 			Projectile.ai[1] += 1f;
 			UpdateLock(owner);
@@ -149,19 +153,27 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 				owner.ChangeDir(dir);
 			}
 
-			if (Formed() && locked != null && Projectile.localAI[0] == 0f) {
+			Projectile.Center = FormPosition(owner);
+			Projectile.scale = FireplaceGreatbladeCharge.GrowScale(Projectile.ai[1]);
+			Projectile.rotation = MathHelper.PiOver2;
+			Projectile.timeLeft = 2;
+			owner.heldProj = Projectile.whoAmI;
+			owner.itemTime = 2;
+			owner.itemAnimation = 2;
+			owner.itemRotation = 0f;
+
+			if (Formed() && Projectile.localAI[0] == 0f) {
 				Projectile.localAI[0] = 1f;
 				if (!Main.dedServ) {
-					SoundEngine.PlaySound(SoundID.Item28, HoverPosition(locked));
+					SoundEngine.PlaySound(SoundID.Item30, Projectile.Center);
 				}
 			}
 
-			if (Formed() && locked != null && !Main.dedServ && Main.rand.NextBool(4)) { // sync-ok: visual only
-				Vector2 hover = HoverPosition(locked);
-				Dust dust = Dust.NewDustDirect(hover - new Vector2(18f), 36, 36, DustID.IceTorch);
+			if (!Main.dedServ && Main.rand.NextBool(Formed() ? 3 : 5)) { // sync-ok: visual only
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch);
 				dust.noGravity = true;
-				dust.velocity.Y = -1.2f;
-				dust.scale = 1.05f;
+				dust.velocity *= 0.3f;
+				dust.scale = Formed() ? 1.15f : 0.8f;
 			}
 
 			if (Projectile.ai[1] >= FireplaceGreatbladeCharge.MaxTicks) {
@@ -175,22 +187,17 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 				return;
 			}
 
+			Player owner = Main.player[Projectile.owner];
 			NPC locked = LockedNpc();
-			if (locked == null) {
-				return;
-			}
-
+			Vector2 impact = locked != null ? locked.Center : Main.MouseWorld;
 			float ticks = Projectile.ai[1];
 			int damage = (int)(Projectile.damage * FireplaceGreatbladeCharge.DamageRatio(ticks));
 			float lerp = FireplaceGreatbladeCharge.ChargeLerp(ticks);
-			Vector2 impact = locked.Center;
-			Vector2 spawn = new Vector2(impact.X, impact.Y - FireplaceGreatbladeCharge.DropHeight);
-			Player owner = Main.player[Projectile.owner];
 
 			Projectile.NewProjectile(
 				owner.GetSource_ItemUse(owner.HeldItem),
-				spawn,
-				new Vector2(0f, 10f),
+				Projectile.Center,
+				Vector2.Zero,
 				ModContent.ProjectileType<FireplaceGiantCrescent>(),
 				damage,
 				Projectile.knockBack * MathHelper.Lerp(1.1f, 1.6f, lerp),
@@ -202,16 +209,8 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		public override bool PreDraw(ref Color lightColor)
 		{
-			if (!Formed()) {
-				return false;
-			}
-
-			NPC locked = LockedNpc();
-			if (locked == null) {
-				return false;
-			}
-
-			DrawCrescent(HoverPosition(locked), FireplaceGreatbladeCharge.BladeScale(Projectile.ai[1]), lightColor, 0.82f);
+			float alpha = Formed() ? 1f : MathHelper.Lerp(0.4f, 0.85f, Projectile.ai[1] / FireplaceGreatbladeCharge.FormTicks);
+			DrawCrescent(Projectile.Center, Projectile.scale, lightColor, alpha);
 			return false;
 		}
 
@@ -264,12 +263,12 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 
 		private bool Formed()
 		{
-			return Projectile.ai[1] >= FireplaceGreatbladeCharge.FormTicks && LockedNpc() != null;
+			return Projectile.ai[1] >= FireplaceGreatbladeCharge.FormTicks;
 		}
 
-		private static Vector2 HoverPosition(NPC npc)
+		private static Vector2 FormPosition(Player owner)
 		{
-			return new Vector2(npc.Center.X, npc.Center.Y - FireplaceGreatbladeCharge.DropHeight);
+			return owner.MountedCenter + new Vector2(owner.direction * 56f, -36f);
 		}
 
 		private static bool IsGreatblade(Item item)
@@ -300,53 +299,79 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 		}
 	}
 
-	/// <summary>成型后的巨新月刃：从锁定点上方落下，抵达后炸开。</summary>
+	/// <summary>成型后的巨刃：先飞到目标上方，再砸下去并爆炸。挥砍不参与这次伤害。</summary>
 	public class FireplaceGiantCrescent : ModProjectile
 	{
 		public override void SetDefaults()
 		{
-			Projectile.width = 72;
-			Projectile.height = 96;
+			Projectile.width = 80;
+			Projectile.height = 110;
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.penetrate = -1;
-			Projectile.timeLeft = 90;
+			Projectile.timeLeft = 120;
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = -1;
+			Projectile.localNPCHitCooldown = 16;
 		}
 
 		public override bool? CanDamage()
 		{
-			return false;
+			return Projectile.localAI[0] >= 1f;
+		}
+
+		public override void ModifyDamageHitbox(ref Rectangle hitbox)
+		{
+			int width = (int)(80 * Projectile.scale);
+			int height = (int)(110 * Projectile.scale);
+			hitbox.Width = width;
+			hitbox.Height = height;
+			hitbox.X = (int)Projectile.Center.X - width / 2;
+			hitbox.Y = (int)Projectile.Center.Y - height / 2;
 		}
 
 		public override void AI()
 		{
-			float lerp = Projectile.ai[2];
-			Projectile.scale = FireplaceGreatbladeCharge.BladeScale(
-				FireplaceGreatbladeCharge.FormTicks + lerp * (FireplaceGreatbladeCharge.MaxTicks - FireplaceGreatbladeCharge.FormTicks));
+			float ticks = FireplaceGreatbladeCharge.TicksFromLerp(Projectile.ai[2]);
+			Projectile.scale = FireplaceGreatbladeCharge.GrowScale(ticks);
 			Projectile.rotation = MathHelper.PiOver2;
 
 			Vector2 impact = new Vector2(Projectile.ai[0], Projectile.ai[1]);
-			Projectile.velocity.Y += 1.4f;
-			if (Projectile.velocity.Y > 26f) {
-				Projectile.velocity.Y = 26f;
-			}
+			Vector2 hover = new Vector2(impact.X, impact.Y - FireplaceGreatbladeCharge.DropHeight);
 
-			Projectile.velocity.X = (impact.X - Projectile.Center.X) * 0.12f;
+			if (Projectile.localAI[0] < 1f) {
+				Vector2 toHover = hover - Projectile.Center;
+				float dist = toHover.Length();
+				if (dist < 18f) {
+					Projectile.Center = hover;
+					Projectile.velocity = new Vector2(0f, 12f);
+					Projectile.localAI[0] = 1f;
+				}
+				else {
+					toHover.Normalize();
+					Projectile.velocity = toHover * 22f;
+				}
+			}
+			else {
+				Projectile.velocity.Y += 1.6f;
+				if (Projectile.velocity.Y > 28f) {
+					Projectile.velocity.Y = 28f;
+				}
+
+				Projectile.velocity.X = (impact.X - Projectile.Center.X) * 0.12f;
+
+				if (Projectile.Center.Y >= impact.Y) {
+					Projectile.Center = impact;
+					Projectile.Kill();
+				}
+			}
 
 			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch);
 				dust.noGravity = true;
-				dust.velocity.Y = 2.4f;
-				dust.scale = 1.2f;
-			}
-
-			if (Projectile.Center.Y >= impact.Y) {
-				Projectile.Center = impact;
-				Projectile.Kill();
+				dust.velocity.Y = 2.2f;
+				dust.scale = 1.15f;
 			}
 		}
 
@@ -356,10 +381,7 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 				return;
 			}
 
-			float lerp = Projectile.ai[2];
-			float radius = FireplaceGreatbladeCharge.BurstRadius(
-				FireplaceGreatbladeCharge.FormTicks + lerp * (FireplaceGreatbladeCharge.MaxTicks - FireplaceGreatbladeCharge.FormTicks));
-
+			float ticks = FireplaceGreatbladeCharge.TicksFromLerp(Projectile.ai[2]);
 			Projectile.NewProjectile(
 				Projectile.GetSource_Death(),
 				Projectile.Center,
@@ -368,13 +390,18 @@ namespace WastelandSoul.Content.Projectiles.Fireplace
 				Projectile.damage,
 				Projectile.knockBack,
 				Projectile.owner,
-				radius);
+				FireplaceGreatbladeCharge.BurstRadius(ticks));
 		}
 
 		public override bool PreDraw(ref Color lightColor)
 		{
 			FireplaceCrescentCharge.DrawCrescent(Projectile.Center, Projectile.scale, lightColor, 1f);
 			return false;
+		}
+
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+		{
+			WastelandShoot.HitBuff(target, BuffID.Frostburn, 240);
 		}
 	}
 

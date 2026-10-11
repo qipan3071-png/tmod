@@ -13,7 +13,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 {
 	/// <summary>
 	/// Fireplace Guardian Greatblade（壁炉守卫 · A 线 · 可合成）
-	/// <para/>远程板块与清道夫大刀对调：挥砍甩 3 片新月刃（每片 60% 伤害）。右键蓄力 3～5 秒砸落巨刃。近战命中仍霜火。
+	/// <para/>左键：C.I.V.E 挥砍 + 3 片新月刃。右键：火山式蓄力，身前生成巨刃，满 3 秒成型后砸下。挥砍不参与右键伤害。
 	/// <para/>制作站点：秘银砧（血肉墙之后装备站点）
 	/// </summary>
 	public class FireplaceWarriorWeapon : WastelandClassWeapon
@@ -46,7 +46,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 
 		public override bool CanUseItem(Player player)
 		{
-			return FireplaceGreatbladeCharge.CanUse(Item, player);
+			return FireplaceGreatbladeCharge.CanUse(Item, player, UseTime);
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

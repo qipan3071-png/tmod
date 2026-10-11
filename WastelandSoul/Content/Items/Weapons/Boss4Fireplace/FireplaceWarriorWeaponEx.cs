@@ -13,7 +13,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 {
 	/// <summary>
 	/// Fireplace Guardian Greatblade MK-II（壁炉守卫 · B 线 · 专属掉落）
-	/// <para/>与 A 线同一套新月刃（3 片、每片 60% 伤害）和右键蓄力砸落，挥砍伤害和挥速更高。
+	/// <para/>与 A 线同一套左键扇刃和右键身前蓄力砸落，挥砍伤害和挥速更高。
 	/// </summary>
 	public class FireplaceWarriorWeaponEx : WastelandClassWeapon
 	{
@@ -45,7 +45,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 
 		public override bool CanUseItem(Player player)
 		{
-			return FireplaceGreatbladeCharge.CanUse(Item, player);
+			return FireplaceGreatbladeCharge.CanUse(Item, player, UseTime);
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
