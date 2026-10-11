@@ -20,12 +20,14 @@ namespace WastelandSoul.Content.Projectiles.Scavenger
 		/// <summary>带这个值的原版刀光才吃 <see cref="SwordBeamHook"/>（写在 <c>ai[2]</c>）。</summary>
 		public const float Mark = 1f;
 
-		private const int FanCount = 5;
+		private const int FanCount = 3;
+
+		private const float DamageRatio = 0.6f;
 
 		public static bool ShootFan(IEntitySource source, Vector2 position, Vector2 velocity, int damage, float knockback, int owner)
 		{
 			return WastelandShoot.EvenFan(
-				source, position, velocity, ProjectileID.SwordBeam, damage, knockback, owner,
+				source, position, velocity, ProjectileID.SwordBeam, (int)(damage * DamageRatio), knockback, owner,
 				FanCount, MathHelper.ToRadians(20f), 0f, 0f, Mark);
 		}
 

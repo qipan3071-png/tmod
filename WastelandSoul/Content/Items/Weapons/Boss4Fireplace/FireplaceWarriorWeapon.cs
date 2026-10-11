@@ -12,7 +12,7 @@ namespace WastelandSoul.Content.Items.Weapons.Boss4Fireplace
 {
 	/// <summary>
 	/// Fireplace Guardian Greatblade（壁炉守卫 · A 线 · 可合成）
-	/// <para/>远程板块与清道夫大刀对调：挥砍甩 5 片新月刃。近战命中仍霜火。
+	/// <para/>远程板块与清道夫大刀对调：挥砍甩 3 片新月刃（每片 60% 伤害）。近战命中仍霜火。
 	/// <para/>制作站点：秘银砧（血肉墙之后装备站点）
 	/// </summary>
 	public class FireplaceWarriorWeapon : WastelandClassWeapon
