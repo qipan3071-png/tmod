@@ -51,7 +51,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.AshHeart
 
 		public override void SetStaticDefaults()
 		{
-			Main.npcFrameCount[Type] = 4;
+			Main.npcFrameCount[Type] = 1;
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			Music = MusicLoader.GetMusicSlot(Mod, "Music/AshHeart");
@@ -59,8 +59,9 @@ namespace WastelandSoul.Content.NPCs.Bosses.AshHeart
 
 		public override void SetDefaults()
 		{
+			// ChatGPT 定稿：四棱水晶 153×272（最近邻），碰撞略小于贴图，碎晶露在盒子外。
 			NPC.width = 110;
-			NPC.height = 110;
+			NPC.height = 180;
 			NPC.damage = ContactDamage;
 			NPC.defDamage = ContactDamage;
 			NPC.defense = 38;

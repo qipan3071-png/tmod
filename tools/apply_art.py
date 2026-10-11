@@ -33,9 +33,9 @@ PREVIEW = os.path.join(INBOX, "preview_P0.png")
 SHEET_PREVIEW = os.path.join(INBOX, "preview_sheets.png")
 
 # (art-inbox 文件名, 模组内相对路径, 目标画布, 颜色数, 内容占比)
+# 归档者 / 灰烬之心 / 壁炉守卫本体已换成 ChatGPT 定稿（install_boss_chatgpt.py），
+# 不要再用 110 画布覆盖那三张。
 ASSETS = [
-    # 本体留 6% 边距：4 帧是靠整体上下位移做的悬浮循环，撑满高度会被切掉 2px
-    ("Archivist_f0.png", r"Content\NPCs\Bosses\Archivist\Archivist.png", (110, 110), 30, 0.94),
     ("Archivist_head.png", r"Content\NPCs\Bosses\Archivist\Archivist_Head_Boss.png", (34, 34), 20, 0.94),
     ("ArchivistIndexBeam.png", r"Content\Projectiles\Archivist\ArchivistIndexBeam.png", (48, 20), 10, 1.00),
     ("ArchivistArchivePage.png", r"Content\Projectiles\Archivist\ArchivistArchivePage.png", (20, 20), 14, 0.94),
