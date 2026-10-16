@@ -3,6 +3,7 @@ using InnoVault.StateMachines;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
@@ -22,29 +23,36 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 	/// 猪龙鱼公爵 60000/100/50、史莱姆皇后 70000/80/50；月亮领主本体是三段共享 145000 血
 	/// （核心 50000 防 70 + 头 45000 防 50 + 双手 25000×2 防 40）。所以这里取 70000 血（等于史莱姆皇后，
 	/// 是月亮领主之外原版最高的那一档）、84 接触、50 防御 —— 不超过月亮领主本体。
-	/// <para/>冷白金属。招式留缝：螺栓波、炉心冲撞、扩散环、向内合拢但停住的火墙。
+	/// <para/>两个阶段。一阶段横扫，并在玩家这一列打出竖直剑气（飞满 80 格消失）。
+	/// 二阶段把环境换成原版暴风雪，并蓄力 1.2 秒后用本体碰撞箱冲刺。
+	/// 转换时获得 12000 点护盾。子弹和魔法弹幕有 50% 被反弹，并把该弹伤害的 10% 打回主人。
 	/// </summary>
 	[AutoloadBossHead]
 	public class FireplaceGuardian : ModNPC
 	{
 		public const float PhaseTwoThreshold = 0.62f;
-		public const float PhaseThreeThreshold = 0.32f;
+
+		/// <summary>阶段转换护盾。1 万 2。</summary>
+		internal const int PhaseShield = 12000;
+
+		/// <summary>竖直剑气飞满这么多格后消失。1 格 = 16 像素。</summary>
+		internal const float SwordQiTiles = 80f;
 
 		internal const int AttackIntervalPhaseOne = 130;
 		internal const int AttackIntervalPhaseTwo = 100;
-		internal const int AttackIntervalPhaseThree = 72;
 
-		internal const int BoltWindup = 40;
-		internal const int SlamWindup = 34;
-		internal const int SlamTicks = 30;
-		internal const int RingWindup = 36;
-		internal const int WallWindup = 44;
+		internal const int SweepWindup = 36;
+		internal const int SwordQiWindup = 28;
+
+		/// <summary>冲刺前摇 1.2 秒。</summary>
+		internal const int DashWindup = 72;
+
+		internal const int DashTicks = 48;
 
 		internal const int ContactDamage = 84;
-		internal const int SlamDamage = 120;
-		internal const int BoltDamage = 56;
-		internal const int RingDamage = 50;
-		internal const int WallDamage = 70;
+		internal const int DashDamage = 120;
+		internal const int SweepDamage = 84;
+		internal const int SwordQiDamage = 56;
 
 		internal const float HoverDefault = 200f;
 		internal const float HoverHigh = 250f;
@@ -61,11 +69,11 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 
 		public override void SetDefaults()
 		{
-			// 石巨人碰撞 140；贴图 256×307（枪盾四足）。玩家 2026-10-11：大小改为当时的 0.7 倍
+			// 石巨人碰撞 140；贴图 256×307（枪盾四足）。体型为最初模型的 0.55 倍
 			//（碰撞与绘制一起缩；枪盾仍露在盒子外）。
 			NPC.width = 127;
 			NPC.height = 168;
-			NPC.scale = 0.7f;
+			NPC.scale = 0.55f;
 			DrawOffsetY = -24f;
 			NPC.damage = ContactDamage;
 			NPC.defDamage = ContactDamage;
@@ -89,6 +97,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 
 			if (context.Target == null) {
 				FireplaceGuardianContext.Release(NPC.whoAmI);
+				EndBlizzard();
 				NPC.velocity.Y -= 0.16f;
 				NPC.EncourageDespawn(30);
 				return;
@@ -96,6 +105,10 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 
 			NPC.target = context.Target.whoAmI;
 			context.Machine.Update();
+
+			if ((int)NPC.ai[0] >= 1) {
+				KeepBlizzard();
+			}
 			NPC.spriteDirection = context.Target.Center.X > NPC.Center.X ? 1 : -1;
 			NPC.rotation = 0f;
 
@@ -204,8 +217,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			int seedB = (int)context.Npc.ai[2];
 
 			return (int)context.Npc.ai[0] switch {
-				>= 2 => AttackIntervalPhaseThree + WastelandRandom.Roll(seedA, seedB, -6, 7),
-				1 => AttackIntervalPhaseTwo + WastelandRandom.Roll(seedA, seedB, -8, 9),
+				>= 1 => AttackIntervalPhaseTwo + WastelandRandom.Roll(seedA, seedB, -8, 9),
 				_ => AttackIntervalPhaseOne + WastelandRandom.Roll(seedA, seedB, -12, 13)
 			};
 		}
@@ -216,24 +228,13 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			int cycle = (int)context.Npc.ai[2];
 			context.Npc.ai[2] += 1f;
 
-			if (phase >= 2) {
-				return (cycle % 4) switch {
-					0 => new FireplaceGuardianWallState(),
-					1 => new FireplaceGuardianSlamState(),
-					2 => new FireplaceGuardianRingState(),
-					_ => new FireplaceGuardianBoltState()
-				};
+			if (phase >= 1) {
+				return new FireplaceGuardianDashState();
 			}
 
-			if (phase == 1) {
-				return (cycle % 3) switch {
-					0 => new FireplaceGuardianRingState(),
-					1 => new FireplaceGuardianBoltState(),
-					_ => new FireplaceGuardianSlamState()
-				};
-			}
-
-			return cycle % 2 == 0 ? new FireplaceGuardianBoltState() : new FireplaceGuardianSlamState();
+			return cycle % 2 == 0
+				? new FireplaceGuardianSweepState()
+				: new FireplaceGuardianSwordQiState();
 		}
 
 		internal static void OnPhaseStart(NPC npc, int phase)
@@ -243,6 +244,11 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			npc.defDamage = ContactDamage;
 			npc.velocity *= 0.2f;
 			npc.netUpdate = true;
+
+			if (phase == 1) {
+				npc.ai[3] = PhaseShield;
+				BeginBlizzard();
+			}
 
 			if (Main.dedServ) {
 				return;
@@ -254,100 +260,243 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			if (phase == 1) {
 				Main.NewText(Language.GetTextValue("Mods.WastelandSoul.Messages.FireplaceGuardianPhaseTwo"), new Color(180, 220, 255));
 			}
-			else if (phase == 2) {
-				Main.NewText(Language.GetTextValue("Mods.WastelandSoul.Messages.FireplaceGuardianPhaseThree"), new Color(140, 190, 255));
-			}
 		}
 
-		internal static void SpawnBolts(FireplaceGuardianContext context)
+		internal static void SpawnSwordQi(FireplaceGuardianContext context)
 		{
 			if (context.Target == null || Main.netMode == NetmodeID.MultiplayerClient) {
 				return;
 			}
 
-			int rows = (int)context.Npc.ai[0] >= 2 ? 9 : 7;
-			float spacing = 72f;
-			float side = context.Target.Center.X >= context.Npc.Center.X ? -1f : 1f;
-			float spawnX = context.Target.Center.X + side * 780f;
-			float startY = context.Target.Center.Y - spacing * (rows - 1) * 0.5f;
-			int gap = WastelandRandom.Roll(context.Npc.whoAmI, (int)context.Npc.ai[2], rows, 0, rows);
+			float direction = context.Target.Center.Y < context.Npc.Center.Y - 16f ? -1f : 1f;
 
-			for (int i = 0; i < rows; i++) {
-				if (i == gap || i == (gap + 3) % rows) {
-					continue;
-				}
-
-				Projectile.NewProjectile(
-					context.Npc.GetSource_FromAI(),
-					new Vector2(spawnX, startY + spacing * i),
-					new Vector2(-side * 8.4f, 0f),
-					ModContent.ProjectileType<HearthBolt>(),
-					BossShotDamage.Half(BoltDamage),
-					1f,
-					Main.myPlayer);
-			}
+			Projectile.NewProjectile(
+				context.Npc.GetSource_FromAI(),
+				new Vector2(context.Target.Center.X, context.Npc.Center.Y),
+				new Vector2(0f, direction * 8f),
+				ModContent.ProjectileType<HearthSwordQi>(),
+				BossShotDamage.Half(SwordQiDamage),
+				2f,
+				Main.myPlayer);
 		}
 
-		internal static void SpawnRing(FireplaceGuardianContext context)
+		internal static void SpawnSweep(FireplaceGuardianContext context)
+		{
+			if (context.Target == null || Main.netMode == NetmodeID.MultiplayerClient) {
+				return;
+			}
+
+			float startAngle = (context.Target.Center - context.Npc.Center).ToRotation() - MathHelper.PiOver2;
+			float sweepDirection = context.Target.Center.X >= context.Npc.Center.X ? 1f : -1f;
+
+			Projectile.NewProjectile(
+				context.Npc.GetSource_FromAI(),
+				context.Npc.Center,
+				Vector2.Zero,
+				ModContent.ProjectileType<HearthSweep>(),
+				BossShotDamage.Half(SweepDamage),
+				6f,
+				Main.myPlayer,
+				startAngle,
+				sweepDirection,
+				context.Npc.whoAmI);
+		}
+
+		/// <summary>冲刺段：本体碰撞箱每 5 帧打一次，并把玩家推开。只在权威侧结算。</summary>
+		internal static void StrikeDash(NPC npc)
 		{
 			if (Main.netMode == NetmodeID.MultiplayerClient) {
 				return;
 			}
 
-			int count = (int)context.Npc.ai[0] >= 2 ? 14 : 10;
-			int gap = WastelandRandom.Roll(context.Npc.whoAmI, (int)context.Npc.ai[2], count + 3, 0, count);
+			Rectangle hitbox = npc.Hitbox;
 
-			for (int i = 0; i < count; i++) {
-				if (i == gap || i == (gap + 1) % count) {
+			for (int i = 0; i < Main.maxPlayers; i++) {
+				Player player = Main.player[i];
+
+				if (!player.active || player.dead || player.ghost || !hitbox.Intersects(player.Hitbox)) {
 					continue;
 				}
 
-				Vector2 velocity = (MathHelper.TwoPi * i / count).ToRotationVector2() * 6.4f;
+				int direction = Math.Sign(player.Center.X - npc.Center.X);
 
-				Projectile.NewProjectile(
-					context.Npc.GetSource_FromAI(),
-					context.Npc.Center,
-					velocity,
-					ModContent.ProjectileType<HearthRingShard>(),
-					BossShotDamage.Half(RingDamage),
-					1f,
-					Main.myPlayer);
+				if (direction == 0) {
+					direction = npc.spriteDirection;
+				}
+
+				player.immune = false;
+				player.immuneTime = 0;
+				player.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), npc.damage, direction);
+				player.velocity.X = direction * 12f;
+				player.velocity.Y = -4.5f;
+				player.immuneTime = 4;
 			}
 		}
 
-		/// <summary>左右两道火墙向玩家合拢，在中间停下，留下一条能站的缝。</summary>
-		internal static void SpawnWalls(FireplaceGuardianContext context)
+		internal static bool BlizzardLiving()
 		{
-			if (context.Target == null || Main.netMode == NetmodeID.MultiplayerClient) {
+			int type = ModContent.NPCType<FireplaceGuardian>();
+
+			for (int i = 0; i < Main.maxNPCs; i++) {
+				NPC npc = Main.npc[i];
+
+				if (npc.active && npc.type == type && (int)npc.ai[0] >= 1) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private static bool _blizzardOwned;
+		private static bool _rainWasAlreadyOn;
+
+		internal static void BeginBlizzard()
+		{
+			if (Main.netMode == NetmodeID.MultiplayerClient || _blizzardOwned) {
 				return;
 			}
 
-			float centerX = context.Target.Center.X;
-			float top = context.Target.Center.Y - 220f;
+			_rainWasAlreadyOn = Main.raining;
+			_blizzardOwned = true;
 
-			for (int i = 0; i < 8; i++) {
-				float y = top + i * 56f;
-
-				Projectile.NewProjectile(
-					context.Npc.GetSource_FromAI(),
-					new Vector2(centerX - 420f, y),
-					new Vector2(3.2f, 0f),
-					ModContent.ProjectileType<HearthWall>(),
-					BossShotDamage.Half(WallDamage),
-					0f,
-					Main.myPlayer,
-					centerX - 70f);
-
-				Projectile.NewProjectile(
-					context.Npc.GetSource_FromAI(),
-					new Vector2(centerX + 420f, y),
-					new Vector2(-3.2f, 0f),
-					ModContent.ProjectileType<HearthWall>(),
-					BossShotDamage.Half(WallDamage),
-					0f,
-					Main.myPlayer,
-					centerX + 70f);
+			if (!Main.raining) {
+				Main.StartRain();
 			}
+
+			Main.maxRaining = Math.Max(Main.maxRaining, 0.85f);
+			Main.rainTime = Math.Max(Main.rainTime, 3600);
+		}
+
+		internal static void KeepBlizzard()
+		{
+			if (Main.netMode == NetmodeID.MultiplayerClient || !_blizzardOwned) {
+				return;
+			}
+
+			if (!Main.raining) {
+				Main.StartRain();
+			}
+
+			Main.maxRaining = Math.Max(Main.maxRaining, 0.85f);
+			Main.rainTime = Math.Max(Main.rainTime, 600);
+		}
+
+		internal static void EndBlizzard()
+		{
+			if (Main.netMode == NetmodeID.MultiplayerClient || !_blizzardOwned || BlizzardLiving()) {
+				return;
+			}
+
+			if (!_rainWasAlreadyOn && Main.raining) {
+				Main.StopRain();
+			}
+
+			_blizzardOwned = false;
+		}
+
+		private static bool IsReflectable(Projectile projectile)
+		{
+			if (!projectile.friendly || projectile.hostile || projectile.damage <= 0 || projectile.minion || projectile.sentry) {
+				return false;
+			}
+
+			if (ProjectileID.Sets.MinionShot[projectile.type]) {
+				return false;
+			}
+
+			if (projectile.DamageType.CountsAsClass(DamageClass.Magic)) {
+				return true;
+			}
+
+			return !projectile.arrow && projectile.DamageType.CountsAsClass(DamageClass.Ranged);
+		}
+
+		public override bool? CanBeHitByProjectile(Projectile projectile)
+		{
+			if (!IsReflectable(projectile)) {
+				return null;
+			}
+
+			if (projectile.localAI[1] == NPC.whoAmI + 1f) {
+				return false;
+			}
+
+			if (WastelandRandom.Roll(NPC.whoAmI, projectile.identity, projectile.owner, 0, 2) != 0) {
+				return null;
+			}
+
+			projectile.localAI[1] = NPC.whoAmI + 1f;
+
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				projectile.velocity *= -1f;
+
+				if (projectile.velocity.LengthSquared() < 1f) {
+					projectile.velocity = (projectile.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * 8f;
+				}
+
+				projectile.position += projectile.velocity * 3f;
+				projectile.netUpdate = true;
+
+				Player owner = Main.player[projectile.owner];
+
+				if (owner.active && !owner.dead && !owner.ghost) {
+					int bite = Math.Max(1, (int)(projectile.damage * 0.1f));
+					int direction = Math.Sign(owner.Center.X - NPC.Center.X);
+
+					if (direction == 0) {
+						direction = NPC.spriteDirection;
+					}
+
+					owner.Hurt(PlayerDeathReason.ByNPC(NPC.whoAmI), bite, direction);
+				}
+			}
+
+			return false;
+		}
+
+		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
+		{
+			AbsorbShield(damageDone);
+		}
+
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
+		{
+			AbsorbShield(damageDone);
+		}
+
+		public override bool CheckDead()
+		{
+			if (NPC.ai[3] > 0f) {
+				NPC.life = 1;
+				return false;
+			}
+
+			return true;
+		}
+
+		private void AbsorbShield(int damageDone)
+		{
+			int shield = (int)NPC.ai[3];
+
+			if (shield <= 0 || damageDone <= 0) {
+				return;
+			}
+
+			int taken = Math.Min(shield, damageDone);
+			NPC.ai[3] = shield - taken;
+			NPC.life += taken;
+
+			if (NPC.life > NPC.lifeMax) {
+				NPC.life = NPC.lifeMax;
+			}
+
+			NPC.netUpdate = true;
+		}
+
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+		{
+			return NPC.localAI[0] < 1f;
 		}
 
 		public override void FindFrame(int frameHeight)
@@ -374,6 +523,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 		public override void OnKill()
 		{
 			FireplaceGuardianContext.Release(NPC.whoAmI);
+			EndBlizzard();
 			WastelandStorySystem.MarkFireplaceGuardianDefeated();
 		}
 

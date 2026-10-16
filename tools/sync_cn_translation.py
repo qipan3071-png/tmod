@@ -520,7 +520,7 @@ TRANSLATIONS = {
     "AshHeartPhaseThree": "灰烬之心——坍缩。脉冲在把一切往里吸。",
     "AshHeartDefeated": "心核裂开了。那道战争指令还是热的。",
     "ThirdMemoryRestored": "智械人恢复了第三段记忆——焚烧程序是她写的，也是她执行的。",
-    "FireplaceGuardianPhaseTwo": "壁炉守卫——冷燃。环正在合拢。",
+    "FireplaceGuardianPhaseTwo": "壁炉守卫——厅堂变成暴风雪。",
     "FireplaceGuardianPhaseThree": "壁炉守卫——重置协议。墙正在压过来。",
     "FireplaceGuardianDefeated": "最后一把锁开了。重置装置在等一个载体。",
     "FourthMemoryRestored": "智械人恢复了第四段记忆。壁炉从来不是庇护所。",
@@ -941,6 +941,8 @@ TRANSLATIONS = {
     "Items.StarstringBow.Tooltip": "将一支箭转化为三支带电矢\n矢会略作追踪并穿过物块",
     "Items.VoidSeed.DisplayName": "虚空种",
     "Items.VoidSeed.Tooltip": "召唤会撕开小裂隙的种子",
+    "Items.ChargeLeapStaff.DisplayName": "电荷跃动",
+    "Items.ChargeLeapStaff.Tooltip": "交替放出正电球与负电球，并施加带电\n穿过敌人并持续造成伤害\n减速或飞得够远后开始辐射\n飞行满0.6秒后，异性电球爆炸，同性电球弹开\n向外每一圈伤害更低\n同性电球相互远离并变大",
     "Projectiles.GapChakramProj.DisplayName": "裂隙环刃",
     "Projectiles.OrbitMote.DisplayName": "环绕微尘",
     "Projectiles.SignalCoilNail.DisplayName": "信号线圈钉",
@@ -952,6 +954,11 @@ TRANSLATIONS = {
     "Projectiles.StarRiftSlash.DisplayName": "星裂隙",
     "Projectiles.StarstringShot.DisplayName": "带电矢",
     "Projectiles.VoidSeedMinion.DisplayName": "虚空种子",
+    "Projectiles.ChargeLeapOrb.DisplayName": "电球",
+    "Projectiles.ChargeLeapField.DisplayName": "电荷场",
+    "Projectiles.ChargeLeapBurst.DisplayName": "电荷震荡波",
+    "Projectiles.HearthSweep.DisplayName": "壁炉横扫",
+    "Projectiles.HearthSwordQi.DisplayName": "壁炉剑气",
 
 }
 

@@ -36,7 +36,6 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 
 				PhaseController.For(context.Machine)
 					.OnHpBelow(c => (float)c.Npc.life / c.Npc.lifeMax, FireplaceGuardian.PhaseTwoThreshold, () => new FireplaceGuardianPhaseTwoState(), label: "阶段二")
-					.OnHpBelow(c => (float)c.Npc.life / c.Npc.lifeMax, FireplaceGuardian.PhaseThreeThreshold, () => new FireplaceGuardianPhaseThreeState(), label: "阶段三")
 					.Apply();
 
 				Cache[npc.whoAmI] = context;

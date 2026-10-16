@@ -1247,8 +1247,23 @@ Items: {
 		DisplayName: 虚空种
 		Tooltip: 召唤会撕开小裂隙的种子
 	}
+	ChargeLeapStaff: {
+		DisplayName: 电荷跃动
+		Tooltip:
+			'''
+			交替放出正电球与负电球，并施加带电
+			穿过敌人并持续造成伤害
+			减速或飞得够远后开始辐射
+			飞行满0.6秒后，异性电球爆炸，同性电球弹开
+			向外每一圈伤害更低
+			同性电球相互远离并变大
+			'''
+	}
 }
 Projectiles: {
+	ChargeLeapOrb.DisplayName: 电球
+	ChargeLeapField.DisplayName: 电荷场
+	ChargeLeapBurst.DisplayName: 电荷震荡波
 	PollutionZone.DisplayName: 污染
 	PollutionHoming.DisplayName: 污染团
 	ScavengerBullet.DisplayName: 清道夫子弹
@@ -1377,6 +1392,8 @@ Projectiles: {
 	FireplaceMageHoldout.DisplayName: 壁炉权杖
 	FireplaceCrescentCharge.DisplayName: 蓄力新月
 	FireplaceGiantCrescent.DisplayName: 巨新月刃
+	HearthSweep.DisplayName: 壁炉横扫
+	HearthSwordQi.DisplayName: 壁炉剑气
 }
 Tiles: {
 	ElvenFrame.MapEntry: 精灵族躯体
@@ -1563,7 +1580,7 @@ Messages: {
 	AshHeartPhaseThree: 灰烬之心——坍缩。脉冲在把一切往里吸。
 	AshHeartDefeated: 心核裂开了。那道战争指令还是热的。
 	ThirdMemoryRestored: 智械人恢复了第三段记忆——焚烧程序是她写的，也是她执行的。
-	FireplaceGuardianPhaseTwo: 壁炉守卫——冷燃。环正在合拢。
+	FireplaceGuardianPhaseTwo: 壁炉守卫——厅堂变成暴风雪。
 	FireplaceGuardianPhaseThree: 壁炉守卫——重置协议。墙正在压过来。
 	FireplaceGuardianDefeated: 最后一把锁开了。重置装置在等一个载体。
 	FourthMemoryRestored: 智械人恢复了第四段记忆。壁炉从来不是庇护所。

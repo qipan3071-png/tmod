@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-"""从汉化表抽出发布用介绍清单（物品 / Boss与生成怪）。"""
+"""从汉化表和源码抽出发布用介绍清单（物品 / Boss与生成怪）。
+
+物品写出介绍、面板数值、稀有度、售价、合成。
+NPC 写出生命、防御、接触伤害、刷新条件和掉落。
+数值是普通模式基础值，专家 / 大师 / 多人还会按原版再乘。
+"""
 import io
 import os
 import re
@@ -196,8 +201,9 @@ def write_npcs(npcs, checklist):
 
 def main():
     items, npcs, checklist = parse_hjson(CN)
-    write_items(items)
-    write_npcs(npcs, checklist)
+    from catalog_detail import emit
+
+    emit(items, npcs, checklist, ITEM_OUT, NPC_OUT, NPC_BLURB, BOSS_KEYS)
     return 0
 
 

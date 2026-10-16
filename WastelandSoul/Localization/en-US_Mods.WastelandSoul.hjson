@@ -1466,9 +1466,25 @@ Items: {
 		DisplayName: Void Seed
 		Tooltip: Summons a seed that tears small rifts
 	}
+
+	ChargeLeapStaff: {
+		DisplayName: Charge Leap
+		Tooltip:
+			'''
+			Alternates positive and negative orbs and inflicts Electrified
+			Passes through enemies and keeps damaging them
+			Radiates after it slows down or flies far enough
+			After 0.6 seconds of flight, opposite orbs explode and matching orbs bounce apart
+			Each ring outward deals less damage
+			Matching orbs spread apart and grow
+			'''
+	}
 }
 
 Projectiles: {
+	ChargeLeapOrb.DisplayName: Charge Orb
+	ChargeLeapField.DisplayName: Charge Field
+	ChargeLeapBurst.DisplayName: Charge Wave
 	PollutionZone.DisplayName: Pollution
 	PollutionHoming.DisplayName: Pollution Blob
 	ScavengerBullet.DisplayName: Scavenger Shot
@@ -1597,6 +1613,8 @@ Projectiles: {
 	FireplaceMageHoldout.DisplayName: Fireplace Mage Holdout
 	FireplaceCrescentCharge.DisplayName: Crescent Charge
 	FireplaceGiantCrescent.DisplayName: Colossal Crescent
+	HearthSweep.DisplayName: Hearth Sweep
+	HearthSwordQi.DisplayName: Hearth Sword Qi
 }
 
 Tiles: {
@@ -1819,7 +1837,7 @@ Messages: {
 	AshHeartPhaseThree: Ash Heart - collapse. The pulse is pulling inward.
 	AshHeartDefeated: The Heart breaks open. The war order is still warm.
 	ThirdMemoryRestored: Machina recovered her third memory - she wrote the burn, and she carried it out.
-	FireplaceGuardianPhaseTwo: Fireplace Guardian - cold ignition. The ring is closing.
+	FireplaceGuardianPhaseTwo: Fireplace Guardian - the hall turns into a blizzard.
 	FireplaceGuardianPhaseThree: Fireplace Guardian - reset protocol. The walls are coming in.
 	FireplaceGuardianDefeated: The last lock opens. The reset device is waiting for a carrier.
 	FourthMemoryRestored: Machina recovered her fourth memory. The Fireplace was never a shelter.

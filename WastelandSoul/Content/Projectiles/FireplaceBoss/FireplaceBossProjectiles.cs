@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian;
 
 namespace WastelandSoul.Content.Projectiles.FireplaceBoss
 {
@@ -99,6 +100,83 @@ namespace WastelandSoul.Content.Projectiles.FireplaceBoss
 				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch);
 				dust.noGravity = true;
 				dust.scale = 1.1f;
+			}
+		}
+	}
+
+	/// <summary>一阶段横扫。贴着守卫扫半圈，冷色斩击朝右绘制后再按角度转。</summary>
+	public class HearthSweep : ModProjectile
+	{
+		private const int SweepDuration = 40;
+		private const float ArmLength = 120f;
+
+		public override void SetDefaults()
+		{
+			Projectile.width = 64;
+			Projectile.height = 24;
+			Projectile.hostile = true;
+			Projectile.friendly = false;
+			Projectile.aiStyle = -1;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.timeLeft = SweepDuration;
+		}
+
+		public override void AI()
+		{
+			int bossIndex = (int)Projectile.ai[2];
+
+			if (bossIndex < 0 || bossIndex >= Main.maxNPCs || !Main.npc[bossIndex].active) {
+				Projectile.Kill();
+				return;
+			}
+
+			NPC boss = Main.npc[bossIndex];
+			float progress = 1f - Projectile.timeLeft / (float)SweepDuration;
+			float angle = Projectile.ai[0] + progress * MathHelper.Pi * Projectile.ai[1];
+
+			Projectile.Center = boss.Center + angle.ToRotationVector2() * ArmLength;
+			Projectile.velocity = Vector2.Zero;
+			Projectile.rotation = angle;
+
+			if (!Main.dedServ && Main.rand.NextBool(2)) { // sync-ok: visual only
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.IceTorch);
+				dust.noGravity = true;
+			}
+		}
+	}
+
+	/// <summary>竖直剑气。沿竖直方向飞，路程满 80 格后消失。</summary>
+	public class HearthSwordQi : ModProjectile
+	{
+		public override void SetDefaults()
+		{
+			Projectile.width = 20;
+			Projectile.height = 72;
+			Projectile.hostile = true;
+			Projectile.friendly = false;
+			Projectile.aiStyle = -1;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.timeLeft = 300;
+			Projectile.light = 0.45f;
+		}
+
+		public override void AI()
+		{
+			Projectile.localAI[0] += Projectile.velocity.Length();
+			Projectile.rotation = Projectile.velocity.Y > 0f ? MathHelper.Pi : 0f;
+
+			if (Projectile.localAI[0] >= FireplaceGuardian.SwordQiTiles * 16f) {
+				Projectile.Kill();
+				return;
+			}
+
+			if (!Main.dedServ && Main.rand.NextBool(3)) { // sync-ok: visual only
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Frost);
+				dust.noGravity = true;
 			}
 		}
 	}

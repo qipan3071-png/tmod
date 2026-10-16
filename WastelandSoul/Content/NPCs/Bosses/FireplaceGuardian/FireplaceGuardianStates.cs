@@ -15,6 +15,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 		{
 			base.OnEnter(machine, ctx);
 			ctx.AttackDelay = FireplaceGuardian.RollAttackDelay(ctx);
+			ctx.Npc.localAI[0] = 0f;
 			ctx.Npc.damage = FireplaceGuardian.ContactDamage;
 			ctx.Npc.defDamage = FireplaceGuardian.ContactDamage;
 		}
@@ -30,7 +31,7 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 	[VaultState(1, typeof(FireplaceGuardianContext))]
 	public class FireplaceGuardianPhaseTwoState : VaultState<FireplaceGuardianContext>
 	{
-		public override string StateName => "阶段二·冷燃";
+		public override string StateName => "阶段二·暴风雪";
 
 		public override void OnEnter(VaultStateMachine<FireplaceGuardianContext> machine, FireplaceGuardianContext ctx)
 		{
@@ -47,38 +48,52 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 	}
 
 	[VaultState(2, typeof(FireplaceGuardianContext))]
-	public class FireplaceGuardianPhaseThreeState : VaultState<FireplaceGuardianContext>
+	public class FireplaceGuardianSweepState : VaultState<FireplaceGuardianContext>
 	{
-		public override string StateName => "阶段三·重置";
+		private bool _fired;
+
+		public override string StateName => "横扫";
 
 		public override void OnEnter(VaultStateMachine<FireplaceGuardianContext> machine, FireplaceGuardianContext ctx)
 		{
+			_fired = false;
 			base.OnEnter(machine, ctx);
-			FireplaceGuardian.OnPhaseStart(ctx.Npc, 2);
+			ctx.Npc.localAI[0] = 0f;
+
+			if (!Terraria.Main.dedServ) {
+				SoundEngine.PlaySound(SoundID.Item1, ctx.Npc.Center);
+			}
 		}
 
 		public override IVaultState<FireplaceGuardianContext> OnUpdate(VaultStateMachine<FireplaceGuardianContext> machine, FireplaceGuardianContext ctx)
 		{
 			base.OnUpdate(machine, ctx);
-			ctx.Npc.velocity *= 0.9f;
-			return Timer >= 50 ? new FireplaceGuardianIdleState() : null;
+			FireplaceGuardian.Hover(ctx, FireplaceGuardian.HoverDefault);
+
+			if (!_fired && Timer >= FireplaceGuardian.SweepWindup) {
+				_fired = true;
+				FireplaceGuardian.SpawnSweep(ctx);
+			}
+
+			return Timer >= FireplaceGuardian.SweepWindup + 50 ? new FireplaceGuardianIdleState() : null;
 		}
 	}
 
 	[VaultState(3, typeof(FireplaceGuardianContext))]
-	public class FireplaceGuardianBoltState : VaultState<FireplaceGuardianContext>
+	public class FireplaceGuardianSwordQiState : VaultState<FireplaceGuardianContext>
 	{
-		/// <summary>本招是否已经触发过（用 >= 判断，避免掉帧直接跨过阈值）。</summary>
-		private bool firedFireplaceGuardianBolt;
-		public override string StateName => "螺栓波";
+		private bool _fired;
+
+		public override string StateName => "竖直剑气";
 
 		public override void OnEnter(VaultStateMachine<FireplaceGuardianContext> machine, FireplaceGuardianContext ctx)
 		{
-			firedFireplaceGuardianBolt = false;
+			_fired = false;
 			base.OnEnter(machine, ctx);
+			ctx.Npc.localAI[0] = 0f;
 
 			if (!Terraria.Main.dedServ) {
-				SoundEngine.PlaySound(SoundID.Item12, ctx.Npc.Center);
+				SoundEngine.PlaySound(SoundID.Item28, ctx.Npc.Center);
 			}
 		}
 
@@ -87,26 +102,27 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 			base.OnUpdate(machine, ctx);
 			FireplaceGuardian.Hover(ctx, FireplaceGuardian.HoverHigh);
 
-			if (!firedFireplaceGuardianBolt && Timer >= FireplaceGuardian.BoltWindup) {
-				firedFireplaceGuardianBolt = true;
-				FireplaceGuardian.SpawnBolts(ctx);
+			if (!_fired && Timer >= FireplaceGuardian.SwordQiWindup) {
+				_fired = true;
+				FireplaceGuardian.SpawnSwordQi(ctx);
 			}
 
-			return Timer >= FireplaceGuardian.BoltWindup + 50 ? new FireplaceGuardianIdleState() : null;
+			return Timer >= FireplaceGuardian.SwordQiWindup + 40 ? new FireplaceGuardianIdleState() : null;
 		}
 	}
 
 	[VaultState(4, typeof(FireplaceGuardianContext))]
-	public class FireplaceGuardianSlamState : VaultState<FireplaceGuardianContext>
+	public class FireplaceGuardianDashState : VaultState<FireplaceGuardianContext>
 	{
-		/// <summary>本招是否已经触发过（用 >= 判断，避免掉帧直接跨过阈值）。</summary>
-		private bool firedFireplaceGuardianSlam;
-		public override string StateName => "炉心冲撞";
+		private bool _fired;
+
+		public override string StateName => "暴雪冲刺";
 
 		public override void OnEnter(VaultStateMachine<FireplaceGuardianContext> machine, FireplaceGuardianContext ctx)
 		{
-			firedFireplaceGuardianSlam = false;
+			_fired = false;
 			base.OnEnter(machine, ctx);
+			ctx.Npc.localAI[0] = 0f;
 			ctx.Npc.velocity *= 0.2f;
 		}
 
@@ -114,15 +130,16 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 		{
 			base.OnUpdate(machine, ctx);
 
-			if (Timer < FireplaceGuardian.SlamWindup) {
-				FireplaceGuardian.Hover(ctx, FireplaceGuardian.HoverDefault);
+			if (Timer < FireplaceGuardian.DashWindup) {
+				ctx.Npc.velocity *= 0.8f;
 				return null;
 			}
 
-			if (!firedFireplaceGuardianSlam && Timer >= FireplaceGuardian.SlamWindup) {
-				firedFireplaceGuardianSlam = true;
-				ctx.Npc.damage = FireplaceGuardian.SlamDamage;
-				ctx.Npc.defDamage = FireplaceGuardian.SlamDamage;
+			if (!_fired && Timer >= FireplaceGuardian.DashWindup) {
+				_fired = true;
+				ctx.Npc.localAI[0] = 1f;
+				ctx.Npc.damage = FireplaceGuardian.DashDamage;
+				ctx.Npc.defDamage = FireplaceGuardian.DashDamage;
 				FireplaceGuardian.DashTowards(ctx);
 
 				if (!Terraria.Main.dedServ) {
@@ -131,77 +148,13 @@ namespace WastelandSoul.Content.NPCs.Bosses.FireplaceGuardian
 				}
 			}
 
-			FireplaceGuardian.SteerSlam(ctx);
-			return Timer >= FireplaceGuardian.SlamWindup + FireplaceGuardian.SlamTicks
+			if (Timer % 5 == 0) {
+				FireplaceGuardian.StrikeDash(ctx.Npc);
+			}
+
+			return Timer >= FireplaceGuardian.DashWindup + FireplaceGuardian.DashTicks
 				? new FireplaceGuardianIdleState()
 				: null;
-		}
-	}
-
-	[VaultState(5, typeof(FireplaceGuardianContext))]
-	public class FireplaceGuardianRingState : VaultState<FireplaceGuardianContext>
-	{
-		/// <summary>本招是否已经触发过（用 >= 判断，避免掉帧直接跨过阈值）。</summary>
-		private bool firedFireplaceGuardianRing;
-		public override string StateName => "冷光环";
-
-		public override void OnEnter(VaultStateMachine<FireplaceGuardianContext> machine, FireplaceGuardianContext ctx)
-		{
-			// 这一招的触发标记必须每次进入复位（`fired*` 用 >= 判断，见上面的字段注释）
-			firedFireplaceGuardianRing = false;
-			base.OnEnter(machine, ctx);
-		}
-
-		public override IVaultState<FireplaceGuardianContext> OnUpdate(VaultStateMachine<FireplaceGuardianContext> machine, FireplaceGuardianContext ctx)
-		{
-			base.OnUpdate(machine, ctx);
-			FireplaceGuardian.Hover(ctx, FireplaceGuardian.HoverHigh);
-
-			if (!firedFireplaceGuardianRing && Timer >= FireplaceGuardian.RingWindup) {
-				firedFireplaceGuardianRing = true;
-				FireplaceGuardian.SpawnRing(ctx);
-				if (!Terraria.Main.dedServ) {
-					SoundEngine.PlaySound(SoundID.Item28, ctx.Npc.Center);
-					WastelandFxSystem.Flash(ctx.Npc.Center, new Color(210, 236, 255), 1.45f);
-					WastelandFxSystem.Ring(ctx.Npc.Center, new Color(160, 214, 255), 18f, 150f, 22);
-				}
-			}
-
-			return Timer >= FireplaceGuardian.RingWindup + 16 ? new FireplaceGuardianIdleState() : null;
-		}
-	}
-
-	[VaultState(6, typeof(FireplaceGuardianContext))]
-	public class FireplaceGuardianWallState : VaultState<FireplaceGuardianContext>
-	{
-		/// <summary>本招是否已经触发过（用 >= 判断，避免掉帧直接跨过阈值）。</summary>
-		private bool firedFireplaceGuardianWall;
-		public override string StateName => "合拢火墙";
-
-		public override void OnEnter(VaultStateMachine<FireplaceGuardianContext> machine, FireplaceGuardianContext ctx)
-		{
-			// 同上：每次进入复位触发标记
-			firedFireplaceGuardianWall = false;
-			base.OnEnter(machine, ctx);
-		}
-
-		public override IVaultState<FireplaceGuardianContext> OnUpdate(VaultStateMachine<FireplaceGuardianContext> machine, FireplaceGuardianContext ctx)
-		{
-			base.OnUpdate(machine, ctx);
-			FireplaceGuardian.Hover(ctx, FireplaceGuardian.HoverHigh);
-
-			if (!firedFireplaceGuardianWall && Timer >= FireplaceGuardian.WallWindup) {
-				firedFireplaceGuardianWall = true;
-				FireplaceGuardian.SpawnWalls(ctx);
-
-				if (!Terraria.Main.dedServ) {
-					SoundEngine.PlaySound(SoundID.Item74, ctx.Npc.Center);
-					WastelandFxSystem.Flash(ctx.Npc.Center, new Color(186, 220, 255), 1.25f);
-					WastelandFxSystem.Motes(ctx.Npc.Center, 64f, 8, new Color(170, 214, 255));
-				}
-			}
-
-			return Timer >= FireplaceGuardian.WallWindup + 90 ? new FireplaceGuardianIdleState() : null;
 		}
 	}
 }
